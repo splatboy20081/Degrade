@@ -3,6 +3,7 @@ package xyz.elevated.frequency.listener;
 import io.netty.channel.ChannelPipeline;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -18,7 +19,7 @@ import xyz.elevated.frequency.util.NmsUtil;
 
 public final class PlayerListener implements Listener {
 
-    @EventHandler
+    @EventHandler(priority=EventPriority.MONITOR)
     public void onJoin(final PlayerJoinEvent event) {
         final Player player = event.getPlayer();
         final PlayerData playerData = Frequency.INSTANCE.getPlayerDataManager().getData(player);
@@ -49,7 +50,7 @@ public final class PlayerListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onQuit(final PlayerQuitEvent event) {
         final Player player = event.getPlayer();
         final ChannelPipeline channelPipeline = NmsUtil.getPlayerPipeline(player);
