@@ -1,5 +1,5 @@
 name: Frequency
-authors: [Elevated, Gson]
+authors: [Elevated, Gson, SplatboyDev]
 version: 1.0
 softdepend: [DiscordLib]
 main: xyz.elevated.frequency.FrequencyPlugin
