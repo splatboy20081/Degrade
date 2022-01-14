@@ -16,7 +16,7 @@ public enum ExemptType {
     /**
      * Returns true if the tps of the server is too low to ensure check stability
      */
-    TPS(playerData -> Timings.TPS.getNumber() < 18),
+    TPS(playerData -> Timings.TPS.getNumber() < 17),
 
     /**
      * Returns true if the player is inside or close to the void
