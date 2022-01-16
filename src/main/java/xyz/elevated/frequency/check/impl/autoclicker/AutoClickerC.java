@@ -38,7 +38,7 @@ public final class AutoClickerC extends PacketCheck {
                 double outliers = outlierPair.getX().size() + outlierPair.getY().size();
 
                 // See if skewness and kurtosis is exceeding a specific limit.
-                if (skewness < 0.75 && kurtosis < 0.0 && outliers < 2) {
+                if (skewness < 0.76 && kurtosis < 0.01 && outliers < 2) {
                     if (++buffer > 1) {
                         fail();
                     }

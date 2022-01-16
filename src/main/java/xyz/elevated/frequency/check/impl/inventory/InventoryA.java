@@ -40,7 +40,7 @@ public final class InventoryA extends PacketCheck {
                 double outliers = outlierPair.getX().size() + outlierPair.getY().size();
 
                 // If the deviation is low and there are no outliers, flag
-                if (deviation < 1.f && outliers == 0.0) fail();
+                if (deviation < 1 && outliers == 0.0) fail();
 
                 samples.clear();
             }

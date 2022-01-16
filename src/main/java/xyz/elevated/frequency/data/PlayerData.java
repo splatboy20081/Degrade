@@ -4,10 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.server.v1_8_R3.AxisAlignedBB;
 import net.minecraft.server.v1_8_R3.PlayerConnection;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import xyz.elevated.frequency.data.impl.*;
 import xyz.elevated.frequency.exempt.ExemptManager;
@@ -18,9 +16,6 @@ import xyz.elevated.frequency.util.EvictingList;
 import xyz.elevated.frequency.util.EvictingMap;
 import xyz.elevated.frequency.util.NmsUtil;
 import xyz.elevated.frequency.util.Pair;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Getter @Setter
 public final class PlayerData {
@@ -61,7 +56,7 @@ public final class PlayerData {
         connection = NmsUtil.getPlayerConnection(bukkitPlayer);
 
         target.observe((from, to) -> {
-            if(from == null || from.getEntityId() != to.getEntityId()) {
+            if(from == null || to == null || from.getEntityId() != to.getEntityId()) {
                 getTargetLocations().clear();
             }
         });

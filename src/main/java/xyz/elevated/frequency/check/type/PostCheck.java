@@ -19,7 +19,7 @@ public class PostCheck extends PacketCheck {
 
     @Override
     public void process(Object object) {
-
+        if(isPost(object)) fail();
     }
 
     // Flag only when its both a post and a flag

@@ -4,17 +4,13 @@ import com.google.common.collect.Lists;
 import lombok.experimental.UtilityClass;
 import net.minecraft.server.v1_8_R3.MathHelper;
 import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_8_R3.util.CraftMagicNumbers;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @UtilityClass
 public class MathUtil {
@@ -53,7 +49,7 @@ public class MathUtil {
     }
 
     public int getPingInTicks(long ping) {
-        return MathHelper.floor(ping / 50.);
+        return DegradingMath.floor(ping / 50f);
     }
 
     /**
@@ -67,7 +63,7 @@ public class MathUtil {
         double variance = getVariance(data);
 
         // The standard deviation is the square root of variance. (sqrt(s^2))
-        return Math.sqrt(variance);
+        return DegradingMath.sqrt(variance);
     }
 
     /**
@@ -109,7 +105,7 @@ public class MathUtil {
             sum += point * point;
         }
 
-        return Math.sqrt(sum);
+        return DegradingMath.sqrt(sum);
     }
 
     public static int getDistinct(Collection<? extends Number> collection) {
@@ -126,8 +122,8 @@ public class MathUtil {
     }
 
     /**
-     * @param - The collection of numbers you want analyze
-     * @return - A pair of the high and low outliers
+     * @param collection - The collection of numbers you want analyze
+     * @return tuple - A pair of the high and low outliers
      * @See - https://en.wikipedia.org/wiki/Outlier
      */
     public Pair<List<Double>, List<Double>> getOutliers(Collection<? extends Number> collection) {
@@ -239,6 +235,7 @@ public class MathUtil {
      */
     @SuppressWarnings("deprecation")
     public int getPotionLevel(Player player, PotionEffectType effect) {
+
         int effectId = effect.getId();
 
         if (!player.hasPotionEffect(effect)) return 0;

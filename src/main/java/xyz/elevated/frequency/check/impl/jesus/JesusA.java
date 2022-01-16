@@ -35,7 +35,7 @@ public final class JesusA extends PositionCheck {
             double horizontalDistance = MathUtil.magnitude(deltaX, deltaZ);
 
             // If the player is moving too, flag
-            if (horizontalDistance > 0.1) {
+            if (horizontalDistance > 0) {
                 fail();
             }
         }

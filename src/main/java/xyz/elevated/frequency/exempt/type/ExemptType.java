@@ -2,7 +2,6 @@ package xyz.elevated.frequency.exempt.type;
 
 import lombok.Getter;
 import org.bukkit.entity.Boat;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Minecart;
 import xyz.elevated.frequency.data.PlayerData;

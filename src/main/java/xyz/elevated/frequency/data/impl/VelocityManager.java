@@ -52,7 +52,7 @@ public final class VelocityManager {
     }
 
     // We do not want to put a getter here as we don't want a getter for the entire class including a getter for the class itself
-    private class VelocitySnapshot {
+    private static class VelocitySnapshot {
         @Getter
         private final double horizontal, vertical;
         @Getter

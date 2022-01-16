@@ -43,6 +43,6 @@ public final class InvalidF extends PositionCheck {
         boolean invalid = deltaY > expectedJumpMotion && !ground && !step;
 
         if (invalid && !exempt) fail();
-        if (step && deltaY > 0.6F && !exempt) fail();
+        if (step && deltaY > 0.59F && !exempt) fail();
     }
 }

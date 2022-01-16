@@ -1,8 +1,7 @@
 package xyz.elevated.frequency.util;
 
 import lombok.experimental.UtilityClass;
-import lombok.val;
-import net.minecraft.server.v1_8_R3.Packet;
+
 import java.lang.reflect.Field;
 
 @UtilityClass
@@ -74,8 +73,7 @@ public class ReflectionUtil {
      *
      * @param clazz - The class you want to grab the value from.
      * @param name - The name of the field you want to grab.
-     * @param type - The type of data the field has..
-     * @return
+     * @param type - The type of data the field has.
      */
     private Field getField(Class<?> clazz, String name, Class<?> type) {
         try {

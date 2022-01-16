@@ -15,8 +15,8 @@ import java.util.List;
 public final class AlertManager {
     private final Check<?> check;
 
-    private final String base = ColorUtil.format("&8[&7FQ&8] &a%s &7failed &a%s &8[&7VL&A%s&8]");
-    private final String broadcast = ColorUtil.format("&8[&7FQ&8] &a%s &7was found using an unfair advantage and was removed from the network.");
+    private final String base = ColorUtil.format("&8[&7Degrade&8] &a%s &7failed &a%s &8[&7VL&A%s&8]");
+    private final String broadcast = ColorUtil.format("&8[&7Degrade&8] &a%s &7was found using an unfair advantage and was removed from the network.");
 
     private final List<Long> alerts = Lists.newArrayList();
 
@@ -48,7 +48,7 @@ public final class AlertManager {
         // Execute the alert on a separate thread as we need to loop
         Frequency.INSTANCE.getExecutorAlert().execute(() -> Bukkit.getOnlinePlayers()
                         .stream()
-                        .filter(send -> send.hasPermission("frequency.alerts"))
+                        .filter(send -> send.hasPermission("degrade.alerts"))
                         .forEach(send -> send.sendMessage(alert)));
     }
 }

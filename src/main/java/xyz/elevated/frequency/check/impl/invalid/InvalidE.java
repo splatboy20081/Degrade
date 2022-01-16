@@ -29,7 +29,7 @@ public final class InvalidE extends PositionCheck {
         double offsetH = MathUtil.magnitude(deltaX, deltaZ);
         double offsetY = Math.abs(deltaY);
 
-        boolean exempt = isExempt(ExemptType.TELEPORTING, ExemptType.VELOCITY);
+        boolean exempt = isExempt(ExemptType.TELEPORTING, ExemptType.VELOCITY, ExemptType.TPS);
         boolean touchingAir = playerData.getPositionManager().getTouchingAir().get();
 
         if (!exempt && touchingAir && offsetH > 0.005 && offsetY < 90.d) {

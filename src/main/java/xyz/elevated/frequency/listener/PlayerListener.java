@@ -1,20 +1,17 @@
 package xyz.elevated.frequency.listener;
 
 import io.netty.channel.ChannelPipeline;
-import net.minecraft.server.v1_8_R3.EntityPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import xyz.elevated.frequency.Frequency;
 import xyz.elevated.frequency.data.PlayerData;
 import xyz.elevated.frequency.packet.PacketHandler;
-import xyz.elevated.frequency.tick.TickManager;
 import xyz.elevated.frequency.util.NmsUtil;
 
 public final class PlayerListener implements Listener {
@@ -33,7 +30,7 @@ public final class PlayerListener implements Listener {
         Frequency.INSTANCE.getExecutorPacket().execute(() -> channelPipeline.addBefore("packet_handler", "frequency_packet_handler", new PacketHandler(playerData)));
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         PlayerData playerData = Frequency.INSTANCE.getPlayerDataManager().getData(player);
@@ -68,7 +65,7 @@ public final class PlayerListener implements Listener {
 
         /*
         * To prevent any memory leaks from showing up, we have to remove the player from
-        * the map we have inside. We don't need to keep the data inside of the memory if we have
+        * the map we have inside. We don't need to keep the data inside the memory if we have
         * no use for it anymore. This can be abused, but if needed, one can make a caching system,
          */
         Frequency.INSTANCE.getPlayerDataManager().remove(player);

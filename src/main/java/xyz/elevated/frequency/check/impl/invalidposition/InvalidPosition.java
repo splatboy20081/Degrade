@@ -47,7 +47,7 @@ public final class InvalidPosition extends PositionCheck {
         }
 
         // It's impossible to make that small of a movement without it being rounded to 0
-        if (deltaY >= 0.0 && horizontalDistance < 1e-06 && acceleration == 0.0) {
+        if (deltaY >= 0.0 && horizontalDistance < 0.00001 && acceleration == 0.0) {
             fail();
         }
 

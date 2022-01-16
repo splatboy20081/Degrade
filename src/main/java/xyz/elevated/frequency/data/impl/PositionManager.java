@@ -60,7 +60,7 @@ public final class PositionManager {
             return;
         }
 
-        // Make sure the player isn't flying and he isn't in a vehicle
+        // Make sure the player isn't flying, and he isn't in a vehicle
         if (bukkitPlayer.isInsideVehicle() || bukkitPlayer.getAllowFlight()) {
             return;
         }

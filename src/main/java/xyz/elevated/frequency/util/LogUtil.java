@@ -10,6 +10,6 @@ public class LogUtil {
      * @param log - The string you want to print under Frequency.
      */
     public void log(String log) {
-        System.out.println("[Frequency]: " + log);
+        System.out.println("[Degrade]: " + log);
     }
 }
