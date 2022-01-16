@@ -6,7 +6,7 @@ import xyz.elevated.frequency.wrapper.PacketWrapper;
 
 public final class WrappedPlayInArmAnimation extends PacketWrapper {
 
-    public WrappedPlayInArmAnimation(final Packet<?> instance) {
+    public WrappedPlayInArmAnimation(Packet<?> instance) {
         super(instance, PacketPlayInArmAnimation.class);
     }
 

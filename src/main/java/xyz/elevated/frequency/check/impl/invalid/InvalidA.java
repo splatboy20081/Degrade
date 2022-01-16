@@ -14,28 +14,28 @@ import xyz.elevated.frequency.util.NmsUtil;
 @CheckData(name = "Invalid (A)")
 public final class InvalidA extends PositionCheck {
 
-    public InvalidA(final PlayerData playerData) {
+    public InvalidA(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final PositionUpdate positionUpdate) {
+    public void process(PositionUpdate positionUpdate) {
         // Get the locations from the position update
-        final Location from = positionUpdate.getFrom();
-        final Location to = positionUpdate.getTo();
+        Location from = positionUpdate.getFrom();
+        Location to = positionUpdate.getTo();
 
         // Get the delta of the positions and the velocity of the player
-        final double deltaY = to.getY() - from.getY();
-        final double velocityY = playerData.getVelocityManager().getMaxVertical();
+        double deltaY = to.getY() - from.getY();
+        double velocityY = playerData.getVelocityManager().getMaxVertical();
 
         // Calculate their max Y according to the formula baseJump + (amplifier * 0.1)
-        final int amplifierJump = MathUtil.getPotionLevel(playerData.getBukkitPlayer(), PotionEffectType.JUMP);
+        int amplifierJump = MathUtil.getPotionLevel(playerData.getBukkitPlayer(), PotionEffectType.JUMP);
 
-        final double motionY = NmsUtil.getMotion(playerData).getY();
-        final double threshold = amplifierJump > 0 ? 0.42 + amplifierJump * 0.1 : 0.42;
+        double motionY = NmsUtil.getMotion(playerData).getY();
+        double threshold = amplifierJump > 0 ? 0.42 + amplifierJump * 0.1 : 0.42;
 
         // Make sure the player isn't exempt
-        final boolean exempt = this.isExempt(ExemptType.TELEPORTING, ExemptType.TPS);
+        boolean exempt = isExempt(ExemptType.TELEPORTING, ExemptType.TPS);
 
         // If the player is ascending higher than the threshold and has no velocity
         if (velocityY == 0.0 && deltaY > threshold && !exempt && motionY == 0.0) {

@@ -2,7 +2,6 @@ package xyz.elevated.frequency.data.impl;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.bukkit.Bukkit;
 import xyz.elevated.frequency.data.PlayerData;
 import xyz.elevated.frequency.observable.Observable;
 import xyz.elevated.frequency.util.EvictingList;
@@ -29,7 +28,7 @@ public final class ActionManager {
             lastDelayedFlying = 0, lastTeleport = 0, movements = 0, lastPlace = 0;
 
     public void onArmAnimation() {
-        this.swinging.set(true);
+        swinging.set(true);
 
         click: {
             if (digging.get() || movements > 5) break click;
@@ -38,8 +37,8 @@ public final class ActionManager {
         }
 
         if (clicks.size() > 5) {
-            final double cps = MathUtil.getCps(clicks);
-            final double rate = cps * movements;
+            double cps = MathUtil.getCps(clicks);
+            double rate = cps * movements;
 
             playerData.getCps().set(cps);
             playerData.getRate().set(rate);
@@ -49,46 +48,46 @@ public final class ActionManager {
     }
 
     public void onAttack() {
-        this.attacking.set(true);
+        attacking.set(true);
 
-        this.lastAttack = playerData.getTicks().get();
+        lastAttack = playerData.getTicks().get();
     }
 
     public void onPlace() {
-        this.placing.set(true);
+        placing.set(true);
 
-        this.lastPlace = playerData.getTicks().get();
+        lastPlace = playerData.getTicks().get();
     }
 
     public void onDig() {
-        this.packetDigging.set(true);
+        packetDigging.set(true);
         
-        this.lastDig = playerData.getTicks().get();
+        lastDig = playerData.getTicks().get();
     }
 
     public void onFlying() {
-        final int now = playerData.getTicks().get();
-        final int attack = now - lastAttack;
+        int now = playerData.getTicks().get();
+        int attack = now - lastAttack;
 
-        final boolean delayed = now - lastFlying > 2;
-        final boolean digging = now - lastDig < 15 || packetDigging.get();
-        final boolean lagging = now - lastDelayedFlying < 2;
-        final boolean teleporting = now - lastTeleport < 2;
-        final boolean recent = attack < 200;
+        boolean delayed = now - lastFlying > 2;
+        boolean digging = now - lastDig < 15 || packetDigging.get();
+        boolean lagging = now - lastDelayedFlying < 2;
+        boolean teleporting = now - lastTeleport < 2;
+        boolean recent = attack < 200;
 
-        this.placing.set(false);
-        this.attacking.set(false);
-        this.swinging.set(false);
-        this.attacking.set(false);
-        this.steer.set(false);
-        this.packetDigging.set(false);
+        placing.set(false);
+        attacking.set(false);
+        swinging.set(false);
+        attacking.set(false);
+        steer.set(false);
+        packetDigging.set(false);
 
         this.digging.set(digging);
         this.delayed.set(lagging);
-        this.teleported.set(teleporting);
+        teleported.set(teleporting);
 
-        this.lastDelayedFlying = delayed ? now : lastDelayedFlying;
-        this.lastFlying = now;
+        lastDelayedFlying = delayed ? now : lastDelayedFlying;
+        lastFlying = now;
 
         playerData.getTarget().set(recent ? playerData.getTarget().get() : null);
         playerData.getTicks().set(now + 1);
@@ -97,14 +96,14 @@ public final class ActionManager {
     }
 
     public void onSteerVehicle() {
-        this.steer.set(true);
+        steer.set(true);
     }
 
     public void onTeleport() {
-        this.lastTeleport = playerData.getTicks().get();
+        lastTeleport = playerData.getTicks().get();
     }
 
     public void onBukkitDig() {
-        this.lastDig = playerData.getTicks().get();
+        lastDig = playerData.getTicks().get();
     }
 }

@@ -7,7 +7,7 @@ import org.bukkit.ChatColor;
 public class ColorUtil {
 
     // & to paragraph symbol
-    public String format(final String string) {
+    public String format(String string) {
         return ChatColor.translateAlternateColorCodes('&', string);
     }
 }

@@ -19,7 +19,7 @@ public final class VelocityManager {
     private final Predicate<VelocitySnapshot> shouldRemoveVelocity = velocity -> velocity.getCreationTime() + 2000L < System.currentTimeMillis();
 
     // Add the player's velocity to the list
-    public void addVelocityEntry(final double x, final double y, final double z) {
+    public void addVelocityEntry(double x, double y, double z) {
         velocities.add(new VelocitySnapshot(x, y, z, x * x + z * z, Math.abs(y)));
     }
 
@@ -60,7 +60,7 @@ public final class VelocityManager {
         @Getter
         private final long creationTime = System.currentTimeMillis();
 
-        public VelocitySnapshot(final double x, final double y, final double z, final double horizontal, final double vertical) {
+        public VelocitySnapshot(double x, double y, double z, double horizontal, double vertical) {
             this.x = x;
             this.y = y;
             this.z = z;

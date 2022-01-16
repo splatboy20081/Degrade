@@ -15,26 +15,26 @@ public final class FlyD extends PositionCheck {
     private int ticks = 0;
     private double total = 0.0d, buffer = 0.0d;
 
-    public FlyD(final PlayerData playerData) {
+    public FlyD(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final PositionUpdate positionUpdate) {
-        final Location from = positionUpdate.getFrom();
-        final Location to = positionUpdate.getTo();
+    public void process(PositionUpdate positionUpdate) {
+        Location from = positionUpdate.getFrom();
+        Location to = positionUpdate.getTo();
 
-        final double deltaX = to.getX() - from.getX();
-        final double deltaY = to.getY() - from.getY();
-        final double deltaZ = to.getZ() - from.getZ();
+        double deltaX = to.getX() - from.getX();
+        double deltaY = to.getY() - from.getY();
+        double deltaZ = to.getZ() - from.getZ();
 
-        final int modifierJump = MathUtil.getPotionLevel(playerData.getBukkitPlayer(), PotionEffectType.JUMP);
+        int modifierJump = MathUtil.getPotionLevel(playerData.getBukkitPlayer(), PotionEffectType.JUMP);
 
-        final double offset = MathUtil.magnitude(deltaX, deltaZ);
-        final double threshold = modifierJump > 0 ? 1.55220341408 + (Math.pow(modifierJump + 4.2, 2D) / 16D) : 1.25220341408;
+        double offset = MathUtil.magnitude(deltaX, deltaZ);
+        double threshold = modifierJump > 0 ? 1.55220341408 + (Math.pow(modifierJump + 4.2, 2D) / 16D) : 1.25220341408;
 
-        final boolean exempt = this.isExempt(ExemptType.TELEPORTING, ExemptType.VELOCITY);
-        final boolean touchingAir = playerData.getPositionManager().getTouchingAir().get();
+        boolean exempt = isExempt(ExemptType.TELEPORTING, ExemptType.VELOCITY);
+        boolean touchingAir = playerData.getPositionManager().getTouchingAir().get();
 
         if (touchingAir && !exempt) {
             ++ticks;

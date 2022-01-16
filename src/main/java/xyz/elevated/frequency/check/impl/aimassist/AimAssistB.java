@@ -10,28 +10,28 @@ public final class AimAssistB extends RotationCheck {
 
     private int lastRoundedYaw = 0, lastRoundedPitch = 0, streak = 0;
 
-    public AimAssistB(final PlayerData playerData) {
+    public AimAssistB(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final RotationUpdate rotationUpdate) {
+    public void process(RotationUpdate rotationUpdate) {
         // Get the current system time to account for attacks
-        final long now = System.currentTimeMillis();
+        long now = System.currentTimeMillis();
 
         // Get the deltas from the rotation update
-        final float deltaYaw = rotationUpdate.getDeltaYaw();
-        final float deltaPitch = rotationUpdate.getDeltaPitch();
+        float deltaYaw = rotationUpdate.getDeltaYaw();
+        float deltaPitch = rotationUpdate.getDeltaPitch();
 
         // Round up the rotations to get their first digit
-        final int roundedYaw = Math.round(deltaYaw);
-        final int roundedPitch = Math.round(deltaPitch);
-        final int roundedDelta = Math.abs(roundedPitch - lastRoundedPitch);
+        int roundedYaw = Math.round(deltaYaw);
+        int roundedPitch = Math.round(deltaPitch);
+        int roundedDelta = Math.abs(roundedPitch - lastRoundedPitch);
 
         // Make sure the player is attacking, isn't using cinematic and the rotations had the same first number
-        final boolean attacking = now - playerData.getActionManager().getLastAttack() < 500L;
-        final boolean cinematic = playerData.getCinematic().get();
-        final boolean identical = roundedYaw == lastRoundedYaw;
+        boolean attacking = now - playerData.getActionManager().getLastAttack() < 500L;
+        boolean cinematic = playerData.getCinematic().get();
+        boolean identical = roundedYaw == lastRoundedYaw;
 
         // If the rotation was not proper, and the player wasn't spamming their aim, flag.
         if (identical && roundedDelta < 5 && deltaYaw < 20.f && deltaPitch < 20.f && attacking && cinematic) {
@@ -42,7 +42,7 @@ public final class AimAssistB extends RotationCheck {
             streak = 0;
         }
 
-        this.lastRoundedYaw = roundedYaw;
-        this.lastRoundedPitch = roundedPitch;
+        lastRoundedYaw = roundedYaw;
+        lastRoundedPitch = roundedPitch;
     }
 }

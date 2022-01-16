@@ -16,37 +16,37 @@ import xyz.elevated.frequency.data.PlayerData;
 @UtilityClass
 public class NmsUtil {
 
-    public EntityPlayer getEntityPlayer(final Player player) {
+    public EntityPlayer getEntityPlayer(Player player) {
         return ((CraftPlayer) player).getHandle();
     }
 
-    public EntityPlayer getEntityPlayer(final PlayerData playerData) {
-        final Player player = playerData.getBukkitPlayer();
+    public EntityPlayer getEntityPlayer(PlayerData playerData) {
+        Player player = playerData.getBukkitPlayer();
 
         return getEntityPlayer(player);
     }
 
-    public ChannelPipeline getEntityPlayerPipeline(final EntityPlayer entityPlayer) {
+    public ChannelPipeline getEntityPlayerPipeline(EntityPlayer entityPlayer) {
         return entityPlayer.playerConnection.networkManager.channel.pipeline();
     }
 
-    public ChannelPipeline getPlayerPipeline(final Player player) {
+    public ChannelPipeline getPlayerPipeline(Player player) {
         return getEntityPlayerPipeline(getEntityPlayer(player));
     }
 
-    public PlayerConnection getPlayerConnection(final PlayerData playerData) {
-        final Player player = playerData.getBukkitPlayer();
+    public PlayerConnection getPlayerConnection(PlayerData playerData) {
+        Player player = playerData.getBukkitPlayer();
 
         return getPlayerConnection(player);
     }
 
-    public PlayerConnection getPlayerConnection(final Player player) {
-        final EntityPlayer entityPlayer = getEntityPlayer(player);
+    public PlayerConnection getPlayerConnection(Player player) {
+        EntityPlayer entityPlayer = getEntityPlayer(player);
 
         return entityPlayer.playerConnection;
     }
 
-    public Block getBlock(final Location location) {
+    public Block getBlock(Location location) {
         return isChunkLoaded(location) ? location.getBlock() : null;
     }
 
@@ -64,18 +64,18 @@ public class NmsUtil {
         return ((CraftWorld)world).getHandle();
     }
 
-    public Vector getMotion(final Player player) {
-        final EntityPlayer entityPlayer = getEntityPlayer(player);
+    public Vector getMotion(Player player) {
+        EntityPlayer entityPlayer = getEntityPlayer(player);
 
-        final double motionX = entityPlayer.motX;
-        final double motionY = entityPlayer.motY;
-        final double motionZ = entityPlayer.motZ;
+        double motionX = entityPlayer.motX;
+        double motionY = entityPlayer.motY;
+        double motionZ = entityPlayer.motZ;
 
         return new Vector(motionX, motionY, motionZ);
     }
 
-    public Vector getMotion(final PlayerData playerData) {
-        final Player player = playerData.getBukkitPlayer();
+    public Vector getMotion(PlayerData playerData) {
+        Player player = playerData.getBukkitPlayer();
 
         return getMotion(player);
     }

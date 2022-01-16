@@ -11,17 +11,17 @@ public final class KillAuraD extends PacketCheck {
 
     private int streak = 0;
 
-    public KillAuraD(final PlayerData playerData) {
+    public KillAuraD(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final Object object) {
+    public void process(Object object) {
         if (object instanceof WrappedPlayInUseEntity) {
-            final WrappedPlayInUseEntity wrapper = (WrappedPlayInUseEntity) object;
+            WrappedPlayInUseEntity wrapper = (WrappedPlayInUseEntity) object;
 
             if (wrapper.getAction() == PacketPlayInUseEntity.EnumEntityUseAction.ATTACK) {
-                final boolean invalid = !playerData.getActionManager().getSwinging().get();
+                boolean invalid = !playerData.getActionManager().getSwinging().get();
 
                 // Player swung and attacked
                 if (invalid) {

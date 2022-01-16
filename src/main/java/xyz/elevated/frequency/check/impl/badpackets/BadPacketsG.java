@@ -13,20 +13,20 @@ public final class BadPacketsG extends PacketCheck {
     private int count = 0;
     private PacketPlayInEntityAction.EnumPlayerAction lastAction;
 
-    public BadPacketsG(final PlayerData playerData) {
+    public BadPacketsG(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final Object object) {
+    public void process(Object object) {
         if (object instanceof WrappedPlayInEntityAction) {
-            final WrappedPlayInEntityAction wrapper = (WrappedPlayInEntityAction) object;
+            WrappedPlayInEntityAction wrapper = (WrappedPlayInEntityAction) object;
 
-            final boolean invalid = ++count > 1 && wrapper.getAction() == lastAction;
+            boolean invalid = ++count > 1 && wrapper.getAction() == lastAction;
 
             if (invalid) fail();
 
-            this.lastAction = wrapper.getAction();
+            lastAction = wrapper.getAction();
         } else if (object instanceof WrappedPlayInFlying) {
             count = 0;
         }

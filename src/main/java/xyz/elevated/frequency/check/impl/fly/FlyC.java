@@ -14,24 +14,24 @@ public final class FlyC extends PositionCheck {
     private double lastDeltaY = 0.0d, buffer = 0.0d;
     private int ticks = 0;
 
-    public FlyC(final PlayerData playerData) {
+    public FlyC(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final PositionUpdate positionUpdate) {
-        final Location from = positionUpdate.getFrom();
-        final Location to = positionUpdate.getTo();
+    public void process(PositionUpdate positionUpdate) {
+        Location from = positionUpdate.getFrom();
+        Location to = positionUpdate.getTo();
 
-        final double deltaX = to.getX() - from.getX();
-        final double deltaY = to.getY() - from.getY();
-        final double deltaZ = to.getZ() - from.getZ();
+        double deltaX = to.getX() - from.getX();
+        double deltaY = to.getY() - from.getY();
+        double deltaZ = to.getZ() - from.getZ();
 
-        final double horizontalDistance = MathUtil.magnitude(deltaX, deltaZ);
-        final double acceleration = Math.abs(deltaY - lastDeltaY);
+        double horizontalDistance = MathUtil.magnitude(deltaX, deltaZ);
+        double acceleration = Math.abs(deltaY - lastDeltaY);
 
-        final boolean exempt = this.isExempt(ExemptType.TELEPORTING, ExemptType.VELOCITY);
-        final boolean touchingAir = playerData.getPositionManager().getTouchingAir().get();
+        boolean exempt = isExempt(ExemptType.TELEPORTING, ExemptType.VELOCITY);
+        boolean touchingAir = playerData.getPositionManager().getTouchingAir().get();
 
         if (!exempt && touchingAir) {
             ++ticks;
@@ -48,6 +48,6 @@ public final class FlyC extends PositionCheck {
             ticks = 0;
         }
 
-        this.lastDeltaY = deltaY;
+        lastDeltaY = deltaY;
     }
 }

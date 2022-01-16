@@ -18,33 +18,33 @@ public final class PacketHandler extends ChannelDuplexHandler {
     private final PlayerData playerData;
 
     @Override
-    public void write(final ChannelHandlerContext channelHandlerContext, final Object object, final ChannelPromise channelPromise) throws Exception {
+    public void write(ChannelHandlerContext channelHandlerContext, Object object, ChannelPromise channelPromise) throws Exception {
         super.write(channelHandlerContext, object, channelPromise);
 
         try {
-            final Packet<PacketListenerPlayOut> packet = (Packet<PacketListenerPlayOut>) object;
+            Packet<PacketListenerPlayOut> packet = (Packet<PacketListenerPlayOut>) object;
 
             Frequency.INSTANCE.getProcessorManager()
                     .getProcessor(OutgoingPacketProcessor.class)
                     .process(playerData, packet);
         }
-        catch (final Throwable throwable) {
+        catch (Throwable throwable) {
             throwable.printStackTrace();
         }
     }
 
     @Override
-    public void channelRead(final ChannelHandlerContext channelHandlerContext, final Object object) throws Exception {
+    public void channelRead(ChannelHandlerContext channelHandlerContext, Object object) throws Exception {
         super.channelRead(channelHandlerContext, object);
 
         try {
-            final Packet<PacketListenerPlayIn> packet = (Packet<PacketListenerPlayIn>) object;
+            Packet<PacketListenerPlayIn> packet = (Packet<PacketListenerPlayIn>) object;
 
             Frequency.INSTANCE.getProcessorManager()
                     .getProcessor(IncomingPacketProcessor.class)
                     .process(playerData, packet);
         }
-        catch (final Throwable throwable) {
+        catch (Throwable throwable) {
             throwable.printStackTrace();
         }
     }

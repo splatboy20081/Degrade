@@ -12,20 +12,20 @@ public final class KillAuraE extends PacketCheck {
 
     private int movements = 0, lastMovements = 0, total = 0, invalid = 0;
 
-    public KillAuraE(final PlayerData playerData) {
+    public KillAuraE(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final Object object) {
+    public void process(Object object) {
         if (object instanceof WrappedPlayInUseEntity) {
-            final WrappedPlayInUseEntity wrapper = (WrappedPlayInUseEntity) object;
+            WrappedPlayInUseEntity wrapper = (WrappedPlayInUseEntity) object;
 
             if (wrapper.getAction() == PacketPlayInUseEntity.EnumEntityUseAction.ATTACK) {
-                final boolean proper = playerData.getCps().get() > 7.2 && movements < 4 && lastMovements < 4;
+                boolean proper = playerData.getCps().get() > 7.2 && movements < 4 && lastMovements < 4;
 
                 if (proper) {
-                    final boolean flag = movements == lastMovements;
+                    boolean flag = movements == lastMovements;
 
                     if (flag) {
                         ++invalid;

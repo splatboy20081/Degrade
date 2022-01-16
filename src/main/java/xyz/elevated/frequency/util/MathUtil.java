@@ -26,9 +26,9 @@ public class MathUtil {
      * @param data - The set of data you want to find the variance from
      * @return - The variance of the numbers.
      *
-     * @See - https://en.wikipedia.org/wiki/Variance
+     * @see  <a href="https://en.wikipedia.org/wiki/Variance">Variance</a>
      */
-    public double getVariance(final Collection<? extends Number> data) {
+    public double getVariance(Collection<? extends Number> data) {
         int count = 0;
 
         double sum = 0.0;
@@ -37,7 +37,7 @@ public class MathUtil {
         double average;
 
         // Increase the sum and the count to find the average and the standard deviation
-        for (final Number number : data) {
+        for (Number number : data) {
             sum += number.doubleValue();
             ++count;
         }
@@ -45,7 +45,7 @@ public class MathUtil {
         average = sum / count;
 
         // Run the standard deviation formula
-        for (final Number number : data) {
+        for (Number number : data) {
             variance += Math.pow(number.doubleValue() - average, 2.0);
         }
 
@@ -63,8 +63,8 @@ public class MathUtil {
      * @See - https://en.wikipedia.org/wiki/Standard_deviation
      * @See - https://en.wikipedia.org/wiki/Variance
      */
-    public double getStandardDeviation(final Collection<? extends Number> data) {
-        final double variance = getVariance(data);
+    public double getStandardDeviation(Collection<? extends Number> data) {
+        double variance = getVariance(data);
 
         // The standard deviation is the square root of variance. (sqrt(s^2))
         return Math.sqrt(variance);
@@ -77,14 +77,14 @@ public class MathUtil {
      *
      * @See - https://en.wikipedia.org/wiki/Skewness
      */
-    public double getSkewness(final Collection<? extends Number> data) {
+    public double getSkewness(Collection<? extends Number> data) {
         double sum = 0;
         int count = 0;
 
-        final List<Double> numbers = Lists.newArrayList();
+        List<Double> numbers = Lists.newArrayList();
 
         // Get the sum of all the data and the amount via looping
-        for (final Number number : data) {
+        for (Number number : data) {
             sum += number.doubleValue();
             ++count;
 
@@ -95,33 +95,33 @@ public class MathUtil {
         Collections.sort(numbers);
 
         // Run the formula to get skewness
-        final double mean =  sum / count;
-        final double median = (count % 2 != 0) ? numbers.get(count / 2) : (numbers.get((count - 1) / 2) + numbers.get(count / 2)) / 2;
-        final double variance = getVariance(data);
+        double mean =  sum / count;
+        double median = (count % 2 != 0) ? numbers.get(count / 2) : (numbers.get((count - 1) / 2) + numbers.get(count / 2)) / 2;
+        double variance = getVariance(data);
 
         return 3 * (mean - median) / variance;
     }
 
-    public static double magnitude(final double... points) {
+    public static double magnitude(double... points) {
         double sum = 0.0;
 
-        for (final double point : points) {
+        for (double point : points) {
             sum += point * point;
         }
 
         return Math.sqrt(sum);
     }
 
-    public static int getDistinct(final Collection<? extends Number> collection) {
+    public static int getDistinct(Collection<? extends Number> collection) {
         Set<Object> set = new HashSet<>(collection);
         return set.size();
     }
 
     /**
-     * @param - collection The collection of the numbers you want to get the duplicates from
-     * @return - The duplicate amount
+     * @param collection The collection of the numbers you want to get the duplicates from
+     * @return The duplicate amount
      */
-    public static int getDuplicates(final Collection<? extends Number> collection) {
+    public static int getDuplicates(Collection<? extends Number> collection) {
         return collection.size() - getDistinct(collection);
     }
 
@@ -130,22 +130,22 @@ public class MathUtil {
      * @return - A pair of the high and low outliers
      * @See - https://en.wikipedia.org/wiki/Outlier
      */
-    public Pair<List<Double>, List<Double>> getOutliers(final Collection<? extends Number> collection) {
-        final List<Double> values = new ArrayList<>();
+    public Pair<List<Double>, List<Double>> getOutliers(Collection<? extends Number> collection) {
+        List<Double> values = new ArrayList<>();
 
-        for (final Number number : collection) {
+        for (Number number : collection) {
             values.add(number.doubleValue());
         }
 
-        final double q1 = getMedian(values.subList(0, values.size() / 2));
-        final double q3 = getMedian(values.subList(values.size() / 2, values.size()));
+        double q1 = getMedian(values.subList(0, values.size() / 2));
+        double q3 = getMedian(values.subList(values.size() / 2, values.size()));
 
-        final double iqr = Math.abs(q1 - q3);
-        final double lowThreshold = q1 - 1.5 * iqr, highThreshold = q3 + 1.5 * iqr;
+        double iqr = Math.abs(q1 - q3);
+        double lowThreshold = q1 - 1.5 * iqr, highThreshold = q3 + 1.5 * iqr;
 
-        final Pair<List<Double>, List<Double>> tuple = new Pair<>(new ArrayList<>(), new ArrayList<>());
+        Pair<List<Double>, List<Double>> tuple = new Pair<>(new ArrayList<>(), new ArrayList<>());
 
-        for (final Double value : values) {
+        for (Double value : values) {
             if (value < lowThreshold) {
                 tuple.getX().add(value);
             } else if (value > highThreshold) {
@@ -163,7 +163,7 @@ public class MathUtil {
      *
      * @See - https://en.wikipedia.org/wiki/Kurtosis
      */
-    public double getKurtosis(final Collection<? extends Number> data) {
+    public double getKurtosis(Collection<? extends Number> data) {
         double sum = 0.0;
         int count = 0;
 
@@ -176,14 +176,14 @@ public class MathUtil {
             return 0.0;
         }
 
-        final double efficiencyFirst = count * (count + 1.0) / ((count - 1.0) * (count - 2.0) * (count - 3.0));
-        final double efficiencySecond = 3.0 * Math.pow(count - 1.0, 2.0) / ((count - 2.0) * (count - 3.0));
-        final double average = sum / count;
+        double efficiencyFirst = count * (count + 1.0) / ((count - 1.0) * (count - 2.0) * (count - 3.0));
+        double efficiencySecond = 3.0 * Math.pow(count - 1.0, 2.0) / ((count - 2.0) * (count - 3.0));
+        double average = sum / count;
 
         double variance = 0.0;
         double varianceSquared = 0.0;
 
-        for (final Number number : data) {
+        for (Number number : data) {
             variance += Math.pow(average - number.doubleValue(), 2.0);
             varianceSquared += Math.pow(average - number.doubleValue(), 4.0);
         }
@@ -197,7 +197,7 @@ public class MathUtil {
      *
      * @See - https://en.wikipedia.org/wiki/Median
      */
-    private double getMedian(final List<Double> data) {
+    private double getMedian(List<Double> data) {
         if (data.size() % 2 == 0) {
             return (data.get(data.size() / 2) + data.get(data.size() / 2 - 1)) / 2;
         } else {
@@ -211,7 +211,7 @@ public class MathUtil {
      * @param previous - The previous value
      * @return - The GCD of those two values
      */
-    public long getGcd(final long current, final long previous) {
+    public long getGcd(long current, long previous) {
         return (previous <= 16384L) ? current : getGcd(previous, current % previous);
     }
 
@@ -220,11 +220,11 @@ public class MathUtil {
      * @param to - The current location
      * @return - The horizontal distance using (x^2 + z^2)
      */
-    public double getMagnitude(final Location from, final Location to) {
+    public double getMagnitude(Location from, Location to) {
         if (from.getWorld() != to.getWorld()) return 0.0;
 
-        final Vector a = to.toVector();
-        final Vector b = from.toVector();
+        Vector a = to.toVector();
+        Vector b = from.toVector();
 
         a.setY(0.0);
         b.setY(0.0);
@@ -237,8 +237,9 @@ public class MathUtil {
      * @param effect - The potion effect you want to get the amplifier of
      * @return - The amplifier added by one to make things more readable
      */
-    public int getPotionLevel(final Player player, final PotionEffectType effect) {
-        final int effectId = effect.getId();
+    @SuppressWarnings("deprecation")
+    public int getPotionLevel(Player player, PotionEffectType effect) {
+        int effectId = effect.getId();
 
         if (!player.hasPotionEffect(effect)) return 0;
 
@@ -250,8 +251,8 @@ public class MathUtil {
      * @param data - The sample of clicks you want to get the cps from
      * @return - The cps using the average as a method of calculation
      */
-    public double getCps(final Collection<? extends Number> data) {
-        final double average = data.stream().mapToDouble(Number::doubleValue).average().orElse(0.0);
+    public double getCps(Collection<? extends Number> data) {
+        double average = data.stream().mapToDouble(Number::doubleValue).average().orElse(0.0);
 
         return 20 / average;
     }

@@ -6,7 +6,7 @@ import xyz.elevated.frequency.wrapper.PacketWrapper;
 
 public final class WrappedPlayInClientCommand extends PacketWrapper {
 
-    public WrappedPlayInClientCommand(final Packet<?> instance) {
+    public WrappedPlayInClientCommand(Packet<?> instance) {
         super(instance, PacketPlayInClientCommand.class);
     }
 

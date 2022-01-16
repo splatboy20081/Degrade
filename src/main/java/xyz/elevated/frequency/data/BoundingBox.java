@@ -21,15 +21,15 @@ public final class BoundingBox {
     private final long timestamp = System.currentTimeMillis();
     private final World world;
 
-    public BoundingBox(final Location position) {
+    public BoundingBox(Location position) {
         this(position.getX(), position.getY(), position.getZ(), position.getWorld());
     }
 
-    public BoundingBox(final double x, final double y, final double z, final World world) {
+    public BoundingBox(double x, double y, double z, World world) {
         this(x, x, y, y, z, z, world);
     }
 
-    public BoundingBox(final double minX, final double maxX, final double minY, final double maxY, final double minZ, final double maxZ, final World world) {
+    public BoundingBox(double minX, double maxX, double minY, double maxY, double minZ, double maxZ, World world) {
         if (minX < maxX) {
             this.minX = minX;
             this.maxX = maxX;
@@ -55,86 +55,86 @@ public final class BoundingBox {
         this.world = world;
     }
 
-    public double distance(final Location location) {
-        return Math.sqrt(Math.min(Math.pow(location.getX() - this.minX, 2), Math.pow(location.getX() - this.maxX, 2)) + Math.min(Math.pow(location.getZ() - this.minZ, 2), Math.pow(location.getZ() - this.maxZ, 2)));
+    public double distance(Location location) {
+        return Math.sqrt(Math.min(Math.pow(location.getX() - minX, 2), Math.pow(location.getX() - maxX, 2)) + Math.min(Math.pow(location.getZ() - minZ, 2), Math.pow(location.getZ() - maxZ, 2)));
     }
 
-    public double distance(final double x, final double z) {
-        final double dx = Math.min(Math.pow(x - minX, 2), Math.pow(x - maxX, 2));
-        final double dz = Math.min(Math.pow(z - minZ, 2), Math.pow(z - maxZ, 2));
+    public double distance(double x, double z) {
+        double dx = Math.min(Math.pow(x - minX, 2), Math.pow(x - maxX, 2));
+        double dz = Math.min(Math.pow(z - minZ, 2), Math.pow(z - maxZ, 2));
 
         return Math.sqrt(dx + dz);
     }
 
-    public double distance(final BoundingBox box) {
-        final double dx = Math.min(Math.pow(box.minX - minX, 2), Math.pow(box.maxX - maxX, 2));
-        final double dz = Math.min(Math.pow(box.minZ - minZ, 2), Math.pow(box.maxZ - maxZ, 2));
+    public double distance(BoundingBox box) {
+        double dx = Math.min(Math.pow(box.minX - minX, 2), Math.pow(box.maxX - maxX, 2));
+        double dz = Math.min(Math.pow(box.minZ - minZ, 2), Math.pow(box.maxZ - maxZ, 2));
 
         return Math.sqrt(dx + dz);
     }
 
     public Vector getDirection() {
-        final double centerX = (minX + maxX) / 2.0;
-        final double centerY = (minY + maxY) / 2.0;
-        final double centerZ = (minZ + maxZ) / 2.0;
+        double centerX = (minX + maxX) / 2.0;
+        double centerY = (minY + maxY) / 2.0;
+        double centerZ = (minZ + maxZ) / 2.0;
 
         return new Location(world, centerX, centerY, centerZ).getDirection();
     }
 
-    public BoundingBox add(final BoundingBox box) {
-        this.minX += box.minX;
-        this.minY += box.minY;
-        this.minZ += box.minZ;
+    public BoundingBox add(BoundingBox box) {
+        minX += box.minX;
+        minY += box.minY;
+        minZ += box.minZ;
 
-        this.maxX += box.maxX;
-        this.maxY += box.maxY;
-        this.maxZ += box.maxZ;
-
-        return this;
-    }
-
-    public BoundingBox move(final double x, final double y, final double z) {
-        this.minX += x;
-        this.minY += y;
-        this.minZ += z;
-
-        this.maxX += x;
-        this.maxY += y;
-        this.maxZ += z;
+        maxX += box.maxX;
+        maxY += box.maxY;
+        maxZ += box.maxZ;
 
         return this;
     }
 
-    public BoundingBox expand(final double x, final double y, final double z) {
-        this.minX -= x;
-        this.minY -= y;
-        this.minZ -= z;
+    public BoundingBox move(double x, double y, double z) {
+        minX += x;
+        minY += y;
+        minZ += z;
 
-        this.maxX += x;
-        this.maxY += y;
-        this.maxZ += z;
-
-        return this;
-    }
-
-    public BoundingBox expandMax(final double x, final double y, final double z) {
-        this.maxX += x;
-        this.maxY += y;
-        this.maxZ += z;
+        maxX += x;
+        maxY += y;
+        maxZ += z;
 
         return this;
     }
 
+    public BoundingBox expand(double x, double y, double z) {
+        minX -= x;
+        minY -= y;
+        minZ -= z;
 
-    public boolean checkBlocks(final Predicate<Material> predicate) {
-        final int first = (int) Math.floor(this.minX);
-        final int second = (int) Math.ceil(this.maxX);
-        final int third = (int) Math.floor(this.minY);
-        final int forth = (int) Math.ceil(this.maxY);
-        final int fifth = (int) Math.floor(this.minZ);
-        final int sixth = (int) Math.ceil(this.maxZ);
+        maxX += x;
+        maxY += y;
+        maxZ += z;
 
-        final ArrayList<Block> list = new ArrayList<>();
+        return this;
+    }
+
+    public BoundingBox expandMax(double x, double y, double z) {
+        maxX += x;
+        maxY += y;
+        maxZ += z;
+
+        return this;
+    }
+
+
+    public boolean checkBlocks(Predicate<Material> predicate) {
+        int first = (int) Math.floor(minX);
+        int second = (int) Math.ceil(maxX);
+        int third = (int) Math.floor(minY);
+        int forth = (int) Math.ceil(maxY);
+        int fifth = (int) Math.floor(minZ);
+        int sixth = (int) Math.ceil(maxZ);
+
+        ArrayList<Block> list = new ArrayList<>();
 
         list.add(world.getBlockAt(first, third, fifth));
 
@@ -172,13 +172,13 @@ final class BlockPosition {
 
     private int x, y, z;
 
-    public BlockPosition(final int x, final int y, final int z) {
+    public BlockPosition(int x, int y, int z) {
         this.x = x;
         this.y = y;
         this.z = z;
     }
 
-    public Block getBlock(final World world) {
+    public Block getBlock(World world) {
         return NmsUtil.getBlock(new Location(world, x, y, z));
     }
 }

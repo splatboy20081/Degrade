@@ -20,26 +20,26 @@ public final class AutoClickerF extends PacketCheck {
     private double buffer = 0.0d;
     private final Deque<Integer> samples = Lists.newLinkedList();
 
-    public AutoClickerF(final PlayerData playerData) {
+    public AutoClickerF(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final Object object) {
+    public void process(Object object) {
         if (object instanceof WrappedPlayInArmAnimation) {
-            final boolean valid = movements < 4 && !playerData.getActionManager().getDigging().get();
+            boolean valid = movements < 4 && !playerData.getActionManager().getDigging().get();
 
             // If the movements is smaller than 4 and the player isn't digging
             if (valid) samples.add(movements);
 
             // Once the samples size is equal to 15
             if (samples.size() == 15) {
-                final Pair<List<Double>, List<Double>> outlierPair = MathUtil.getOutliers(samples);
+                Pair<List<Double>, List<Double>> outlierPair = MathUtil.getOutliers(samples);
 
                 // Get the deviation outliers the the cps from the math util
-                final double deviation = MathUtil.getStandardDeviation(samples);
-                final double outliers = outlierPair.getX().size() + outlierPair.getY().size();
-                final double cps = playerData.getCps().get();
+                double deviation = MathUtil.getStandardDeviation(samples);
+                double outliers = outlierPair.getX().size() + outlierPair.getY().size();
+                double cps = playerData.getCps().get();
 
                 // If the deviation is relatively low along with the outliers and the cps is rounded
                 if (deviation < 0.3 && outliers < 2 && cps % 1.0 == 0.0) {

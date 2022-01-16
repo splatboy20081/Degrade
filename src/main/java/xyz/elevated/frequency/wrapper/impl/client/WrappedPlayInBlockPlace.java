@@ -6,7 +6,7 @@ import xyz.elevated.frequency.wrapper.PacketWrapper;
 
 public final class WrappedPlayInBlockPlace extends PacketWrapper {
 
-    public WrappedPlayInBlockPlace(final Packet<?> instance) {
+    public WrappedPlayInBlockPlace(Packet<?> instance) {
         super(instance, PacketPlayInBlockPlace.class);
     }
 

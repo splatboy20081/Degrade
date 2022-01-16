@@ -10,28 +10,28 @@ import java.util.Optional;
 public final class ConnectionManager {
     private final PlayerData playerData;
 
-    public void onTransaction(final short actionNumber, final long now) {
-        final Optional<Long> entry = this.getTransactionTime(actionNumber);
+    public void onTransaction(short actionNumber, long now) {
+        Optional<Long> entry = getTransactionTime(actionNumber);
 
         entry.ifPresent(time -> playerData.getTransactionPing().set(now - time));
     }
 
-    public void onKeepAlive(final int identification, final long now) {
-        final Optional<Long> entry = this.getKeepAliveTime(identification);
+    public void onKeepAlive(int identification, long now) {
+        Optional<Long> entry = getKeepAliveTime(identification);
 
         entry.ifPresent(time -> playerData.getKeepAlivePing().set(now - time));
     }
 
-    public Optional<Long> getTransactionTime(final short actionNumber) {
-        final Map<Short, Long> entries = playerData.getTransactionUpdates();
+    public Optional<Long> getTransactionTime(short actionNumber) {
+        Map<Short, Long> entries = playerData.getTransactionUpdates();
 
         if (entries.containsKey(actionNumber)) return Optional.of(entries.get(actionNumber));
 
         return Optional.empty();
     }
 
-    public Optional<Long> getKeepAliveTime(final int identification) {
-        final Map<Integer, Long> entries = playerData.getKeepAliveUpdates();
+    public Optional<Long> getKeepAliveTime(int identification) {
+        Map<Integer, Long> entries = playerData.getKeepAliveUpdates();
 
         if (entries.containsKey(identification)) return Optional.of(entries.get(identification));
 

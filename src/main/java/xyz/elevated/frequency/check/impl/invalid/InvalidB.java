@@ -14,32 +14,32 @@ import xyz.elevated.frequency.util.NmsUtil;
 @CheckData(name = "Invalid (B)")
 public final class InvalidB extends PositionCheck {
 
-    public InvalidB(final PlayerData playerData) {
+    public InvalidB(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final PositionUpdate positionUpdate) {
-        final PositionManager positionManager = playerData.getPositionManager();
-        final EntityPlayer entityPlayer = NmsUtil.getEntityPlayer(playerData);
+    public void process(PositionUpdate positionUpdate) {
+        PositionManager positionManager = playerData.getPositionManager();
+        EntityPlayer entityPlayer = NmsUtil.getEntityPlayer(playerData);
 
         // Get the locations from the position update
-        final Location from = positionUpdate.getFrom();
-        final Location to = positionUpdate.getTo();
+        Location from = positionUpdate.getFrom();
+        Location to = positionUpdate.getTo();
 
         // Get the deltas for each axis
-        final double deltaX = to.getX() - from.getX();
-        final double deltaY = to.getY() - from.getY();
-        final double deltaZ = to.getZ() - from.getZ();
+        double deltaX = to.getX() - from.getX();
+        double deltaY = to.getY() - from.getY();
+        double deltaZ = to.getZ() - from.getZ();
 
         // Get the right circumstances. We don't want to run the check on these as it increases the margin of error
-        final boolean environment = !positionManager.getTouchingAir().get()
+        boolean environment = !positionManager.getTouchingAir().get()
                 && !positionManager.getTouchingHalfBlock().get()
                 && !positionManager.getTouchingLiquid().get()
                 && positionUpdate.isOnGround();
 
         // We don't want the check to run when the player is on the void or when he's receiving velocity
-        final boolean exempt = this.isExempt(ExemptType.TELEPORTING, ExemptType.VOID, ExemptType.VELOCITY);
+        boolean exempt = isExempt(ExemptType.TELEPORTING, ExemptType.VOID, ExemptType.VELOCITY);
 
         /*
         * The player should never exceed the distance of their basic head height. For our case we could
@@ -47,7 +47,7 @@ public final class InvalidB extends PositionCheck {
         * the source code, we will the simple formula of (headHeight - 1.0) which for the player when standing should
         * output the number 0.6. And just like that, we have a basic threshold for our check.
          */
-        final double threshold = entityPlayer.getHeadHeight() - 1.0;
+        double threshold = entityPlayer.getHeadHeight() - 1.0;
 
         /*
         * There is no way for the player go beyond their basic head height and yet still remain saying they're
@@ -55,7 +55,7 @@ public final class InvalidB extends PositionCheck {
         * for a false positive. Thus, we're checking if the player is also on ground and exceeding the threshold
          */
         if (deltaY > threshold && environment && !exempt) {
-            final double horizontalDistance = MathUtil.magnitude(deltaX, deltaZ);
+            double horizontalDistance = MathUtil.magnitude(deltaX, deltaZ);
 
             // Making sure the player is actually moving
             if (horizontalDistance > 0.1) fail();

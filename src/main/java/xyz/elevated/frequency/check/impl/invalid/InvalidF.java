@@ -15,32 +15,32 @@ import xyz.elevated.frequency.util.NmsUtil;
 @CheckData(name = "Invalid (F)")
 public final class InvalidF extends PositionCheck {
 
-    public InvalidF(final PlayerData playerData) {
+    public InvalidF(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final PositionUpdate positionUpdate) {
-        final Location from = positionUpdate.getFrom();
-        final Location to = positionUpdate.getTo();
+    public void process(PositionUpdate positionUpdate) {
+        Location from = positionUpdate.getFrom();
+        Location to = positionUpdate.getTo();
 
-        final Player player = playerData.getBukkitPlayer();
-        final EntityPlayer entityPlayer = NmsUtil.getEntityPlayer(playerData);
+        Player player = playerData.getBukkitPlayer();
+        EntityPlayer entityPlayer = NmsUtil.getEntityPlayer(playerData);
 
-        final double deltaY = to.getY() - from.getY();
+        double deltaY = to.getY() - from.getY();
 
-        final boolean deltaModulo = deltaY % 0.015625 == 0.0;
-        final boolean lastGround = from.getY() % 0.015625 == 0.0;
+        boolean deltaModulo = deltaY % 0.015625 == 0.0;
+        boolean lastGround = from.getY() % 0.015625 == 0.0;
 
-        final boolean step = deltaModulo && lastGround;
+        boolean step = deltaModulo && lastGround;
 
-        final double modifierJump = MathUtil.getPotionLevel(player, PotionEffectType.JUMP) * 0.1F;
-        final double expectedJumpMotion = 0.42F + modifierJump;
+        double modifierJump = MathUtil.getPotionLevel(player, PotionEffectType.JUMP) * 0.1F;
+        double expectedJumpMotion = 0.42F + modifierJump;
 
-        final boolean ground = entityPlayer.onGround;
+        boolean ground = entityPlayer.onGround;
 
-        final boolean exempt = this.isExempt(ExemptType.VELOCITY, ExemptType.TELEPORTING);
-        final boolean invalid = deltaY > expectedJumpMotion && !ground && !step;
+        boolean exempt = isExempt(ExemptType.VELOCITY, ExemptType.TELEPORTING);
+        boolean invalid = deltaY > expectedJumpMotion && !ground && !step;
 
         if (invalid && !exempt) fail();
         if (step && deltaY > 0.6F && !exempt) fail();

@@ -16,16 +16,16 @@ public final class KillAuraC extends RotationCheck {
     private final Deque<Float> samplesYaw = Lists.newLinkedList();
     private final Deque<Float> samplesPitch = Lists.newLinkedList();
 
-    public KillAuraC(final PlayerData playerData) {
+    public KillAuraC(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final RotationUpdate rotationUpdate) {
-        final float deltaYaw = rotationUpdate.getDeltaYaw();
-        final float deltaPitch = rotationUpdate.getDeltaPitch();
+    public void process(RotationUpdate rotationUpdate) {
+        float deltaYaw = rotationUpdate.getDeltaYaw();
+        float deltaPitch = rotationUpdate.getDeltaPitch();
 
-        final boolean exempt = this.isExempt(ExemptType.TELEPORTING);
+        boolean exempt = isExempt(ExemptType.TELEPORTING);
 
         if (deltaYaw > 0.0 && deltaPitch > 0.0 && !exempt) {
             samplesPitch.add(deltaPitch);
@@ -33,10 +33,10 @@ public final class KillAuraC extends RotationCheck {
         }
 
         if (samplesPitch.size() == 10 && samplesYaw.size() == 10) {
-            final AtomicInteger level = new AtomicInteger(0);
+            AtomicInteger level = new AtomicInteger(0);
 
-            final double averageYaw = samplesYaw.stream().mapToDouble(d -> d).average().orElse(0.0);
-            final double averagePitch = samplesPitch.stream().mapToDouble(d -> d).average().orElse(0.0);
+            double averageYaw = samplesYaw.stream().mapToDouble(d -> d).average().orElse(0.0);
+            double averagePitch = samplesPitch.stream().mapToDouble(d -> d).average().orElse(0.0);
 
             samplesYaw.stream().filter(delta -> delta % 1.0 == 0.0).forEach(delta -> level.incrementAndGet());
             samplesPitch.stream().filter(delta -> delta % 1.0 == 0.0).forEach(delta -> level.incrementAndGet());

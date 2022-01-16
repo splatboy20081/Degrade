@@ -23,7 +23,7 @@ public enum Frequency {
     private final Executor executorAlert = Executors.newSingleThreadExecutor();
     private final Executor executorPacket = Executors.newSingleThreadExecutor();
 
-    public void start(final FrequencyPlugin plugin) {
+    public void start(FrequencyPlugin plugin) {
         this.plugin = plugin;
 
         assert plugin != null : "Something went wrong! The plugin was null. (Startup)";
@@ -32,7 +32,7 @@ public enum Frequency {
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), plugin);
     }
 
-    public void stop(final FrequencyPlugin plugin) {
+    public void stop(FrequencyPlugin plugin) {
         this.plugin = plugin;
 
         assert plugin != null : "Something went wrong! The plugin was null. (Shutdown)";

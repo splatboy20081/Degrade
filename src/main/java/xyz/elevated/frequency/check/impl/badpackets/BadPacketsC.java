@@ -15,8 +15,8 @@ public final class BadPacketsC extends PostCheck {
     }
 
     @Override
-    public void process(final Object object) {
-        final boolean post = this.isPost(object);
+    public void process(Object object) {
+        boolean post = isPost(object);
 
         if (post) fail();
     }

@@ -7,12 +7,12 @@ import xyz.elevated.frequency.update.RotationUpdate;
 
 public class RotationCheck extends Check<RotationUpdate> {
 
-    public RotationCheck(final PlayerData playerData) {
+    public RotationCheck(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final RotationUpdate rotationUpdate) {
+    public void process(RotationUpdate rotationUpdate) {
 
     }
 }

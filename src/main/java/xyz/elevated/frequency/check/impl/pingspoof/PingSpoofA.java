@@ -9,18 +9,18 @@ import xyz.elevated.frequency.wrapper.impl.client.WrappedPlayInFlying;
 @CheckData(name = "PingSpoof (A)")
 public final class PingSpoofA extends PacketCheck {
 
-    public PingSpoofA(final PlayerData playerData) {
+    public PingSpoofA(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final Object object) {
+    public void process(Object object) {
         if (object instanceof WrappedPlayInFlying) {
-            final long transactionPing = playerData.getTransactionPing().get();
-            final long keepAlivePing = playerData.getKeepAlivePing().get();
+            long transactionPing = playerData.getTransactionPing().get();
+            long keepAlivePing = playerData.getKeepAlivePing().get();
 
-            final boolean joined = playerData.getTicks().get() - playerData.getJoined().get() < 10;
-            final boolean exempt = this.isExempt(ExemptType.LAGGING, ExemptType.TELEPORTING, ExemptType.TPS, ExemptType.CHUNK);
+            boolean joined = playerData.getTicks().get() - playerData.getJoined().get() < 10;
+            boolean exempt = isExempt(ExemptType.LAGGING, ExemptType.TELEPORTING, ExemptType.TPS, ExemptType.CHUNK);
 
             if (!exempt && !joined && transactionPing > keepAlivePing && Math.abs(transactionPing - keepAlivePing) > 50) fail();
         }

@@ -10,14 +10,14 @@ public class BadPacketsP extends PacketCheck {
 
     private int lastId = -1;
 
-    public BadPacketsP(final PlayerData playerData) {
+    public BadPacketsP(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final Object object) {
+    public void process(Object object) {
         if (object instanceof WrappedPlayInKeepAlive) {
-            final WrappedPlayInKeepAlive wrapper = (WrappedPlayInKeepAlive) object;
+            WrappedPlayInKeepAlive wrapper = (WrappedPlayInKeepAlive) object;
 
             if (wrapper.getId() == lastId) {
                 fail();

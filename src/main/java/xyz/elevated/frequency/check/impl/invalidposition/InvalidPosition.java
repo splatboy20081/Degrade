@@ -13,24 +13,24 @@ public final class InvalidPosition extends PositionCheck {
 
     private double lastHorizontalDistance = 0.0d, buffer = 0.0d;
 
-    public InvalidPosition(final PlayerData playerData) {
+    public InvalidPosition(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final PositionUpdate positionUpdate) {
-        final Location from = positionUpdate.getFrom();
-        final Location to = positionUpdate.getTo();
+    public void process(PositionUpdate positionUpdate) {
+        Location from = positionUpdate.getFrom();
+        Location to = positionUpdate.getTo();
 
-        final double deltaX = to.getX() - from.getX();
-        final double deltaY = to.getY() - from.getY();
-        final double deltaZ = to.getZ() - from.getZ();
+        double deltaX = to.getX() - from.getX();
+        double deltaY = to.getY() - from.getY();
+        double deltaZ = to.getZ() - from.getZ();
 
-        final double horizontalDistance = MathUtil.magnitude(deltaX, deltaZ);
-        final double acceleration = Math.abs(horizontalDistance - lastHorizontalDistance);
+        double horizontalDistance = MathUtil.magnitude(deltaX, deltaZ);
+        double acceleration = Math.abs(horizontalDistance - lastHorizontalDistance);
 
-        final boolean exempt = this.isExempt(ExemptType.TELEPORTING, ExemptType.VELOCITY);
-        final boolean sprinting = playerData.getSprinting().get();
+        boolean exempt = isExempt(ExemptType.TELEPORTING, ExemptType.VELOCITY);
+        boolean sprinting = playerData.getSprinting().get();
 
         if (exempt || !sprinting) return;
 
@@ -46,11 +46,11 @@ public final class InvalidPosition extends PositionCheck {
             buffer = Math.max(buffer - 0.125, 0);
         }
 
-        // Its impossible to make that small of a movement without it being rounded to 0
+        // It's impossible to make that small of a movement without it being rounded to 0
         if (deltaY >= 0.0 && horizontalDistance < 1e-06 && acceleration == 0.0) {
             fail();
         }
 
-        this.lastHorizontalDistance = horizontalDistance;
+        lastHorizontalDistance = horizontalDistance;
     }
 }

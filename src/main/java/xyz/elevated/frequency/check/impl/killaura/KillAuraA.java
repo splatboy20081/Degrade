@@ -14,15 +14,15 @@ public final class KillAuraA extends PostCheck {
     private long lastFlying = 0L, lastPacket = 0L;
     private double buffer = 0.0d;
 
-    public KillAuraA(final PlayerData playerData) {
+    public KillAuraA(PlayerData playerData) {
         super(playerData, WrappedPlayInUseEntity.class);
     }
 
     @Override
-    public void process(final Object object) {
+    public void process(Object object) {
         if (object instanceof WrappedPlayInFlying) {
-            final long now = System.currentTimeMillis();
-            final long delay = now - lastPacket;
+            long now = System.currentTimeMillis();
+            long delay = now - lastPacket;
 
             if (sent) {
                 if (delay > 40L && delay < 100L) {
@@ -38,16 +38,16 @@ public final class KillAuraA extends PostCheck {
                 sent = false;
             }
 
-            this.lastFlying = now;
+            lastFlying = now;
         } else if (object instanceof WrappedPlayInUseEntity) {
-            final WrappedPlayInUseEntity wrapper = (WrappedPlayInUseEntity) object;
+            WrappedPlayInUseEntity wrapper = (WrappedPlayInUseEntity) object;
 
             if (wrapper.getAction() != PacketPlayInUseEntity.EnumEntityUseAction.ATTACK) {
                 return;
             }
 
-            final long now = System.currentTimeMillis();
-            final long delay = now - lastFlying;
+            long now = System.currentTimeMillis();
+            long delay = now - lastFlying;
 
             if (delay < 10L) {
                 lastPacket = now;

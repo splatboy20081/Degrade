@@ -17,26 +17,26 @@ public final class MovingStats implements Serializable {
     private double variance;
 
     public MovingStats(int size) {
-        this.elements = new double[size];
-        this.variance = size * 2.5;
+        elements = new double[size];
+        variance = size * 2.5;
 
         //We need to assign the sum to the entire double array
-        for (int i = 0, len = this.elements.length; i < len; i++) {
-            this.elements[i] = size * 2.5 / size;
+        for (int i = 0, len = elements.length; i < len; i++) {
+            elements[i] = size * 2.5 / size;
         }
     }
 
     public void add(double sum) {
-        sum /= this.elements.length;
+        sum /= elements.length;
 
-        this.variance -= this.elements[currentElement];
-        this.variance += sum;
+        variance -= elements[currentElement];
+        variance += sum;
 
         //apply the sum to the current element value
-        this.elements[currentElement] = sum;
+        elements[currentElement] = sum;
 
         //change our element index so it doesn't idle
-        this.currentElement = (currentElement + 1) % this.elements.length;
+        currentElement = (currentElement + 1) % elements.length;
     }
 
     public double getStdDev(double required) {
@@ -45,7 +45,7 @@ public final class MovingStats implements Serializable {
         //the standard deviation is less than the requirement
         if (stdDev < required) {
             //count it and make sure all match
-            if (++windowCount > this.elements.length) {
+            if (++windowCount > elements.length) {
                 return stdDev;
             }
         } else {

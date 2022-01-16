@@ -10,18 +10,18 @@ import xyz.elevated.frequency.wrapper.impl.client.WrappedPlayInWindowClick;
 @CheckData(name = "BadPackets (J)")
 public final class BadPacketsJ extends PacketCheck {
 
-    public BadPacketsJ(final PlayerData playerData) {
+    public BadPacketsJ(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final Object object) {
+    public void process(Object object) {
         if (object instanceof WrappedPlayInUseEntity) {
-            final WrappedPlayInUseEntity wrapper = (WrappedPlayInUseEntity) object;
+            WrappedPlayInUseEntity wrapper = (WrappedPlayInUseEntity) object;
             handle: {
                 if (wrapper.getAction() != EnumEntityUseAction.ATTACK) break handle;
 
-                final boolean placing = playerData.getActionManager().getPlacing().get();
+                boolean placing = playerData.getActionManager().getPlacing().get();
 
                 if (placing) fail();
             }

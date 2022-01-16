@@ -13,14 +13,14 @@ public class BadPacketsN extends PacketCheck {
 
     private boolean swung;
 
-    public BadPacketsN(final PlayerData playerData) {
+    public BadPacketsN(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final Object object) {
+    public void process(Object object) {
         if (object instanceof WrappedPlayInUseEntity) {
-            final WrappedPlayInUseEntity wrapper = (WrappedPlayInUseEntity) object;
+            WrappedPlayInUseEntity wrapper = (WrappedPlayInUseEntity) object;
 
             check: {
                 if (wrapper.getAction() != PacketPlayInUseEntity.EnumEntityUseAction.ATTACK) break check;

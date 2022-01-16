@@ -5,12 +5,12 @@ import xyz.elevated.frequency.data.PlayerData;
 
 public class PacketCheck extends Check<Object> {
 
-    public PacketCheck(final PlayerData playerData) {
+    public PacketCheck(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final Object object) {
+    public void process(Object object) {
         playerData.getCheckManager().getChecks()
                 .stream()
                 .filter(PostCheck.class::isInstance)

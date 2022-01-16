@@ -11,21 +11,21 @@ public final class AutoClickerD extends PacketCheck {
 
     private int movements = 0, clicks = 0;
 
-    public AutoClickerD(final PlayerData playerData) {
+    public AutoClickerD(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final Object object) {
+    public void process(Object object) {
         if (object instanceof WrappedPlayInArmAnimation) {
-            final boolean valid = movements < 100 && !playerData.getActionManager().getDigging().get();
+            boolean valid = movements < 100 && !playerData.getActionManager().getDigging().get();
 
             // If the player has clicked recently and the player isn't digging
             if (valid) ++clicks;
 
             // 20 movements = 1 second
             if (movements == 20) {
-                final boolean flag = clicks > 20;
+                boolean flag = clicks > 20;
 
                 // Sent an extra swing in a tick
                 if (flag) fail();

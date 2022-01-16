@@ -6,7 +6,7 @@ import xyz.elevated.frequency.wrapper.PacketWrapper;
 
 public final class WrappedPlayOutTeleport extends PacketWrapper {
 
-    public WrappedPlayOutTeleport(final Packet<?> instance) {
+    public WrappedPlayOutTeleport(Packet<?> instance) {
         super(instance, PacketPlayOutEntityTeleport.class);
     }
 

@@ -11,29 +11,29 @@ public final class BadPacketsI extends PacketCheck {
 
     private float lastYaw = 0.0f, lastPitch = 0.0f;
 
-    public BadPacketsI(final PlayerData playerData) {
+    public BadPacketsI(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final Object object) {
+    public void process(Object object) {
         if (object instanceof WrappedPlayInFlying) {
-            final WrappedPlayInFlying wrapper = (WrappedPlayInFlying) object;
+            WrappedPlayInFlying wrapper = (WrappedPlayInFlying) object;
 
             if (!wrapper.hasLook() || playerData.getBukkitPlayer().isInsideVehicle()
                     || playerData.getActionManager().getSteer().get()) return;
 
-            final float yaw = wrapper.getYaw();
-            final float pitch = wrapper.getPitch();
+            float yaw = wrapper.getYaw();
+            float pitch = wrapper.getPitch();
 
-            final boolean exempt = this.isExempt(ExemptType.TELEPORTING, ExemptType.LAGGING, ExemptType.TPS, ExemptType.VEHICLE);
+            boolean exempt = isExempt(ExemptType.TELEPORTING, ExemptType.LAGGING, ExemptType.TPS, ExemptType.VEHICLE);
 
             if (yaw == lastYaw && pitch == lastPitch && !exempt) {
                 fail();
             }
 
-            this.lastYaw = yaw;
-            this.lastPitch = pitch;
+            lastYaw = yaw;
+            lastPitch = pitch;
         }
     }
 }

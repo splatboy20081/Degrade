@@ -11,12 +11,12 @@ import java.util.UUID;
 public final class PlayerDataManager {
     private final Map<UUID, PlayerData> playerDataMap = Maps.newConcurrentMap();
 
-    public PlayerData getData(final Player player) {
+    public PlayerData getData(Player player) {
         return playerDataMap.computeIfAbsent(player.getUniqueId(), uuid -> new PlayerData(player));
     }
 
-    public PlayerData remove(final Player player) {
-        final UUID uuid = player.getUniqueId();
+    public PlayerData remove(Player player) {
+        UUID uuid = player.getUniqueId();
 
         return playerDataMap.remove(uuid);
     }

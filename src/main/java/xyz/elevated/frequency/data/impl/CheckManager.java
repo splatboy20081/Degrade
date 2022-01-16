@@ -29,7 +29,7 @@ import java.util.Collection;
 public final class CheckManager {
     private final ClassToInstanceMap<Check> checks;
 
-    public CheckManager(final PlayerData playerData) {
+    public CheckManager(PlayerData playerData) {
         checks = new ImmutableClassToInstanceMap.Builder<Check>()
                 .put(KillAuraA.class, new KillAuraA(playerData))
                 .put(KillAuraB.class, new KillAuraB(playerData))
@@ -95,7 +95,7 @@ public final class CheckManager {
         return checks.values();
     }
 
-    public Check<?> getCheck(final Class<? extends Check> clazz) {
+    public Check<?> getCheck(Class<? extends Check> clazz) {
         return checks.getInstance(clazz);
     }
 }

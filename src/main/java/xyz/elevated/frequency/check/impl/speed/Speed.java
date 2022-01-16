@@ -21,7 +21,7 @@ public final class Speed extends PositionCheck {
     private double blockSlipperiness = 0.91;
     private double lastHorizontalDistance = 0.0;
 
-    public Speed(final PlayerData playerData) {
+    public Speed(PlayerData playerData) {
         super(playerData);
     }
 
@@ -33,30 +33,30 @@ public final class Speed extends PositionCheck {
      */
 
     @Override
-    public void process(final PositionUpdate positionUpdate) {
+    public void process(PositionUpdate positionUpdate) {
         // Get the location update from the position update
-        final Location from = positionUpdate.getFrom();
-        final Location to = positionUpdate.getTo();
+        Location from = positionUpdate.getFrom();
+        Location to = positionUpdate.getTo();
 
         // Get the entity player from the NMS util
-        final Player player = playerData.getBukkitPlayer();
-        final EntityPlayer entityPlayer = NmsUtil.getEntityPlayer(playerData);
+        Player player = playerData.getBukkitPlayer();
+        EntityPlayer entityPlayer = NmsUtil.getEntityPlayer(playerData);
 
         // Get the pos deltas
-        final double deltaX = to.getX() - from.getX();
-        final double deltaY = to.getY() - from.getY();
-        final double deltaZ = to.getZ() - from.getZ();
+        double deltaX = to.getX() - from.getX();
+        double deltaY = to.getY() - from.getY();
+        double deltaZ = to.getZ() - from.getZ();
 
         // Get the player's attribute speed and last friction
         double blockSlipperiness = this.blockSlipperiness;
         double attributeSpeed = 1.d;
 
         // Run calculations to if the player is on ground and if they're exempt
-        final boolean onGround = entityPlayer.onGround;
-        final boolean exempt = this.isExempt(ExemptType.TPS, ExemptType.TELEPORTING);
+        boolean onGround = entityPlayer.onGround;
+        boolean exempt = isExempt(ExemptType.TPS, ExemptType.TELEPORTING);
 
         // Properly calculate max jump for jump threshold
-        final int modifierJump = MathUtil.getPotionLevel(player, PotionEffectType.JUMP);
+        int modifierJump = MathUtil.getPotionLevel(player, PotionEffectType.JUMP);
 
         /*
          * How minecraft calculates speed increase. We cast as a float because this is what the client does.
@@ -96,8 +96,8 @@ public final class Speed extends PositionCheck {
         attributeSpeed += playerData.getVelocityManager().getMaxHorizontal();
 
         // Get the horizontal distance and convert to the movement speed
-        final double horizontalDistance = MathUtil.magnitude(deltaX, deltaZ);
-        final double movementSpeed = (horizontalDistance - lastHorizontalDistance) / attributeSpeed;
+        double horizontalDistance = MathUtil.magnitude(deltaX, deltaZ);
+        double movementSpeed = (horizontalDistance - lastHorizontalDistance) / attributeSpeed;
 
         // If thr movement speed is greater than the threshold and the player isn't exempt, fail
         if (movementSpeed > 1.0 && !exempt) {
@@ -119,6 +119,6 @@ public final class Speed extends PositionCheck {
                 .getBlock()
                 .frictionFactor * 0.91F;
 
-        this.lastHorizontalDistance = horizontalDistance * blockSlipperiness;
+        lastHorizontalDistance = horizontalDistance * blockSlipperiness;
     }
 }

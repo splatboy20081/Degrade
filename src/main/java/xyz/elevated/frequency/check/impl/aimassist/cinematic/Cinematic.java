@@ -18,27 +18,27 @@ public final class Cinematic extends RotationCheck {
     private final List<Double> yawSamples = Lists.newArrayList();
     private final List<Double> pitchSamples = Lists.newArrayList();
 
-    public Cinematic(final PlayerData playerData) {
+    public Cinematic(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final RotationUpdate rotationUpdate) {
-        final long now = System.currentTimeMillis();
+    public void process(RotationUpdate rotationUpdate) {
+        long now = System.currentTimeMillis();
 
-        final double deltaYaw = rotationUpdate.getDeltaYaw();
-        final double deltaPitch = rotationUpdate.getDeltaPitch();
+        double deltaYaw = rotationUpdate.getDeltaYaw();
+        double deltaPitch = rotationUpdate.getDeltaPitch();
 
-        final double differenceYaw = Math.abs(deltaYaw - lastDeltaYaw);
-        final double differencePitch = Math.abs(deltaPitch - lastDeltaPitch);
+        double differenceYaw = Math.abs(deltaYaw - lastDeltaYaw);
+        double differencePitch = Math.abs(deltaPitch - lastDeltaPitch);
 
-        final double joltYaw = Math.abs(differenceYaw - deltaYaw);
-        final double joltPitch = Math.abs(differencePitch - deltaPitch);
+        double joltYaw = Math.abs(differenceYaw - deltaYaw);
+        double joltPitch = Math.abs(differencePitch - deltaPitch);
 
-        final boolean cinematic = (now - lastHighRate > 250L) || now - lastSmooth < 9000L;
+        boolean cinematic = (now - lastHighRate > 250L) || now - lastSmooth < 9000L;
 
         if (joltYaw > 1.0 && joltPitch > 1.0) {
-            this.lastHighRate = now;
+            lastHighRate = now;
         }
 
         if (deltaPitch > 0.0 && deltaPitch > 0.0) {
@@ -48,20 +48,20 @@ public final class Cinematic extends RotationCheck {
 
         if (yawSamples.size() == 20 && pitchSamples.size() == 20) {
             // Get the cerberus/positive graph of the sample-lists
-            final GraphUtil.GraphResult resultsYaw = GraphUtil.getGraph(yawSamples);
-            final GraphUtil.GraphResult resultsPitch = GraphUtil.getGraph(pitchSamples);
+            GraphUtil.GraphResult resultsYaw = GraphUtil.getGraph(yawSamples);
+            GraphUtil.GraphResult resultsPitch = GraphUtil.getGraph(pitchSamples);
 
             // Negative values
-            final int negativesYaw = resultsYaw.getNegatives();
-            final int negativesPitch = resultsPitch.getNegatives();
+            int negativesYaw = resultsYaw.getNegatives();
+            int negativesPitch = resultsPitch.getNegatives();
 
             // Positive values
-            final int positivesYaw = resultsYaw.getPositives();
-            final int positivesPitch = resultsPitch.getPositives();
+            int positivesYaw = resultsYaw.getPositives();
+            int positivesPitch = resultsPitch.getPositives();
 
             // Cinematic camera usually does this on *most* speeds and is accurate for the most part.
             if (positivesYaw > negativesYaw || positivesPitch > negativesPitch) {
-                this.lastSmooth = now;
+                lastSmooth = now;
             }
 
             yawSamples.clear();
@@ -70,7 +70,7 @@ public final class Cinematic extends RotationCheck {
 
         playerData.getCinematic().set(cinematic);
 
-        this.lastDeltaYaw = deltaYaw;
-        this.lastDeltaPitch = deltaPitch;
+        lastDeltaYaw = deltaYaw;
+        lastDeltaPitch = deltaPitch;
     }
 }

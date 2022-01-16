@@ -13,22 +13,22 @@ public final class FlyB extends PositionCheck {
     private double lastDeltaY = 0.0d, buffer = 0.0d;
     private int ticks = 0;
 
-    public FlyB(final PlayerData playerData) {
+    public FlyB(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final PositionUpdate positionUpdate) {
-        final Location from = positionUpdate.getFrom();
-        final Location to = positionUpdate.getTo();
+    public void process(PositionUpdate positionUpdate) {
+        Location from = positionUpdate.getFrom();
+        Location to = positionUpdate.getTo();
 
-        final double deltaY = to.getY() - from.getY();
-        final double estimation = (lastDeltaY - 0.08) * 0.9800000190734863;
+        double deltaY = to.getY() - from.getY();
+        double estimation = (lastDeltaY - 0.08) * 0.9800000190734863;
 
-        final boolean resetting = Math.abs(deltaY) + 0.0980000019 < 0.05;
-        final boolean exempt = this.isExempt(ExemptType.TELEPORTING, ExemptType.VELOCITY);
+        boolean resetting = Math.abs(deltaY) + 0.0980000019 < 0.05;
+        boolean exempt = isExempt(ExemptType.TELEPORTING, ExemptType.VELOCITY);
 
-        final boolean touchingAir = playerData.getPositionManager().getTouchingAir().get();
+        boolean touchingAir = playerData.getPositionManager().getTouchingAir().get();
 
         if (exempt || resetting) return;
 
@@ -46,6 +46,6 @@ public final class FlyB extends PositionCheck {
             ticks = 0;
         }
 
-        this.lastDeltaY = deltaY;
+        lastDeltaY = deltaY;
     }
 }

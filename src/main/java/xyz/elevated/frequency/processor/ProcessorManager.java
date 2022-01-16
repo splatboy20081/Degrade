@@ -24,7 +24,7 @@ public final class ProcessorManager {
      * @param <T> - The raw class.
      * @return - The instance of the processor requested.
      */
-    public final <T extends Processor<?>> T getProcessor(final Class<T> clazz) {
+    public final <T extends Processor<?>> T getProcessor(Class<T> clazz) {
         return processors.getInstance(clazz);
     }
 

@@ -18,24 +18,24 @@ public final class AutoClickerG extends PacketCheck {
     private int movements = 0;
     private final Deque<Integer> samples = Lists.newLinkedList();
 
-    public AutoClickerG(final PlayerData playerData) {
+    public AutoClickerG(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final Object object) {
+    public void process(Object object) {
         if (object instanceof WrappedPlayInArmAnimation) {
-            final boolean valid = movements < 4 && !playerData.getActionManager().getDigging().get();
+            boolean valid = movements < 4 && !playerData.getActionManager().getDigging().get();
 
             if (valid) samples.add(movements);
 
             // Sample size is assigned to 15
             if (samples.size() == 15) {
-                final Pair<List<Double>, List<Double>> outlierPair = MathUtil.getOutliers(samples);
+                Pair<List<Double>, List<Double>> outlierPair = MathUtil.getOutliers(samples);
 
-                final double skewness = MathUtil.getSkewness(samples);
-                final double kurtosis = MathUtil.getKurtosis(samples);
-                final double outliers = outlierPair.getX().size() + outlierPair.getY().size();
+                double skewness = MathUtil.getSkewness(samples);
+                double kurtosis = MathUtil.getKurtosis(samples);
+                double outliers = outlierPair.getX().size() + outlierPair.getY().size();
 
                 // See if skewness and kurtosis is exceeding a specific limit.
                 if (skewness < 0.035 && kurtosis < 0.1 && outliers < 2) fail();

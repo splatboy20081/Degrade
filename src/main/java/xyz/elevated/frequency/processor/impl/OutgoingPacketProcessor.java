@@ -11,25 +11,25 @@ import xyz.elevated.frequency.wrapper.impl.server.WrappedPlayOutTransaction;
 public final class OutgoingPacketProcessor implements Processor<Packet<PacketListenerPlayOut>> {
 
     @Override
-    public void process(final PlayerData playerData, final Packet<PacketListenerPlayOut> packet) {
+    public void process(PlayerData playerData, Packet<PacketListenerPlayOut> packet) {
         if (packet instanceof PacketPlayOutEntityVelocity) {
-            final WrappedPlayOutEntityVelocity wrapper = new WrappedPlayOutEntityVelocity(packet);
+            WrappedPlayOutEntityVelocity wrapper = new WrappedPlayOutEntityVelocity(packet);
 
-            final int packetEntityId = wrapper.getEntityId();
-            final int playerEntityId = playerData.getBukkitPlayer().getEntityId();
+            int packetEntityId = wrapper.getEntityId();
+            int playerEntityId = playerData.getBukkitPlayer().getEntityId();
 
             if (packetEntityId == playerEntityId) {
-                final double velocityX = wrapper.getX();
-                final double velocityY = wrapper.getY();
-                final double velocityZ = wrapper.getZ();
+                double velocityX = wrapper.getX();
+                double velocityY = wrapper.getY();
+                double velocityZ = wrapper.getZ();
 
                 playerData.getVelocityManager().addVelocityEntry(velocityX, velocityY, velocityZ);
             }
         } else if (packet instanceof PacketPlayOutEntityTeleport) {
-            final WrappedPlayOutTeleport wrapper = new WrappedPlayOutTeleport(packet);
+            WrappedPlayOutTeleport wrapper = new WrappedPlayOutTeleport(packet);
 
-            final int entityId = wrapper.getEntityId();
-            final int playerId = playerData.getBukkitPlayer().getEntityId();
+            int entityId = wrapper.getEntityId();
+            int playerId = playerData.getBukkitPlayer().getEntityId();
 
             if (entityId == playerId) {
                 playerData.getActionManager().onTeleport();

@@ -13,12 +13,12 @@ public abstract class PacketWrapper {
     private final Packet<?> instance;
     private final Class<? extends Packet<?>> clazz;
 
-    public PacketWrapper(final Packet<?> instance, final Class<? extends Packet<?>> clazz) {
-        final Field[] declaredFields = clazz.getDeclaredFields();
+    public PacketWrapper(Packet<?> instance, Class<? extends Packet<?>> clazz) {
+        Field[] declaredFields = clazz.getDeclaredFields();
 
         // Loop around all the declared fields and make them accessible
-        for (final Field declaredField : declaredFields) {
-            final String fieldName = declaredField.getName();
+        for (Field declaredField : declaredFields) {
+            String fieldName = declaredField.getName();
 
             declaredField.setAccessible(true);
             fields.put(fieldName, declaredField);
@@ -35,12 +35,12 @@ public abstract class PacketWrapper {
      * @param <T> - The data-type
      * @return - The value (possibly null) that we got from the field.
      */
-    public <T> T get(final String name) {
+    public <T> T get(String name) {
         try {
             //noinspection unchecked
             return (T) fields.get(name).get(instance);
         }
-        catch (final Exception e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -52,11 +52,11 @@ public abstract class PacketWrapper {
      * @param name - The name of the field you want to edit.
      * @param alteration - The new object to set in the field.
      */
-    public void set(final String name, final Object alteration) {
+    public void set(String name, Object alteration) {
         try {
             fields.get(name).set(clazz, alteration);
         }
-        catch (final Exception e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
     }

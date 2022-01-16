@@ -7,7 +7,7 @@ import xyz.elevated.frequency.wrapper.PacketWrapper;
 
 public final class WrappedPlayInBlockDig extends PacketWrapper {
 
-    public WrappedPlayInBlockDig(final Packet<?> instance) {
+    public WrappedPlayInBlockDig(Packet<?> instance) {
         super(instance, PacketPlayInBlockDig.class);
     }
 

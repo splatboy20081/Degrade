@@ -10,18 +10,18 @@ public final class BadPacketsF extends PacketCheck {
 
     private int lastSlot = -1;
 
-    public BadPacketsF(final PlayerData playerData) {
+    public BadPacketsF(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final Object object) {
+    public void process(Object object) {
         if (object instanceof WrappedPlayInHeldItemSlot) {
-            final WrappedPlayInHeldItemSlot wrapper = (WrappedPlayInHeldItemSlot) object;
+            WrappedPlayInHeldItemSlot wrapper = (WrappedPlayInHeldItemSlot) object;
 
             if (wrapper.getSlot() == lastSlot) fail();
 
-            this.lastSlot = wrapper.getSlot();
+            lastSlot = wrapper.getSlot();
         }
     }
 }

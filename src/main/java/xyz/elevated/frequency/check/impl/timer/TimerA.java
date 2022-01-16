@@ -15,26 +15,26 @@ public final class TimerA extends PacketCheck {
     private long lastFlying = 0L;
     private long allowance = 0;
 
-    public TimerA(final PlayerData playerData) {
+    public TimerA(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final Object object) {
-        final boolean flying = object instanceof WrappedPlayInFlying;
+    public void process(Object object) {
+        boolean flying = object instanceof WrappedPlayInFlying;
 
         if (flying) {
             // Get the server ticks and the current time for the check processing
-            final int serverTicks = Frequency.INSTANCE.getTickManager().getTicks();
-            final long now = System.currentTimeMillis();
+            int serverTicks = Frequency.INSTANCE.getTickManager().getTicks();
+            long now = System.currentTimeMillis();
 
             /*
             * We want to make sure the player is not exempt from any of the actions below.
             * Additionally, we want to ensure that the player is not lagged out and accepted a keepalive.
             * Thankfully, we shouldn't have any bypasses because of this because of PingSpoof.
              */
-            final boolean exempt = this.isExempt(ExemptType.TPS, ExemptType.TELEPORTING, ExemptType.LAGGING);
-            final boolean accepted = playerData.getConnectionManager().getKeepAliveTime(serverTicks).isPresent();
+            boolean exempt = isExempt(ExemptType.TPS, ExemptType.TELEPORTING, ExemptType.LAGGING);
+            boolean accepted = playerData.getConnectionManager().getKeepAliveTime(serverTicks).isPresent();
 
             /*
             * Basic theory is that the player is going to deviate through 50ms without many changes to that
@@ -46,7 +46,7 @@ public final class TimerA extends PacketCheck {
                 if (exempt || !accepted) break handle;
 
                 // Get the delay from the current and the last flying packet
-                final long delay = now - lastFlying;
+                long delay = now - lastFlying;
 
                 // Add the delay to the MovingStats to analyze our input
                 movingStats.add(delay);
@@ -57,7 +57,7 @@ public final class TimerA extends PacketCheck {
                 * single point, we're using it as a threshold value in the deviation check below.
                  */
                 final double threshold = 7.07;
-                final double deviation = movingStats.getStdDev(threshold);
+                double deviation = movingStats.getStdDev(threshold);
 
                 // We're making sure the deviation check processed and the deviation is smaller than the threshold.
                 if (deviation < threshold && !Double.isNaN(deviation)) {
@@ -78,7 +78,7 @@ public final class TimerA extends PacketCheck {
                 }
             }
 
-            this.lastFlying = now;
+            lastFlying = now;
         }
     }
 }

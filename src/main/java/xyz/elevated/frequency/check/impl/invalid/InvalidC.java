@@ -15,27 +15,27 @@ public final class InvalidC extends PositionCheck {
     private double buffer = 0.0d;
     private int ticks = 0;
 
-    public InvalidC(final PlayerData playerData) {
+    public InvalidC(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final PositionUpdate positionUpdate) {
-        final Location from = positionUpdate.getFrom();
-        final Location to = positionUpdate.getTo();
+    public void process(PositionUpdate positionUpdate) {
+        Location from = positionUpdate.getFrom();
+        Location to = positionUpdate.getTo();
 
-        final EntityPlayer entityPlayer = NmsUtil.getEntityPlayer(playerData);
+        EntityPlayer entityPlayer = NmsUtil.getEntityPlayer(playerData);
 
-        final double deltaX = to.getX() - from.getZ();
-        final double deltaZ = to.getZ() - from.getZ();
+        double deltaX = to.getX() - from.getZ();
+        double deltaZ = to.getZ() - from.getZ();
 
-        final double offset = MathUtil.magnitude(deltaX, deltaZ);
-        final double velocity = entityPlayer.motX + entityPlayer.motY;
+        double offset = MathUtil.magnitude(deltaX, deltaZ);
+        double velocity = entityPlayer.motX + entityPlayer.motY;
 
-        final boolean onGround = positionUpdate.isOnGround();
+        boolean onGround = positionUpdate.isOnGround();
 
         if (!onGround) {
-            final boolean invalid = ++ticks > 8 && offset > 0.3 && velocity == 0.0;
+            boolean invalid = ++ticks > 8 && offset > 0.3 && velocity == 0.0;
 
             if (invalid) {
                 buffer += 0.5;

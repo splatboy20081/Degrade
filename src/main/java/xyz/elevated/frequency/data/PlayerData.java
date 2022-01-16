@@ -56,9 +56,9 @@ public final class PlayerData {
     private final ConnectionManager connectionManager = new ConnectionManager(this);
     private final VelocityManager velocityManager = new VelocityManager();
 
-    public PlayerData(final Player bukkitPlayer) {
+    public PlayerData(Player bukkitPlayer) {
         this.bukkitPlayer = bukkitPlayer;
-        this.connection = NmsUtil.getPlayerConnection(bukkitPlayer);
+        connection = NmsUtil.getPlayerConnection(bukkitPlayer);
 
         target.observe((from, to) -> {
             if(from == null || from.getEntityId() != to.getEntityId()) {

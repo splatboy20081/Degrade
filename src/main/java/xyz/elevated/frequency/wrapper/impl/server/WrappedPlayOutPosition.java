@@ -6,7 +6,7 @@ import xyz.elevated.frequency.wrapper.PacketWrapper;
 
 public final class WrappedPlayOutPosition extends PacketWrapper {
 
-    public WrappedPlayOutPosition(final Packet<?> instance) {
+    public WrappedPlayOutPosition(Packet<?> instance) {
         super(instance, PacketPlayOutPosition.class);
     }
 

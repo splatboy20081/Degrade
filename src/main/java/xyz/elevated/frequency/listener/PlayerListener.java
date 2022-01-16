@@ -20,12 +20,12 @@ import xyz.elevated.frequency.util.NmsUtil;
 public final class PlayerListener implements Listener {
 
     @EventHandler(priority=EventPriority.MONITOR)
-    public void onJoin(final PlayerJoinEvent event) {
-        final Player player = event.getPlayer();
-        final PlayerData playerData = Frequency.INSTANCE.getPlayerDataManager().getData(player);
+    public void onJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        PlayerData playerData = Frequency.INSTANCE.getPlayerDataManager().getData(player);
 
-        final int ticks = playerData.getTicks().get();
-        final ChannelPipeline channelPipeline = NmsUtil.getPlayerPipeline(player);
+        int ticks = playerData.getTicks().get();
+        ChannelPipeline channelPipeline = NmsUtil.getPlayerPipeline(player);
 
         playerData.getActionManager().onTeleport();
         playerData.getJoined().set(ticks);
@@ -34,9 +34,9 @@ public final class PlayerListener implements Listener {
     }
 
     @EventHandler
-    public void onInteract(final PlayerInteractEvent event) {
-        final Player player = event.getPlayer();
-        final PlayerData playerData = Frequency.INSTANCE.getPlayerDataManager().getData(player);
+    public void onInteract(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        PlayerData playerData = Frequency.INSTANCE.getPlayerDataManager().getData(player);
 
         /*
         * There's a bug with Minecraft where the START_DIGGING packet will never be sent, making it impossible
@@ -51,9 +51,9 @@ public final class PlayerListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onQuit(final PlayerQuitEvent event) {
-        final Player player = event.getPlayer();
-        final ChannelPipeline channelPipeline = NmsUtil.getPlayerPipeline(player);
+    public void onQuit(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+        ChannelPipeline channelPipeline = NmsUtil.getPlayerPipeline(player);
 
         /*
         * We need to remove the player's pipeline in the case it does not get auto-removed

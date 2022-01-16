@@ -6,7 +6,7 @@ import xyz.elevated.frequency.wrapper.PacketWrapper;
 
 public final class WrappedPlayInWindowClick extends PacketWrapper {
 
-    public WrappedPlayInWindowClick(final Packet<?> instance) {
+    public WrappedPlayInWindowClick(Packet<?> instance) {
         super(instance, PacketPlayInWindowClick.class);
     }
 

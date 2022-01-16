@@ -19,16 +19,16 @@ public abstract class Check<T> {
     private final AlertManager alertManager = new AlertManager(this);
     private final List<Long> violations = Lists.newArrayList();
 
-    public Check(final PlayerData playerData) {
+    public Check(PlayerData playerData) {
         this.playerData = playerData;
 
-        final Class<?> checkClass = this.getClass();
+        Class<?> checkClass = getClass();
 
         if (checkClass.isAnnotationPresent(CheckData.class)) {
-            final CheckData checkData = checkClass.getAnnotation(CheckData.class);
+            CheckData checkData = checkClass.getAnnotation(CheckData.class);
 
-            this.checkName = checkData.name();
-            this.threshold = checkData.threshold();
+            checkName = checkData.name();
+            threshold = checkData.threshold();
         } else {
             LogUtil.log("Check annotation not found in class: " + checkClass.getSimpleName());
         }
@@ -38,13 +38,13 @@ public abstract class Check<T> {
         alertManager.fail();
     }
 
-    protected boolean isExempt(final ExemptType exemptType) {
+    protected boolean isExempt(ExemptType exemptType) {
         return playerData.getExemptManager().isExempt(exemptType);
     }
 
-    protected boolean isExempt(final ExemptType... exemptTypes) {
+    protected boolean isExempt(ExemptType... exemptTypes) {
         return playerData.getExemptManager().isExempt(exemptTypes);
     }
 
-    public abstract void process(final T object);
+    public abstract void process(T object);
 }

@@ -48,7 +48,7 @@ public class GraphUtil {
                 }
             }
 
-            graph.append(sb.toString());
+            graph.append(sb);
         }
 
         return new GraphResult(graph.toString(), positives, negatives);

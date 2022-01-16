@@ -52,7 +52,7 @@ public enum ExemptType {
 
     private final Function<PlayerData, Boolean> exception;
 
-    ExemptType(final Function<PlayerData, Boolean> exception) {
+    ExemptType(Function<PlayerData, Boolean> exception) {
         this.exception = exception;
     }
 }

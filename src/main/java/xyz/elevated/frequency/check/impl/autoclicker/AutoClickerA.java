@@ -18,14 +18,14 @@ public final class AutoClickerA extends PacketCheck {
     private int movements = 0;
     private final Deque<Integer> samples = Lists.newLinkedList();
 
-    public AutoClickerA(final PlayerData playerData) {
+    public AutoClickerA(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final Object object) {
+    public void process(Object object) {
         if (object instanceof WrappedPlayInArmAnimation) {
-            final boolean valid = playerData.getCps().get() > 6.5
+            boolean valid = playerData.getCps().get() > 6.5
                     && movements < 4 && !playerData.getActionManager().getDigging().get() && !playerData.getActionManager().getPlacing().get();
 
             // If the movement are not incredibly low and the player isn't digging
@@ -33,11 +33,11 @@ public final class AutoClickerA extends PacketCheck {
 
             if (samples.size() == 20) {
                 // Get the outliers properly from the math utility
-                final Pair<List<Double>, List<Double>> outlierPair = MathUtil.getOutliers(samples);
+                Pair<List<Double>, List<Double>> outlierPair = MathUtil.getOutliers(samples);
 
                 // Get the deviation from the math utility and the outliers
-                final double deviation = MathUtil.getStandardDeviation(samples);
-                final double outliers = outlierPair.getX().size() + outlierPair.getY().size();
+                double deviation = MathUtil.getStandardDeviation(samples);
+                double outliers = outlierPair.getX().size() + outlierPair.getY().size();
 
                 // Low deviation and low outliers
                 if (deviation < 2.d && outliers < 2) fail();

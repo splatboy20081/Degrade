@@ -11,22 +11,22 @@ public class PostCheck extends PacketCheck {
     public long lastFlying, lastPacket;
     public double buffer = 0.0;
 
-    public PostCheck(final PlayerData playerData, final Class<? extends PacketWrapper> packet) {
+    public PostCheck(PlayerData playerData, Class<? extends PacketWrapper> packet) {
         super(playerData);
 
         this.packet = packet;
     }
 
     @Override
-    public void process(final Object object) {
+    public void process(Object object) {
 
     }
 
     // Flag only when its both a post and a flag
-    public boolean isPost(final Object object) {
+    public boolean isPost(Object object) {
         if (object.getClass() == WrappedPlayInFlying.class) {
-            final long now = System.currentTimeMillis();
-            final long delay = now - lastPacket;
+            long now = System.currentTimeMillis();
+            long delay = now - lastPacket;
 
             if (sent) {
                 if (delay > 40L && delay < 100L) {
@@ -42,10 +42,10 @@ public class PostCheck extends PacketCheck {
                 sent = false;
             }
 
-            this.lastFlying = now;
+            lastFlying = now;
         } else if (object.getClass() == packet) {
-            final long now = System.currentTimeMillis();
-            final long delay = now - lastFlying;
+            long now = System.currentTimeMillis();
+            long delay = now - lastFlying;
 
             if (delay < 10L) {
                 lastPacket = now;

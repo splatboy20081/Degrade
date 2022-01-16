@@ -14,14 +14,14 @@ public final class InventoryB extends PacketCheck {
     private boolean inventory = false;
     private int buffer = 0;
 
-    public InventoryB(final PlayerData playerData) {
+    public InventoryB(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final Object object) {
+    public void process(Object object) {
         if (object instanceof WrappedPlayInClientCommand) {
-            final WrappedPlayInClientCommand wrapper = (WrappedPlayInClientCommand) object;
+            WrappedPlayInClientCommand wrapper = (WrappedPlayInClientCommand) object;
 
             achievement: {
                 if (wrapper.getCommand() != PacketPlayInClientCommand.EnumClientCommand.OPEN_INVENTORY_ACHIEVEMENT) break achievement;
@@ -30,11 +30,11 @@ public final class InventoryB extends PacketCheck {
             }
 
             if (inventory) {
-                final long now = System.currentTimeMillis();
+                long now = System.currentTimeMillis();
 
-                final boolean lagging = now - lastFlying > 60L;
-                final boolean attacking = playerData.getActionManager().getAttacking().get();
-                final boolean swinging = playerData.getActionManager().getSwinging().get();
+                boolean lagging = now - lastFlying > 60L;
+                boolean attacking = playerData.getActionManager().getAttacking().get();
+                boolean swinging = playerData.getActionManager().getSwinging().get();
 
                 if (!lagging && (attacking || swinging)) {
                     if (++buffer > 2) {

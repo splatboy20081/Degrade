@@ -14,16 +14,16 @@ public class ReflectionUtil {
      * @param fieldName - The name of the declared field you would like to modify.
      * @param alteration - The new value you want to give to the field.
      */
-    public void modifyDeclaredField(final Object object, final String fieldName, final Object alteration) {
+    public void modifyDeclaredField(Object object, String fieldName, Object alteration) {
         try {
-            final Field declaredField = object.getClass().getDeclaredField(fieldName);
+            Field declaredField = object.getClass().getDeclaredField(fieldName);
 
             declaredField.setAccessible(true);
             declaredField.set(object, alteration);
 
             declaredField.setAccessible(false);
         }
-        catch (final Exception e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -34,16 +34,16 @@ public class ReflectionUtil {
      * @param fieldName - The name of the field you would like to modify.
      * @param alteration - The new value you want to give to the field.
      */
-    public void modifyField(final Object object, final String fieldName, final Object alteration) {
+    public void modifyField(Object object, String fieldName, Object alteration) {
         try {
-            final Field field = object.getClass().getField(fieldName);
+            Field field = object.getClass().getField(fieldName);
 
             field.setAccessible(true);
             field.set(object, alteration);
 
             field.setAccessible(false);
         }
-        catch (final Exception e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -56,8 +56,8 @@ public class ReflectionUtil {
      * @param instance - The instance for the class
      * @return - The value if found.
      */
-    public <T> T getFieldValue(final Class<?> clazz, final String fieldName, final Class<?> type, final Object instance) {
-        final Field field = getField(clazz, fieldName, type);
+    public <T> T getFieldValue(Class<?> clazz, String fieldName, Class<?> type, Object instance) {
+        Field field = getField(clazz, fieldName, type);
 
         field.setAccessible(true);
 
@@ -65,7 +65,7 @@ public class ReflectionUtil {
             //noinspection unchecked
             return (T) field.get(instance);
         }
-        catch (final IllegalAccessException e) {
+        catch (IllegalAccessException e) {
             throw new RuntimeException("Failed to get value of field '" + field.getName() + "'");
         }
     }
@@ -77,9 +77,9 @@ public class ReflectionUtil {
      * @param type - The type of data the field has..
      * @return
      */
-    private Field getField(final Class<?> clazz, final String name, final Class<?> type) {
+    private Field getField(Class<?> clazz, String name, Class<?> type) {
         try {
-            final Field field = clazz.getDeclaredField(name);
+            Field field = clazz.getDeclaredField(name);
 
             field.setAccessible(true);
 
@@ -88,7 +88,7 @@ public class ReflectionUtil {
             }
             return field;
         }
-        catch (final Exception e) {
+        catch (Exception e) {
             throw new RuntimeException("Failed to get field '" + name + "'");
         }
     }

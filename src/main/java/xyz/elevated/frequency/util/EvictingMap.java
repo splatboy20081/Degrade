@@ -54,7 +54,7 @@ public final class EvictingMap<K, V> extends HashMap<K, V> {
 
     private boolean checkAndRemove() {
         if(storedKeys.size() >= size) {
-            final K key = storedKeys.removeFirst();
+            K key = storedKeys.removeFirst();
 
             remove(key);
             return true;

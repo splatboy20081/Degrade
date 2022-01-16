@@ -12,22 +12,22 @@ import xyz.elevated.frequency.wrapper.impl.client.WrappedPlayInFlying;
 public final class BadPacketsH extends PacketCheck {
     private int count = 0;
 
-    public BadPacketsH(final PlayerData playerData) {
+    public BadPacketsH(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final Object object) {
-        final boolean digging = object instanceof WrappedPlayInBlockDig;
-        final boolean flying = object instanceof WrappedPlayInFlying;
+    public void process(Object object) {
+        boolean digging = object instanceof WrappedPlayInBlockDig;
+        boolean flying = object instanceof WrappedPlayInFlying;
 
         if (digging) {
-            final WrappedPlayInBlockDig wrapper = (WrappedPlayInBlockDig) object;
+            WrappedPlayInBlockDig wrapper = (WrappedPlayInBlockDig) object;
 
             handle: {
                 if (wrapper.getDigType() != EnumPlayerDigType.RELEASE_USE_ITEM) break handle;
 
-                final boolean invalid = ++count > 1;
+                boolean invalid = ++count > 1;
 
                 if (invalid) fail();
             }

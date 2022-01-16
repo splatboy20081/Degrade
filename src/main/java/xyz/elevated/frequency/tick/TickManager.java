@@ -39,7 +39,7 @@ public class TickManager implements Runnable {
         ticks++;
 
         Frequency.INSTANCE.getPlayerDataManager().getEntries().parallelStream().forEach(playerData -> {
-            final Entity target = playerData.getTarget().get();
+            Entity target = playerData.getTarget().get();
 
             attack: {
                 if (target == null) break attack;
@@ -49,7 +49,7 @@ public class TickManager implements Runnable {
                 * from the game. To avoid needing to do this constantly for the last target we're only doing it when
                 * there has been someone attacked and not when the target is null.
                  */
-                final AxisAlignedBB boundingBox = NmsUtil.getEntity(target).getBoundingBox();
+                AxisAlignedBB boundingBox = NmsUtil.getEntity(target).getBoundingBox();
 
                 // Set the bounding box in the targetLocations storage along with the time.
                 playerData.getTargetLocations().add(new Pair<>(boundingBox, ticks));
@@ -62,7 +62,7 @@ public class TickManager implements Runnable {
                 * We're using a timestamp to get a more dynamic time of when we sent the packet to the player.
                 * This can be used later on for a pingspoof check or for getting the player's ping with ease on response.
                  */
-                final long timestamp = System.currentTimeMillis();
+                long timestamp = System.currentTimeMillis();
 
                 /*
                 * The identification used by the transaction packet should always 0 or a negative
@@ -70,13 +70,13 @@ public class TickManager implements Runnable {
                 * and we should not be having any issues regarding the game mechanics.
                  */
                 final int identification = 0;
-                final short actionNumber = (short) (Short.MAX_VALUE % ticks);
+                short actionNumber = (short) (Short.MAX_VALUE % ticks);
 
                 /*
                 * We're setting in the identification and the action number we're about to send, plus ensuring
                 * that the packet is received as an unaccepted once because of the false boolean in the end.
                  */
-                final PacketPlayOutTransaction transaction =
+                PacketPlayOutTransaction transaction =
                         new PacketPlayOutTransaction(identification, actionNumber, false);
 
                 /*
@@ -95,20 +95,20 @@ public class TickManager implements Runnable {
                  * Like transaction, We're using a timestamp to get a more dynamic time of when we sent the packet to the player.
                  * This can be used later on for a pingspoof check or for getting the player's ping with ease on response.
                  */
-                final long timestamp = System.currentTimeMillis();
+                long timestamp = System.currentTimeMillis();
 
                 /*
                 * We don't need to do any fancy randomization for keepalives since they're much simpler
                 * as operations in comparison to keepalives, and no matter how many of them we send there won't be
                 * and collisions with the actual game functionality.
                  */
-                final int identification = ticks;
+                int identification = ticks;
 
                 /*
                 * We're creating the keepalive with the tick variable inside which is going to be used
                 * for is verification later on. Other than that everything can be left as is for keepalive.
                  */
-                final PacketPlayOutKeepAlive keepAlive = new PacketPlayOutKeepAlive(identification);
+                PacketPlayOutKeepAlive keepAlive = new PacketPlayOutKeepAlive(identification);
 
                 /*
                 * Similarly to transactions, we can simply send the packet directly onto the player's pipeline

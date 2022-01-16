@@ -10,7 +10,7 @@ import xyz.elevated.frequency.wrapper.PacketWrapper;
 
 public final class WrappedPlayInUseEntity extends PacketWrapper {
 
-    public WrappedPlayInUseEntity(final Packet<?> instance) {
+    public WrappedPlayInUseEntity(Packet<?> instance) {
         super(instance, PacketPlayInUseEntity.class);
     }
 
@@ -18,14 +18,14 @@ public final class WrappedPlayInUseEntity extends PacketWrapper {
         return get("action");
     }
 
-    public Entity getTarget(final World world) {
-        final int entityId = get("a");
+    public Entity getTarget(World world) {
+        int entityId = get("a");
 
         return world.a(entityId).getBukkitEntity();
     }
 
     public Vector getVector() {
-        final Vec3D vec3D = get("c");
+        Vec3D vec3D = get("c");
 
         return new Vector(vec3D.a, vec3D.b, vec3D.c);
     }

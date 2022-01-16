@@ -21,10 +21,10 @@ public final class AlertManager {
     private final List<Long> alerts = Lists.newArrayList();
 
     public void fail() {
-        final long now = System.currentTimeMillis();
+        long now = System.currentTimeMillis();
 
-        final PlayerData playerData = check.getPlayerData();
-        final Player player = playerData.getBukkitPlayer();
+        PlayerData playerData = check.getPlayerData();
+        Player player = playerData.getBukkitPlayer();
 
         if (alerts.contains(now)) {
             return;
@@ -32,11 +32,11 @@ public final class AlertManager {
 
         alerts.add(now);
 
-        final int violations = (int) (alerts.stream().filter(violation -> violation + 9000L > System.currentTimeMillis()).count());
-        final int threshold = check.getThreshold();
+        int violations = (int) (alerts.stream().filter(violation -> violation + 9000L > System.currentTimeMillis()).count());
+        int threshold = check.getThreshold();
 
-        final String alert = String.format(base, player.getName(), check.getCheckName(), violations);
-        final String message = String.format(broadcast, player.getName());
+        String alert = String.format(base, player.getName(), check.getCheckName(), violations);
+        String message = String.format(broadcast, player.getName());
 
         if (violations > threshold) {
             //Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ban " + player.getName() + " [Frequency] Unfair Advantage");;

@@ -6,7 +6,7 @@ import xyz.elevated.frequency.wrapper.PacketWrapper;
 
 public final class WrappedPlayInSteerVehicle extends PacketWrapper {
 
-    public WrappedPlayInSteerVehicle(final Packet<?> instance) {
+    public WrappedPlayInSteerVehicle(Packet<?> instance) {
         super(instance, PacketPlayInSteerVehicle.class);
     }
 

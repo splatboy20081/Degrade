@@ -10,13 +10,13 @@ import xyz.elevated.frequency.wrapper.impl.client.WrappedPlayInFlying;
 @CheckData(name = "BadPackets (D)")
 public final class BadPacketsD extends PostCheck {
 
-    public BadPacketsD(final PlayerData playerData) {
+    public BadPacketsD(PlayerData playerData) {
         super(playerData, WrappedPlayInCustomPayload.class);
     }
 
     @Override
-    public void process(final Object object) {
-        final boolean post = this.isPost(object);
+    public void process(Object object) {
+        boolean post = isPost(object);
 
         if (post) fail();
     }

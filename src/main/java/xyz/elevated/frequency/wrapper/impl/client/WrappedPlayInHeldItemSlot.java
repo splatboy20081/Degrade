@@ -6,7 +6,7 @@ import xyz.elevated.frequency.wrapper.PacketWrapper;
 
 public final class WrappedPlayInHeldItemSlot extends PacketWrapper {
 
-    public WrappedPlayInHeldItemSlot(final Packet<?> instance) {
+    public WrappedPlayInHeldItemSlot(Packet<?> instance) {
         super(instance, PacketPlayInHeldItemSlot.class);
     }
 

@@ -17,30 +17,30 @@ import java.util.Random;
 public final class IncomingPacketProcessor implements Processor<Packet<PacketListenerPlayIn>> {
 
     @Override
-    public void process(final PlayerData playerData, final Packet<PacketListenerPlayIn> packet) {
+    public void process(PlayerData playerData, Packet<PacketListenerPlayIn> packet) {
         if (packet instanceof PacketPlayInFlying) {
-            final WrappedPlayInFlying wrapper = new WrappedPlayInFlying(packet);
+            WrappedPlayInFlying wrapper = new WrappedPlayInFlying(packet);
 
-            final double posX = wrapper.getX();
-            final double posY = wrapper.getY();
-            final double posZ = wrapper.getZ();
+            double posX = wrapper.getX();
+            double posY = wrapper.getY();
+            double posZ = wrapper.getZ();
 
-            final float yaw = wrapper.getYaw();
-            final float pitch = wrapper.getPitch();
+            float yaw = wrapper.getYaw();
+            float pitch = wrapper.getPitch();
 
-            final boolean hasPos = wrapper.hasPos();
-            final boolean hasLook = wrapper.hasLook();
-            final boolean onGround = wrapper.onGround();
+            boolean hasPos = wrapper.hasPos();
+            boolean hasLook = wrapper.hasLook();
+            boolean onGround = wrapper.onGround();
 
             if (hasPos) {
-                final PositionManager positionManager = playerData.getPositionManager();
-                final World world = playerData.getBukkitPlayer().getWorld();
+                PositionManager positionManager = playerData.getPositionManager();
+                World world = playerData.getBukkitPlayer().getWorld();
 
                 positionManager.handle(world, posX, posY, posZ, onGround);
             }
 
             if (hasLook) {
-                final RotationManager rotationManager = playerData.getRotationManager();
+                RotationManager rotationManager = playerData.getRotationManager();
 
                 rotationManager.handle(yaw, pitch);
             }
@@ -51,7 +51,7 @@ public final class IncomingPacketProcessor implements Processor<Packet<PacketLis
                     .filter(PacketCheck.class::isInstance)
                     .forEach(check -> check.process(wrapper));
         } else if (packet instanceof PacketPlayInUseEntity) {
-            final WrappedPlayInUseEntity wrapper = new WrappedPlayInUseEntity(packet);
+            WrappedPlayInUseEntity wrapper = new WrappedPlayInUseEntity(packet);
 
             if (wrapper.getAction() == PacketPlayInUseEntity.EnumEntityUseAction.ATTACK) {
                 playerData.getActionManager().onAttack();
@@ -64,7 +64,7 @@ public final class IncomingPacketProcessor implements Processor<Packet<PacketLis
                     .filter(PacketCheck.class::isInstance)
                     .forEach(check -> check.process(wrapper));
         } else if (packet instanceof PacketPlayInBlockDig) {
-            final WrappedPlayInBlockDig wrapper = new WrappedPlayInBlockDig(packet);
+            WrappedPlayInBlockDig wrapper = new WrappedPlayInBlockDig(packet);
 
             switch (wrapper.getDigType()) {
                 case START_DESTROY_BLOCK:
@@ -79,13 +79,13 @@ public final class IncomingPacketProcessor implements Processor<Packet<PacketLis
                     .filter(PacketCheck.class::isInstance)
                     .forEach(check -> check.process(wrapper));
         } else if (packet instanceof PacketPlayInHeldItemSlot) {
-            final WrappedPlayInHeldItemSlot wrapper = new WrappedPlayInHeldItemSlot(packet);
+            WrappedPlayInHeldItemSlot wrapper = new WrappedPlayInHeldItemSlot(packet);
 
             playerData.getCheckManager().getChecks().stream()
                     .filter(PacketCheck.class::isInstance)
                     .forEach(check -> check.process(wrapper));
         } else if (packet instanceof PacketPlayInEntityAction) {
-            final WrappedPlayInEntityAction wrapper = new WrappedPlayInEntityAction(packet);
+            WrappedPlayInEntityAction wrapper = new WrappedPlayInEntityAction(packet);
 
             switch (wrapper.getAction()) {
                 case START_SPRINTING: {
@@ -103,47 +103,47 @@ public final class IncomingPacketProcessor implements Processor<Packet<PacketLis
                     .filter(PacketCheck.class::isInstance)
                     .forEach(check -> check.process(wrapper));
         } else if (packet instanceof PacketPlayInCustomPayload) {
-            final WrappedPlayInCustomPayload wrapper = new WrappedPlayInCustomPayload(packet);
+            WrappedPlayInCustomPayload wrapper = new WrappedPlayInCustomPayload(packet);
 
             playerData.getCheckManager().getChecks().stream()
                     .filter(PacketCheck.class::isInstance)
                     .forEach(check -> check.process(wrapper));
         } else if (packet instanceof PacketPlayInArmAnimation) {
-            final WrappedPlayInArmAnimation wrapper = new WrappedPlayInArmAnimation(packet);
+            WrappedPlayInArmAnimation wrapper = new WrappedPlayInArmAnimation(packet);
 
             playerData.getActionManager().onArmAnimation();
             playerData.getCheckManager().getChecks().stream()
                     .filter(PacketCheck.class::isInstance)
                     .forEach(check -> check.process(wrapper));
         } else if(packet instanceof PacketPlayInKeepAlive) {
-            final WrappedPlayInKeepAlive wrapper = new WrappedPlayInKeepAlive(packet);
+            WrappedPlayInKeepAlive wrapper = new WrappedPlayInKeepAlive(packet);
 
             playerData.getConnectionManager().onKeepAlive(wrapper.getId(), System.currentTimeMillis());
             playerData.getCheckManager().getChecks().stream().filter(PacketCheck.class::isInstance).forEach(check -> check.process(wrapper));
         } else if (packet instanceof PacketPlayInClientCommand) {
-            final WrappedPlayInClientCommand wrapper = new WrappedPlayInClientCommand(packet);
+            WrappedPlayInClientCommand wrapper = new WrappedPlayInClientCommand(packet);
 
             playerData.getCheckManager().getChecks().stream()
                     .filter(PacketCheck.class::isInstance)
                     .forEach(check -> check.process(wrapper));
         } else if (packet instanceof PacketPlayInBlockPlace) {
-            final WrappedPlayInBlockPlace wrapper =  new WrappedPlayInBlockPlace(packet);
+            WrappedPlayInBlockPlace wrapper =  new WrappedPlayInBlockPlace(packet);
 
             playerData.getActionManager().onPlace();
             playerData.getCheckManager().getChecks().stream()
                     .filter(PacketCheck.class::isInstance)
                     .forEach(check -> check.process(wrapper));
         } else if (packet instanceof PacketPlayInSteerVehicle) {
-            final WrappedPlayInSteerVehicle wrapper = new WrappedPlayInSteerVehicle(packet);
+            WrappedPlayInSteerVehicle wrapper = new WrappedPlayInSteerVehicle(packet);
 
             playerData.getActionManager().onSteerVehicle();
             playerData.getCheckManager().getChecks().stream()
                     .filter(PacketCheck.class::isInstance)
                     .forEach(check -> check.process(wrapper));
         } else if (packet instanceof PacketPlayInTransaction) {
-            final WrappedPlayInTransaction wrapper = new WrappedPlayInTransaction(packet);
+            WrappedPlayInTransaction wrapper = new WrappedPlayInTransaction(packet);
 
-            final long now = System.currentTimeMillis();
+            long now = System.currentTimeMillis();
 
             playerData.getConnectionManager().onTransaction(wrapper.getHash(), now);
             playerData.getCheckManager().getChecks().stream()

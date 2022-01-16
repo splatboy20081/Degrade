@@ -11,14 +11,14 @@ public final class BadPacketsL extends PacketCheck {
 
     private int streak = 0;
 
-    public BadPacketsL(final PlayerData playerData) {
+    public BadPacketsL(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final Object object) {
+    public void process(Object object) {
         if (object instanceof WrappedPlayInFlying) {
-            final WrappedPlayInFlying wrapper = (WrappedPlayInFlying) object;
+            WrappedPlayInFlying wrapper = (WrappedPlayInFlying) object;
 
             if (!wrapper.hasPos() && playerData.getBukkitPlayer().getVehicle() == null) {
                 // There must be a position update by the client every 20 ticks

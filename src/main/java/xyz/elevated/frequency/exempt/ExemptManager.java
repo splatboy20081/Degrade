@@ -16,7 +16,7 @@ public final class ExemptManager {
      * @param exceptType - The type of exception you want return.
      * @return - True/False depending on appliance.
      */
-    public boolean isExempt(final ExemptType exceptType) {
+    public boolean isExempt(ExemptType exceptType) {
         return exceptType.getException().apply(playerData);
     }
 
@@ -25,7 +25,7 @@ public final class ExemptManager {
      * @param exceptTypes - An array of possible exceptions.
      * @return - True/False depending on if any match the appliance.
      */
-    public boolean isExempt(final ExemptType... exceptTypes) {
+    public boolean isExempt(ExemptType... exceptTypes) {
         return Arrays.stream(exceptTypes).anyMatch(this::isExempt);
     }
 
@@ -34,7 +34,7 @@ public final class ExemptManager {
      * @param exception - A custom function-based exception
      * @return - True/False depending on appliance.
      */
-    public boolean isExempt(final Function<PlayerData, Boolean> exception) {
+    public boolean isExempt(Function<PlayerData, Boolean> exception) {
         return exception.apply(playerData);
     }
 }

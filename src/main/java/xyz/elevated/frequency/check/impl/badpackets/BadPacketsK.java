@@ -13,14 +13,14 @@ import java.util.Arrays;
 @CheckData(name = "BadPackets (K)")
 public final class BadPacketsK extends PacketCheck {
 
-    public BadPacketsK(final PlayerData playerData) {
+    public BadPacketsK(PlayerData playerData) {
         super(playerData);
     }
 
     @Override
-    public void process(final Object object) {
+    public void process(Object object) {
         if (object instanceof WrappedPlayInSteerVehicle) {
-            final boolean exempt = isExempt(ExemptType.VEHICLE);
+            boolean exempt = isExempt(ExemptType.VEHICLE);
 
             if (exempt) {
                 fail();
