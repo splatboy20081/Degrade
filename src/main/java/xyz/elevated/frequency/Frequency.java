@@ -7,6 +7,11 @@ import xyz.elevated.frequency.listener.PlayerListener;
 import xyz.elevated.frequency.processor.ProcessorManager;
 import xyz.elevated.frequency.tick.TickManager;
 
+import me.godead.lilliputian.Dependency;
+import me.godead.lilliputian.Lilliputian;
+import me.godead.lilliputian.Repository;
+
+
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -24,9 +29,24 @@ public enum Frequency {
     private final Executor executorPacket = Executors.newSingleThreadExecutor();
 
     public void start(FrequencyPlugin plugin) {
+
         this.plugin = plugin;
 
         assert plugin != null : "Something went wrong! The plugin was null. (Startup)";
+
+        Lilliputian lilliputian = new Lilliputian(plugin);
+        lilliputian.getDependencyBuilder()
+                .addDependency(new Dependency(
+                        "https://hub.spigotmc.org/nexus/content/groups/public/",
+                        "org.atteo.classindex",
+                        "classindex",
+                        "3.11"))
+                .addDependency(new Dependency(
+                        "https://hub.spigotmc.org/nexus/content/groups/public/",
+                        "org.mongodb",
+                        "mongo-java-driver",
+                        "3.5.0"))
+                .loadDependencies();
 
         tickManager.start();
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), plugin);

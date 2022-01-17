@@ -1,11 +1,10 @@
 package xyz.elevated.frequency.wrapper;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import net.minecraft.server.v1_8_R3.Packet;
 
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 public abstract class PacketWrapper {
     private final Map<String, Field> fields = new WeakHashMap<>();

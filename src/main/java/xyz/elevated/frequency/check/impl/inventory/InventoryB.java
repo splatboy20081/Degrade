@@ -11,8 +11,8 @@ import xyz.elevated.frequency.wrapper.impl.client.WrappedPlayInFlying;
 public final class InventoryB extends PacketCheck {
 
     private long lastFlying = System.currentTimeMillis();
-    private boolean inventory = false;
-    private int buffer = 0;
+    private boolean inventory;
+    private int buffer;
 
     public InventoryB(PlayerData playerData) {
         super(playerData);

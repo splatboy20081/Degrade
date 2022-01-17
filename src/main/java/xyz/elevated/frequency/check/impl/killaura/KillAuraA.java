@@ -10,9 +10,9 @@ import xyz.elevated.frequency.wrapper.impl.client.WrappedPlayInUseEntity;
 @CheckData(name = "KillAura (A)")
 public final class KillAuraA extends PostCheck {
 
-    private boolean sent = false;
-    private long lastFlying = 0L, lastPacket = 0L;
-    private double buffer = 0.0d;
+    private boolean sent;
+    private long lastFlying, lastPacket;
+    private double buffer;
 
     public KillAuraA(PlayerData playerData) {
         super(playerData, WrappedPlayInUseEntity.class);

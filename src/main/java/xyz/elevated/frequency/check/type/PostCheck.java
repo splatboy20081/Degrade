@@ -6,10 +6,10 @@ import xyz.elevated.frequency.wrapper.impl.client.WrappedPlayInFlying;
 
 public class PostCheck extends PacketCheck {
     private final Class<? extends PacketWrapper> packet;
-    private boolean sent = false;
+    private boolean sent;
 
     public long lastFlying, lastPacket;
-    public double buffer = 0.0;
+    public double buffer;
 
     public PostCheck(PlayerData playerData, Class<? extends PacketWrapper> packet) {
         super(playerData);

@@ -24,8 +24,8 @@ public final class ActionManager {
     private final Observable<Boolean> steer = new Observable<>(false);
     private final Observable<Boolean> packetDigging = new Observable<>(false);
 
-    private int lastAttack = 0, lastDig = 0, lastFlying = 0,
-            lastDelayedFlying = 0, lastTeleport = 0, movements = 0, lastPlace = 0;
+    private int lastAttack, lastDig, lastFlying,
+            lastDelayedFlying, lastTeleport, movements, lastPlace;
 
     public void onArmAnimation() {
         swinging.set(true);

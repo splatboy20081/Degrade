@@ -1,7 +1,6 @@
 package xyz.elevated.frequency.wrapper.impl.client;
 
 import net.minecraft.server.v1_8_R3.Packet;
-import net.minecraft.server.v1_8_R3.PacketListenerPlayIn;
 import net.minecraft.server.v1_8_R3.PacketPlayInFlying;
 import xyz.elevated.frequency.wrapper.PacketWrapper;
 

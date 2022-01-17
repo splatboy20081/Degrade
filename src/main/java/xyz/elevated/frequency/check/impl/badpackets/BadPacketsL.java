@@ -9,7 +9,7 @@ import xyz.elevated.frequency.wrapper.impl.client.WrappedPlayInSteerVehicle;
 @CheckData(name = "BadPackets (L)")
 public final class BadPacketsL extends PacketCheck {
 
-    private int streak = 0;
+    private int streak;
 
     public BadPacketsL(PlayerData playerData) {
         super(playerData);

@@ -22,7 +22,9 @@ public final class ReachA extends PacketCheck {
 
             if(((WrappedPlayInUseEntity) object).getAction().equals(PacketPlayInUseEntity.EnumEntityUseAction.ATTACK)) {
 
-               // double dist = MathUtil.getMagnitude(playerData.getBukkitPlayer().getLocation(), ((WrappedPlayInUseEntity) object).getVector().toLocation());
+                double dist = MathUtil.getMagnitude(playerData.getBukkitPlayer().getLocation(), playerData.getTarget().get().getLocation());
+
+                if (dist > 3.51) fail();
 
             }
 

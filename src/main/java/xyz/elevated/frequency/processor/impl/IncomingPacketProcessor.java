@@ -4,15 +4,12 @@ import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import xyz.elevated.frequency.check.type.PacketCheck;
-import xyz.elevated.frequency.data.BoundingBox;
 import xyz.elevated.frequency.data.PlayerData;
 import xyz.elevated.frequency.data.impl.PositionManager;
 import xyz.elevated.frequency.data.impl.RotationManager;
 import xyz.elevated.frequency.processor.type.Processor;
 import xyz.elevated.frequency.util.NmsUtil;
 import xyz.elevated.frequency.wrapper.impl.client.*;
-
-import java.util.Random;
 
 public final class IncomingPacketProcessor implements Processor<Packet<PacketListenerPlayIn>> {
 

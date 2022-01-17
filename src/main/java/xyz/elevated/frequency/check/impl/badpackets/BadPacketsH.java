@@ -1,6 +1,6 @@
 package xyz.elevated.frequency.check.impl.badpackets;
 
-import net.minecraft.server.v1_8_R3.PacketPlayInBlockDig.EnumPlayerDigType;
+import net.minecraft.server.v1_8_R3.PacketPlayInBlockDig;
 import xyz.elevated.frequency.check.CheckData;
 import xyz.elevated.frequency.check.type.PacketCheck;
 import xyz.elevated.frequency.data.PlayerData;
@@ -10,7 +10,7 @@ import xyz.elevated.frequency.wrapper.impl.client.WrappedPlayInFlying;
 
 @CheckData(name = "BadPackets (H)")
 public final class BadPacketsH extends PacketCheck {
-    private int count = 0;
+    private int count;
 
     public BadPacketsH(PlayerData playerData) {
         super(playerData);
@@ -25,7 +25,7 @@ public final class BadPacketsH extends PacketCheck {
             WrappedPlayInBlockDig wrapper = (WrappedPlayInBlockDig) object;
 
             handle: {
-                if (wrapper.getDigType() != EnumPlayerDigType.RELEASE_USE_ITEM) break handle;
+                if (wrapper.getDigType() != PacketPlayInBlockDig.EnumPlayerDigType.RELEASE_USE_ITEM) break handle;
 
                 boolean invalid = ++count > 1;
 

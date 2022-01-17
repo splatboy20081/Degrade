@@ -9,7 +9,7 @@ import xyz.elevated.frequency.wrapper.impl.client.WrappedPlayInFlying;
 @CheckData(name = "BadPackets (I)")
 public final class BadPacketsI extends PacketCheck {
 
-    private float lastYaw = 0.0f, lastPitch = 0.0f;
+    private float lastYaw, lastPitch;
 
     public BadPacketsI(PlayerData playerData) {
         super(playerData);

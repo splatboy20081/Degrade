@@ -9,8 +9,8 @@ import xyz.elevated.frequency.wrapper.impl.client.WrappedPlayInFlying;
 @CheckData(name = "KillAura (F)")
 public final class KillAuraF extends PacketCheck {
 
-    private double lastPosX = 0.0d, lastPosZ = 0.0d, lastHorizontalDistance = 0.0d;
-    private float lastYaw = 0L, lastPitch = 0L;
+    private double lastPosX, lastPosZ, lastHorizontalDistance;
+    private float lastYaw, lastPitch;
 
     public KillAuraF(PlayerData playerData) {
         super(playerData);
@@ -40,7 +40,7 @@ public final class KillAuraF extends PacketCheck {
                 double acceleration = Math.abs(horizontalDistance - lastHorizontalDistance);
 
                 // Player made a large head rotation and didn't accelerate / decelerate which is impossible
-                if (acceleration < 1e-02 && deltaYaw > 30.f && deltaPitch > 15.f && attacking) {
+                if (acceleration < 0.01 && deltaYaw > 30.f && deltaPitch > 15.f && attacking) {
                     fail();
                 }
             }

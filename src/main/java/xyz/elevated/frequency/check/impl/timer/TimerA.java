@@ -12,8 +12,8 @@ import xyz.elevated.frequency.wrapper.impl.client.WrappedPlayInFlying;
 public final class TimerA extends PacketCheck {
     private final MovingStats movingStats = new MovingStats(20);
 
-    private long lastFlying = 0L;
-    private long allowance = 0;
+    private long lastFlying;
+    private long allowance;
 
     public TimerA(PlayerData playerData) {
         super(playerData);

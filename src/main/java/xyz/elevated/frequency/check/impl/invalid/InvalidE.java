@@ -10,8 +10,8 @@ import xyz.elevated.frequency.util.MathUtil;
 
 @CheckData(name = "Invalid (E)")
 public final class InvalidE extends PositionCheck {
-    private double lastOffsetH = 0.0;
-    private int buffer = 0;
+    private double lastOffsetH;
+    private int buffer;
 
     public InvalidE(PlayerData playerData) {
         super(playerData);

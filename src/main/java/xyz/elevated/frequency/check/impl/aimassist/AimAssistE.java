@@ -10,8 +10,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @CheckData(name = "AimAssist (E)")
 public final class AimAssistE extends RotationCheck {
-    private float lastDeltaYaw = 0.0f, lastDeltaPitch = 0.0f;
-    private int buffer = 0;
+    private float lastDeltaYaw, lastDeltaPitch;
+    private int buffer;
 
     private static final double MODULO_THRESHOLD = 90F;
     private static final double LINEAR_THRESHOLD = 0.1F;

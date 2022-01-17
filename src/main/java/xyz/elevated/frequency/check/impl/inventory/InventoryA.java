@@ -16,7 +16,7 @@ import java.util.List;
 @CheckData(name = "Inventory (A)")
 public final class InventoryA extends PacketCheck {
 
-    private int movements = 0;
+    private int movements;
     private final Deque<Integer> samples = Lists.newLinkedList();
 
     public InventoryA(PlayerData playerData) {

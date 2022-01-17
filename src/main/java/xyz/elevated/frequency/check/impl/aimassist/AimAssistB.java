@@ -8,7 +8,7 @@ import xyz.elevated.frequency.update.RotationUpdate;
 @CheckData(name = "AimAssist (B)")
 public final class AimAssistB extends RotationCheck {
 
-    private int lastRoundedYaw = 0, lastRoundedPitch = 0, streak = 0;
+    private int lastRoundedYaw, lastRoundedPitch, streak;
 
     public AimAssistB(PlayerData playerData) {
         super(playerData);

@@ -19,6 +19,7 @@ import xyz.elevated.frequency.check.impl.jesus.JesusA;
 import xyz.elevated.frequency.check.impl.killaura.*;
 import xyz.elevated.frequency.check.impl.pingspoof.PingSpoofA;
 import xyz.elevated.frequency.check.impl.pingspoof.PingSpoofB;
+import xyz.elevated.frequency.check.impl.reach.ReachA;
 import xyz.elevated.frequency.check.impl.speed.Speed;
 import xyz.elevated.frequency.check.impl.timer.TimerA;
 import xyz.elevated.frequency.data.PlayerData;
@@ -89,6 +90,7 @@ public final class CheckManager {
                 .put(InvalidDirection.class, new InvalidDirection(playerData))
                 .put(PingSpoofA.class, new PingSpoofA(playerData))
                 .put(PingSpoofB.class, new PingSpoofB(playerData))
+                .put(ReachA.class, new ReachA(playerData))
                 .build();
     }
 

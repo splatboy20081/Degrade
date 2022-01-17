@@ -13,7 +13,7 @@ import xyz.elevated.frequency.util.MathUtil;
 public final class FlyE extends PositionCheck {
 
     private Location lastGroundLocation;
-    private int movements = 0;
+    private int movements;
 
     public FlyE(PlayerData playerData) {
         super(playerData);

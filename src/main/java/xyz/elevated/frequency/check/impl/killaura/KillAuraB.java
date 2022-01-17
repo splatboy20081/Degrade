@@ -15,7 +15,7 @@ public final class KillAuraB extends RotationCheck {
     private final Deque<Float> samplesYaw = Lists.newLinkedList();
     private final Deque<Float> samplesPitch = Lists.newLinkedList();
 
-    private double buffer = 0.0d, lastAverage = 0.0d;
+    private double buffer, lastAverage;
 
     public KillAuraB(PlayerData playerData) {
         super(playerData);

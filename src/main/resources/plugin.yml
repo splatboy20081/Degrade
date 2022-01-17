@@ -1,4 +1,4 @@
-name: Frequency
+name: Degrade
 authors: [Elevated, Gson, SplatboyDev]
 version: 1.0
 softdepend: [DiscordLib]

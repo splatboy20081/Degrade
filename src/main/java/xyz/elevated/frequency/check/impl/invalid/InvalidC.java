@@ -12,8 +12,8 @@ import xyz.elevated.frequency.util.NmsUtil;
 @CheckData(name = "Invalid (C)")
 public final class InvalidC extends PositionCheck {
 
-    private double buffer = 0.0d;
-    private int ticks = 0;
+    private double buffer;
+    private int ticks;
 
     public InvalidC(PlayerData playerData) {
         super(playerData);
