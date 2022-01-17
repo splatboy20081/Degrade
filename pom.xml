@@ -100,11 +100,5 @@
             <version>0.1.13</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.github.funkemunky</groupId>
-            <artifactId>Atlas</artifactId>
-            <version>1.11.3</version>
-        </dependency>
-
     </dependencies>
 </project>
