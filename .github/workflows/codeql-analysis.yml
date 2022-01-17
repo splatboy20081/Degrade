@@ -84,7 +84,6 @@ jobs:
         # My (SpraxDev) provider is causing some builds to fail depending on the build environment
         # Available: SpraxDev, SpigotMC
         buildToolProvider: SpigotMC # Optional
-    
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Autobuild
