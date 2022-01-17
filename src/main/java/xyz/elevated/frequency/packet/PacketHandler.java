@@ -15,37 +15,40 @@ import xyz.elevated.frequency.processor.impl.OutgoingPacketProcessor;
 @RequiredArgsConstructor
 public final class PacketHandler extends ChannelDuplexHandler {
 
-    private final PlayerData playerData;
+  private final PlayerData playerData;
 
-    @Override
-    public void write(ChannelHandlerContext channelHandlerContext, Object object, ChannelPromise channelPromise) throws Exception {
-        super.write(channelHandlerContext, object, channelPromise);
+  @Override
+  public void write(
+      ChannelHandlerContext channelHandlerContext, Object object, ChannelPromise channelPromise)
+      throws Exception {
+    super.write(channelHandlerContext, object, channelPromise);
 
-        try {
-            Packet<PacketListenerPlayOut> packet = (Packet<PacketListenerPlayOut>) object;
+    try {
+      Packet<PacketListenerPlayOut> packet = (Packet<PacketListenerPlayOut>) object;
 
-            Frequency.INSTANCE.getProcessorManager()
-                    .getProcessor(OutgoingPacketProcessor.class)
-                    .process(playerData, packet);
-        }
-        catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
+      Frequency.INSTANCE
+          .getProcessorManager()
+          .getProcessor(OutgoingPacketProcessor.class)
+          .process(playerData, packet);
+    } catch (Throwable throwable) {
+      throwable.printStackTrace();
     }
+  }
 
-    @Override
-    public void channelRead(ChannelHandlerContext channelHandlerContext, Object object) throws Exception {
-        super.channelRead(channelHandlerContext, object);
+  @Override
+  public void channelRead(ChannelHandlerContext channelHandlerContext, Object object)
+      throws Exception {
+    super.channelRead(channelHandlerContext, object);
 
-        try {
-            Packet<PacketListenerPlayIn> packet = (Packet<PacketListenerPlayIn>) object;
+    try {
+      Packet<PacketListenerPlayIn> packet = (Packet<PacketListenerPlayIn>) object;
 
-            Frequency.INSTANCE.getProcessorManager()
-                    .getProcessor(IncomingPacketProcessor.class)
-                    .process(playerData, packet);
-        }
-        catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
+      Frequency.INSTANCE
+          .getProcessorManager()
+          .getProcessor(IncomingPacketProcessor.class)
+          .process(playerData, packet);
+    } catch (Throwable throwable) {
+      throwable.printStackTrace();
     }
+  }
 }

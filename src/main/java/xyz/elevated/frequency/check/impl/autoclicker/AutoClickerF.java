@@ -1,7 +1,8 @@
 package xyz.elevated.frequency.check.impl.autoclicker;
 
 import com.google.common.collect.Lists;
-import org.bukkit.Bukkit;
+import java.util.Deque;
+import java.util.List;
 import xyz.elevated.frequency.check.CheckData;
 import xyz.elevated.frequency.check.type.PacketCheck;
 import xyz.elevated.frequency.data.PlayerData;
@@ -10,57 +11,53 @@ import xyz.elevated.frequency.util.Pair;
 import xyz.elevated.frequency.wrapper.impl.client.WrappedPlayInArmAnimation;
 import xyz.elevated.frequency.wrapper.impl.client.WrappedPlayInFlying;
 
-import java.util.Deque;
-import java.util.List;
-
 @CheckData(name = "AutoClicker (F)")
 public final class AutoClickerF extends PacketCheck {
 
-    private int movements;
-    private double buffer;
-    private final Deque<Integer> samples = Lists.newLinkedList();
+  private int movements;
+  private double buffer;
+  private final Deque<Integer> samples = Lists.newLinkedList();
 
-    public AutoClickerF(PlayerData playerData) {
-        super(playerData);
-    }
+  public AutoClickerF(PlayerData playerData) {
+    super(playerData);
+  }
 
-    @Override
-    public void process(Object object) {
-        if (object instanceof WrappedPlayInArmAnimation) {
-            boolean valid = movements < 4 && !playerData.getActionManager().getDigging().get();
+  @Override
+  public void process(Object object) {
+    if (object instanceof WrappedPlayInArmAnimation) {
+      boolean valid = movements < 4 && !playerData.getActionManager().getDigging().get();
 
-            // If the movements is smaller than 4 and the player isn't digging
-            if (valid) samples.add(movements);
+      // If the movements is smaller than 4 and the player isn't digging
+      if (valid) samples.add(movements);
 
-            // Once the samples size is equal to 15
-            if (samples.size() == 15) {
-                Pair<List<Double>, List<Double>> outlierPair = MathUtil.getOutliers(samples);
+      // Once the samples size is equal to 15
+      if (samples.size() == 15) {
+        Pair<List<Double>, List<Double>> outlierPair = MathUtil.getOutliers(samples);
 
-                // Get the deviation outliers the the cps from the math util
-                double deviation = MathUtil.getStandardDeviation(samples);
-                double outliers = outlierPair.getX().size() + outlierPair.getY().size();
-                double cps = playerData.getCps().get();
+        // Get the deviation outliers the the cps from the math util
+        double deviation = MathUtil.getStandardDeviation(samples);
+        double outliers = outlierPair.getX().size() + outlierPair.getY().size();
+        double cps = playerData.getCps().get();
 
-                // If the deviation is relatively low along with the outliers and the cps is rounded
-                if (deviation < 0.3 && outliers < 2 && cps % 1.0 == 0.0) {
-                    buffer += 0.25;
+        // If the deviation is relatively low along with the outliers and the cps is rounded
+        if (deviation < 0.3 && outliers < 2 && cps % 1.0 == 0.0) {
+          buffer += 0.25;
 
-                    if (buffer > 0.75) {
-                        fail();
-                    }
-                } else {
-                    buffer = Math.max(buffer - 0.2, 0);
-                }
-
-                // Clear the samples
-                samples.clear();
-            }
-
-            // Reset the movements
-            movements = 0;
-        } else if (object instanceof WrappedPlayInFlying) {
-            ++movements;
+          if (buffer > 0.75) {
+            fail();
+          }
+        } else {
+          buffer = Math.max(buffer - 0.2, 0);
         }
-    }
 
+        // Clear the samples
+        samples.clear();
+      }
+
+      // Reset the movements
+      movements = 0;
+    } else if (object instanceof WrappedPlayInFlying) {
+      ++movements;
+    }
+  }
 }

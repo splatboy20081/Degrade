@@ -12,51 +12,52 @@ import xyz.elevated.frequency.util.MathUtil;
 @CheckData(name = "Fly (D)")
 public final class FlyD extends PositionCheck {
 
-    private int ticks;
-    private double total, buffer;
+  private int ticks;
+  private double total, buffer;
 
-    public FlyD(PlayerData playerData) {
-        super(playerData);
-    }
+  public FlyD(PlayerData playerData) {
+    super(playerData);
+  }
 
-    @Override
-    public void process(PositionUpdate positionUpdate) {
-        Location from = positionUpdate.getFrom();
-        Location to = positionUpdate.getTo();
+  @Override
+  public void process(PositionUpdate positionUpdate) {
+    Location from = positionUpdate.getFrom();
+    Location to = positionUpdate.getTo();
 
-        double deltaX = to.getX() - from.getX();
-        double deltaY = to.getY() - from.getY();
-        double deltaZ = to.getZ() - from.getZ();
+    double deltaX = to.getX() - from.getX();
+    double deltaY = to.getY() - from.getY();
+    double deltaZ = to.getZ() - from.getZ();
 
-        int modifierJump = MathUtil.getPotionLevel(playerData.getBukkitPlayer(), PotionEffectType.JUMP);
+    int modifierJump = MathUtil.getPotionLevel(playerData.getBukkitPlayer(), PotionEffectType.JUMP);
 
-        double offset = MathUtil.magnitude(deltaX, deltaZ);
-        double threshold = modifierJump > 0 ? 1.55220341408 + (Math.pow(modifierJump + 4.2, 2D) / 16D) : 1.25220341408;
+    double offset = MathUtil.magnitude(deltaX, deltaZ);
+    double threshold =
+        modifierJump > 0 ? 1.55220341408 + (Math.pow(modifierJump + 4.2, 2D) / 16D) : 1.25220341408;
 
-        boolean exempt = isExempt(ExemptType.TELEPORTING, ExemptType.VELOCITY);
-        boolean touchingAir = playerData.getPositionManager().getTouchingAir().get();
+    boolean exempt = isExempt(ExemptType.TELEPORTING, ExemptType.VELOCITY);
+    boolean touchingAir = playerData.getPositionManager().getTouchingAir().get();
 
-        if (touchingAir && !exempt) {
-            ++ticks;
+    if (touchingAir && !exempt) {
+      ++ticks;
 
-            if (ticks > 7 && offset > 0.1) {
-                total += deltaY;
+      if (ticks > 7 && offset > 0.1) {
+        total += deltaY;
 
-                if (total > threshold) {
-                    buffer += 0.25;
+        if (total > threshold) {
+          buffer += 0.25;
 
-                    if (buffer > 1.5) {
-                        fail();
-                    }
-                } else {
-                    buffer = 0.0;
-                }
-            } else {
-                total = 0.0;
-                buffer = 0.0;
-            }
+          if (buffer > 1.5) {
+            fail();
+          }
         } else {
-            ticks = 0;
+          buffer = 0.0;
         }
+      } else {
+        total = 0.0;
+        buffer = 0.0;
+      }
+    } else {
+      ticks = 0;
     }
+  }
 }

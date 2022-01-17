@@ -6,23 +6,23 @@ import xyz.elevated.frequency.wrapper.PacketWrapper;
 
 public final class WrappedPacketPlayOutEntity extends PacketWrapper {
 
-    public WrappedPacketPlayOutEntity(Packet<?> instance) {
-        super(instance, PacketPlayOutEntity.class);
-    }
+  public WrappedPacketPlayOutEntity(Packet<?> instance) {
+    super(instance, PacketPlayOutEntity.class);
+  }
 
-    public int getEntityId() {
-        return get("a");
-    }
+  public int getEntityId() {
+    return get("a");
+  }
 
-    public double getDeltaX() {
-        return ((byte) get("b")) / 32.d;
-    }
+  public double getDeltaX() {
+    return ((byte) get("b")) / 32.d;
+  }
 
-    public double getDeltaY() {
-        return (byte) (get("c")) / 32.d;
-    }
+  public double getDeltaY() {
+    return (byte) (get("c")) / 32.d;
+  }
 
-    public double getDeltaZ() {
-        return ((byte) get("d")) / 32.d;
-    }
+  public double getDeltaZ() {
+    return ((byte) get("d")) / 32.d;
+  }
 }

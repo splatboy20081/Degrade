@@ -10,41 +10,40 @@ import xyz.elevated.frequency.wrapper.impl.client.WrappedPlayInUseEntity;
 @CheckData(name = "KillAura (E)")
 public final class KillAuraE extends PacketCheck {
 
-    private int movements, lastMovements, total, invalid;
+  private int movements, lastMovements, total, invalid;
 
-    public KillAuraE(PlayerData playerData) {
-        super(playerData);
-    }
+  public KillAuraE(PlayerData playerData) {
+    super(playerData);
+  }
 
-    @Override
-    public void process(Object object) {
-        if (object instanceof WrappedPlayInUseEntity) {
-            WrappedPlayInUseEntity wrapper = (WrappedPlayInUseEntity) object;
+  @Override
+  public void process(Object object) {
+    if (object instanceof WrappedPlayInUseEntity) {
+      WrappedPlayInUseEntity wrapper = (WrappedPlayInUseEntity) object;
 
-            if (wrapper.getAction() == PacketPlayInUseEntity.EnumEntityUseAction.ATTACK) {
-                boolean proper = playerData.getCps().get() > 7.2 && movements < 4 && lastMovements < 4;
+      if (wrapper.getAction() == PacketPlayInUseEntity.EnumEntityUseAction.ATTACK) {
+        boolean proper = playerData.getCps().get() > 7.2 && movements < 4 && lastMovements < 4;
 
-                if (proper) {
-                    boolean flag = movements == lastMovements;
+        if (proper) {
+          boolean flag = movements == lastMovements;
 
-                    if (flag) {
-                        ++invalid;
-                    }
+          if (flag) {
+            ++invalid;
+          }
 
-                    if (++total == 30) {
+          if (++total == 30) {
 
-                        if (invalid > 28)
-                            fail();
+            if (invalid > 28) fail();
 
-                        total = 0;
-                    }
-                }
-
-                lastMovements = movements;
-                movements = 0;
-            }
-        } else if (object instanceof WrappedPlayInFlying) {
-            ++movements;
+            total = 0;
+          }
         }
+
+        lastMovements = movements;
+        movements = 0;
+      }
+    } else if (object instanceof WrappedPlayInFlying) {
+      ++movements;
     }
+  }
 }

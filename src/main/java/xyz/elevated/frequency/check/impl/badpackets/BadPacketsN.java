@@ -11,35 +11,32 @@ import xyz.elevated.frequency.wrapper.impl.client.WrappedPlayInUseEntity;
 @CheckData(name = "BadPackets (N)")
 public class BadPacketsN extends PacketCheck {
 
-    private boolean swung;
+  private boolean swung;
 
-    public BadPacketsN(PlayerData playerData) {
-        super(playerData);
+  public BadPacketsN(PlayerData playerData) {
+    super(playerData);
+  }
+
+  @Override
+  public void process(Object object) {
+    if (object instanceof WrappedPlayInUseEntity) {
+      WrappedPlayInUseEntity wrapper = (WrappedPlayInUseEntity) object;
+
+      check:
+      {
+        if (wrapper.getAction() != PacketPlayInUseEntity.EnumEntityUseAction.ATTACK) break check;
+
+        /*
+         * This ensures the player is swinging before they send an attack packet. This will detect any
+         * combat checks that mess with the packet order such as criticals.
+         */
+
+        if (!swung) fail();
+      }
+    } else if (object instanceof WrappedPlayInArmAnimation) {
+      swung = true;
+    } else if (object instanceof WrappedPlayInFlying) {
+      swung = false;
     }
-
-    @Override
-    public void process(Object object) {
-        if (object instanceof WrappedPlayInUseEntity) {
-            WrappedPlayInUseEntity wrapper = (WrappedPlayInUseEntity) object;
-
-            check: {
-                if (wrapper.getAction() != PacketPlayInUseEntity.EnumEntityUseAction.ATTACK) break check;
-
-                /*
-                 * This ensures the player is swinging before they send an attack packet. This will detect any
-                 * combat checks that mess with the packet order such as criticals.
-                 */
-
-                if (!swung) fail();
-            }
-        }
-
-        else if (object instanceof WrappedPlayInArmAnimation) {
-            swung = true;
-        }
-
-        else if (object instanceof WrappedPlayInFlying) {
-            swung = false;
-        }
-    }
+  }
 }

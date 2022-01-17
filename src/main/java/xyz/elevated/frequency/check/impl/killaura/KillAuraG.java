@@ -8,19 +8,19 @@ import xyz.elevated.frequency.wrapper.impl.client.WrappedPlayInFlying;
 @CheckData(name = "KillAura (G)")
 public final class KillAuraG extends PacketCheck {
 
-    public KillAuraG(PlayerData playerData) {
-        super(playerData);
-    }
+  public KillAuraG(PlayerData playerData) {
+    super(playerData);
+  }
 
-    @Override
-    public void process(Object object) {
-        if (object instanceof WrappedPlayInFlying) {
-            boolean attacking = playerData.getActionManager().getAttacking().get();
-            boolean swinging = playerData.getActionManager().getSwinging().get();
+  @Override
+  public void process(Object object) {
+    if (object instanceof WrappedPlayInFlying) {
+      boolean attacking = playerData.getActionManager().getAttacking().get();
+      boolean swinging = playerData.getActionManager().getSwinging().get();
 
-            if (attacking && !swinging) {
-                fail();
-            }
-        }
+      if (attacking && !swinging) {
+        fail();
+      }
     }
+  }
 }

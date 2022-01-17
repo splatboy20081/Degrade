@@ -6,15 +6,15 @@ import xyz.elevated.frequency.wrapper.PacketWrapper;
 
 public final class WrappedPlayInArmAnimation extends PacketWrapper {
 
-    public WrappedPlayInArmAnimation(Packet<?> instance) {
-        super(instance, PacketPlayInArmAnimation.class);
-    }
+  public WrappedPlayInArmAnimation(Packet<?> instance) {
+    super(instance, PacketPlayInArmAnimation.class);
+  }
 
-    public long getTimestamp() {
-        return System.currentTimeMillis();
-    }
+  public long getTimestamp() {
+    return System.currentTimeMillis();
+  }
 
-    public long getPacketTimestamp() {
-        return get("timestamp");
-    }
+  public long getPacketTimestamp() {
+    return get("timestamp");
+  }
 }

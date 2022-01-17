@@ -9,28 +9,28 @@ import xyz.elevated.frequency.wrapper.impl.client.WrappedPlayInSteerVehicle;
 @CheckData(name = "BadPackets (L)")
 public final class BadPacketsL extends PacketCheck {
 
-    private int streak;
+  private int streak;
 
-    public BadPacketsL(PlayerData playerData) {
-        super(playerData);
-    }
+  public BadPacketsL(PlayerData playerData) {
+    super(playerData);
+  }
 
-    @Override
-    public void process(Object object) {
-        if (object instanceof WrappedPlayInFlying) {
-            WrappedPlayInFlying wrapper = (WrappedPlayInFlying) object;
+  @Override
+  public void process(Object object) {
+    if (object instanceof WrappedPlayInFlying) {
+      WrappedPlayInFlying wrapper = (WrappedPlayInFlying) object;
 
-            if (!wrapper.hasPos() && playerData.getBukkitPlayer().getVehicle() == null) {
-                // There must be a position update by the client every 20 ticks
-                if (++streak > 20) {
-                    fail();
-                }
-            } else {
-                streak = 0;
-            }
-
-        } else if (object instanceof WrappedPlayInSteerVehicle) {
-            streak = 0;
+      if (!wrapper.hasPos() && playerData.getBukkitPlayer().getVehicle() == null) {
+        // There must be a position update by the client every 20 ticks
+        if (++streak > 20) {
+          fail();
         }
+      } else {
+        streak = 0;
+      }
+
+    } else if (object instanceof WrappedPlayInSteerVehicle) {
+      streak = 0;
     }
+  }
 }

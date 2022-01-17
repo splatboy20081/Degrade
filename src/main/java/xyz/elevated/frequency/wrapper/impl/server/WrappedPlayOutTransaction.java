@@ -6,15 +6,15 @@ import xyz.elevated.frequency.wrapper.PacketWrapper;
 
 public final class WrappedPlayOutTransaction extends PacketWrapper {
 
-    public WrappedPlayOutTransaction(Packet<?> instance) {
-        super(instance, PacketPlayOutTransaction.class);
-    }
+  public WrappedPlayOutTransaction(Packet<?> instance) {
+    super(instance, PacketPlayOutTransaction.class);
+  }
 
-    public long getTime() {
-        return System.currentTimeMillis();
-    }
+  public long getTime() {
+    return System.currentTimeMillis();
+  }
 
-    public short getHash() {
-        return get("b");
-    }
+  public short getHash() {
+    return get("b");
+  }
 }

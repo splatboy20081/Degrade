@@ -6,11 +6,11 @@ import xyz.elevated.frequency.wrapper.PacketWrapper;
 
 public final class WrappedPlayInEntityAction extends PacketWrapper {
 
-    public WrappedPlayInEntityAction(Packet<?> instance) {
-        super(instance, PacketPlayInEntityAction.class);
-    }
+  public WrappedPlayInEntityAction(Packet<?> instance) {
+    super(instance, PacketPlayInEntityAction.class);
+  }
 
-    public PacketPlayInEntityAction.EnumPlayerAction getAction() {
-        return get("animation");
-    }
+  public PacketPlayInEntityAction.EnumPlayerAction getAction() {
+    return get("animation");
+  }
 }

@@ -8,14 +8,14 @@ import xyz.elevated.frequency.wrapper.impl.client.WrappedPlayInWindowClick;
 @CheckData(name = "BadPackets (M)")
 public final class BadPacketsM extends PostCheck {
 
-    public BadPacketsM(PlayerData playerData) {
-        super(playerData, WrappedPlayInWindowClick.class);
-    }
+  public BadPacketsM(PlayerData playerData) {
+    super(playerData, WrappedPlayInWindowClick.class);
+  }
 
-    @Override
-    public void process(Object object) {
-        boolean post = isPost(object);
+  @Override
+  public void process(Object object) {
+    boolean post = isPost(object);
 
-        if (post) fail();
-    }
+    if (post) fail();
+  }
 }

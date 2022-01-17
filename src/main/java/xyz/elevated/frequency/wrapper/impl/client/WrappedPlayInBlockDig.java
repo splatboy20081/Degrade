@@ -7,15 +7,15 @@ import xyz.elevated.frequency.wrapper.PacketWrapper;
 
 public final class WrappedPlayInBlockDig extends PacketWrapper {
 
-    public WrappedPlayInBlockDig(Packet<?> instance) {
-        super(instance, PacketPlayInBlockDig.class);
-    }
+  public WrappedPlayInBlockDig(Packet<?> instance) {
+    super(instance, PacketPlayInBlockDig.class);
+  }
 
-    public PacketPlayInBlockDig.EnumPlayerDigType getDigType() {
-        return get("c");
-    }
+  public PacketPlayInBlockDig.EnumPlayerDigType getDigType() {
+    return get("c");
+  }
 
-    public EnumDirection getDirection() {
-        return get("b");
-    }
+  public EnumDirection getDirection() {
+    return get("b");
+  }
 }

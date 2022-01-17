@@ -6,19 +6,19 @@ import xyz.elevated.frequency.wrapper.PacketWrapper;
 
 public final class WrappedPlayInTransaction extends PacketWrapper {
 
-    public WrappedPlayInTransaction(Packet<?> instance) {
-        super(instance, PacketPlayInTransaction.class);
-    }
+  public WrappedPlayInTransaction(Packet<?> instance) {
+    super(instance, PacketPlayInTransaction.class);
+  }
 
-    public long getTime() {
-        return System.currentTimeMillis();
-    }
+  public long getTime() {
+    return System.currentTimeMillis();
+  }
 
-    public long getId() {
-        return get("a");
-    }
+  public long getId() {
+    return get("a");
+  }
 
-    public short getHash() {
-        return get("b");
-    }
+  public short getHash() {
+    return get("b");
+  }
 }

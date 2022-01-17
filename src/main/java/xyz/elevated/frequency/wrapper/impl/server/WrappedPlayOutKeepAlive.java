@@ -5,15 +5,15 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutKeepAlive;
 import xyz.elevated.frequency.wrapper.PacketWrapper;
 
 public final class WrappedPlayOutKeepAlive extends PacketWrapper {
-    public WrappedPlayOutKeepAlive(Packet<?> instance) {
-        super(instance, PacketPlayOutKeepAlive.class);
-    }
+  public WrappedPlayOutKeepAlive(Packet<?> instance) {
+    super(instance, PacketPlayOutKeepAlive.class);
+  }
 
-    public int getTime() {
-        return get("a");
-    }
+  public int getTime() {
+    return get("a");
+  }
 
-    public void setTime(int time) {
-        set("a", time);
-    }
+  public void setTime(int time) {
+    set("a", time);
+  }
 }

@@ -6,12 +6,10 @@ import xyz.elevated.frequency.update.PositionUpdate;
 
 public class PositionCheck extends Check<PositionUpdate> {
 
-    public PositionCheck(PlayerData playerData) {
-        super(playerData);
-    }
+  public PositionCheck(PlayerData playerData) {
+    super(playerData);
+  }
 
-    @Override
-    public void process(PositionUpdate positionUpdate) {
-
-    }
+  @Override
+  public void process(PositionUpdate positionUpdate) {}
 }

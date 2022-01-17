@@ -7,19 +7,21 @@ import xyz.elevated.frequency.update.RotationUpdate;
 
 @RequiredArgsConstructor
 public final class RotationManager {
-    private final PlayerData playerData;
+  private final PlayerData playerData;
 
-    private float lastYaw, lastPitch;
+  private float lastYaw, lastPitch;
 
-    public void handle(float yaw, float pitch) {
-        float deltaYaw = Math.abs(yaw - lastYaw);
-        float deltaPitch = Math.abs(pitch - lastPitch);
+  public void handle(float yaw, float pitch) {
+    float deltaYaw = Math.abs(yaw - lastYaw);
+    float deltaPitch = Math.abs(pitch - lastPitch);
 
-        RotationUpdate rotationUpdate = new RotationUpdate(deltaYaw, deltaPitch);
+    RotationUpdate rotationUpdate = new RotationUpdate(deltaYaw, deltaPitch);
 
-        playerData.getCheckManager().getChecks().stream().filter(RotationCheck.class::isInstance).forEach(check -> check.process(rotationUpdate));
-        
-        lastYaw = yaw;
-        lastPitch = pitch;
-    }
+    playerData.getCheckManager().getChecks().stream()
+        .filter(RotationCheck.class::isInstance)
+        .forEach(check -> check.process(rotationUpdate));
+
+    lastYaw = yaw;
+    lastPitch = pitch;
+  }
 }

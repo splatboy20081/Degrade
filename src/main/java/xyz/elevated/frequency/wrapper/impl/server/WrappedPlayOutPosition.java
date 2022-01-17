@@ -6,19 +6,19 @@ import xyz.elevated.frequency.wrapper.PacketWrapper;
 
 public final class WrappedPlayOutPosition extends PacketWrapper {
 
-    public WrappedPlayOutPosition(Packet<?> instance) {
-        super(instance, PacketPlayOutPosition.class);
-    }
+  public WrappedPlayOutPosition(Packet<?> instance) {
+    super(instance, PacketPlayOutPosition.class);
+  }
 
-    public double getX() {
-        return (double) (get("a")) / 32.d;
-    }
+  public double getX() {
+    return (double) (get("a")) / 32.d;
+  }
 
-    public double getY() {
-        return (double) (get("b")) / 32.d;
-    }
+  public double getY() {
+    return (double) (get("b")) / 32.d;
+  }
 
-    public double getZ() {
-        return (double) (get("c")) / 32.d;
-    }
+  public double getZ() {
+    return (double) (get("c")) / 32.d;
+  }
 }

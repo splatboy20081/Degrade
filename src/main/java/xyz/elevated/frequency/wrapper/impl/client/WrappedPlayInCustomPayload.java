@@ -6,11 +6,11 @@ import xyz.elevated.frequency.wrapper.PacketWrapper;
 
 public final class WrappedPlayInCustomPayload extends PacketWrapper {
 
-    public WrappedPlayInCustomPayload(Packet<?> instance) {
-        super(instance, PacketPlayInCustomPayload.class);
-    }
+  public WrappedPlayInCustomPayload(Packet<?> instance) {
+    super(instance, PacketPlayInCustomPayload.class);
+  }
 
-    public String getPayload() {
-        return get("a");
-    }
+  public String getPayload() {
+    return get("a");
+  }
 }

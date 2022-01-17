@@ -8,14 +8,14 @@ import xyz.elevated.frequency.wrapper.impl.client.WrappedPlayInArmAnimation;
 @CheckData(name = "BadPackets (B)")
 public final class BadPacketsB extends PostCheck {
 
-    public BadPacketsB(PlayerData playerData) {
-        super(playerData, WrappedPlayInArmAnimation.class);
-    }
+  public BadPacketsB(PlayerData playerData) {
+    super(playerData, WrappedPlayInArmAnimation.class);
+  }
 
-    @Override
-    public void process(Object object) {
-        boolean post = isPost(object);
+  @Override
+  public void process(Object object) {
+    boolean post = isPost(object);
 
-        if (post) fail();
-    }
+    if (post) fail();
+  }
 }

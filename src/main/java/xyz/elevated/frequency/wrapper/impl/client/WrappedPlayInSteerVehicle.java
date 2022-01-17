@@ -6,15 +6,15 @@ import xyz.elevated.frequency.wrapper.PacketWrapper;
 
 public final class WrappedPlayInSteerVehicle extends PacketWrapper {
 
-    public WrappedPlayInSteerVehicle(Packet<?> instance) {
-        super(instance, PacketPlayInSteerVehicle.class);
-    }
+  public WrappedPlayInSteerVehicle(Packet<?> instance) {
+    super(instance, PacketPlayInSteerVehicle.class);
+  }
 
-    public float getForward() {
-        return get("a");
-    }
+  public float getForward() {
+    return get("a");
+  }
 
-    public float getSide() {
-        return get("b");
-    }
+  public float getSide() {
+    return get("b");
+  }
 }

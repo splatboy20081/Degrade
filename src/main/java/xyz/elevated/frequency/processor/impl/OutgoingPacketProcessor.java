@@ -8,32 +8,32 @@ import xyz.elevated.frequency.wrapper.impl.server.WrappedPlayOutTeleport;
 
 public final class OutgoingPacketProcessor implements Processor<Packet<PacketListenerPlayOut>> {
 
-    @Override
-    public void process(PlayerData playerData, Packet<PacketListenerPlayOut> packet) {
-        if (packet instanceof PacketPlayOutEntityVelocity) {
-            WrappedPlayOutEntityVelocity wrapper = new WrappedPlayOutEntityVelocity(packet);
+  @Override
+  public void process(PlayerData playerData, Packet<PacketListenerPlayOut> packet) {
+    if (packet instanceof PacketPlayOutEntityVelocity) {
+      WrappedPlayOutEntityVelocity wrapper = new WrappedPlayOutEntityVelocity(packet);
 
-            int packetEntityId = wrapper.getEntityId();
-            int playerEntityId = playerData.getBukkitPlayer().getEntityId();
+      int packetEntityId = wrapper.getEntityId();
+      int playerEntityId = playerData.getBukkitPlayer().getEntityId();
 
-            if (packetEntityId == playerEntityId) {
-                double velocityX = wrapper.getX();
-                double velocityY = wrapper.getY();
-                double velocityZ = wrapper.getZ();
+      if (packetEntityId == playerEntityId) {
+        double velocityX = wrapper.getX();
+        double velocityY = wrapper.getY();
+        double velocityZ = wrapper.getZ();
 
-                playerData.getVelocityManager().addVelocityEntry(velocityX, velocityY, velocityZ);
-            }
-        } else if (packet instanceof PacketPlayOutEntityTeleport) {
-            WrappedPlayOutTeleport wrapper = new WrappedPlayOutTeleport(packet);
+        playerData.getVelocityManager().addVelocityEntry(velocityX, velocityY, velocityZ);
+      }
+    } else if (packet instanceof PacketPlayOutEntityTeleport) {
+      WrappedPlayOutTeleport wrapper = new WrappedPlayOutTeleport(packet);
 
-            int entityId = wrapper.getEntityId();
-            int playerId = playerData.getBukkitPlayer().getEntityId();
+      int entityId = wrapper.getEntityId();
+      int playerId = playerData.getBukkitPlayer().getEntityId();
 
-            if (entityId == playerId) {
-                playerData.getActionManager().onTeleport();
-            }
-        } else if (packet instanceof PacketPlayOutPosition) {
-            playerData.getActionManager().onTeleport();
-        }
+      if (entityId == playerId) {
+        playerData.getActionManager().onTeleport();
+      }
+    } else if (packet instanceof PacketPlayOutPosition) {
+      playerData.getActionManager().onTeleport();
     }
+  }
 }

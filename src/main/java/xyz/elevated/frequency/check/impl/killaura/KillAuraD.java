@@ -9,29 +9,29 @@ import xyz.elevated.frequency.wrapper.impl.client.WrappedPlayInUseEntity;
 @CheckData(name = "KillAura (D)")
 public final class KillAuraD extends PacketCheck {
 
-    private int streak;
+  private int streak;
 
-    public KillAuraD(PlayerData playerData) {
-        super(playerData);
-    }
+  public KillAuraD(PlayerData playerData) {
+    super(playerData);
+  }
 
-    @Override
-    public void process(Object object) {
-        if (object instanceof WrappedPlayInUseEntity) {
-            WrappedPlayInUseEntity wrapper = (WrappedPlayInUseEntity) object;
+  @Override
+  public void process(Object object) {
+    if (object instanceof WrappedPlayInUseEntity) {
+      WrappedPlayInUseEntity wrapper = (WrappedPlayInUseEntity) object;
 
-            if (wrapper.getAction() == PacketPlayInUseEntity.EnumEntityUseAction.ATTACK) {
-                boolean invalid = !playerData.getActionManager().getSwinging().get();
+      if (wrapper.getAction() == PacketPlayInUseEntity.EnumEntityUseAction.ATTACK) {
+        boolean invalid = !playerData.getActionManager().getSwinging().get();
 
-                // Player swung and attacked
-                if (invalid) {
-                    if (++streak > 2) {
-                        fail();
-                    }
-                } else {
-                    streak = 0;
-                }
-            }
+        // Player swung and attacked
+        if (invalid) {
+          if (++streak > 2) {
+            fail();
+          }
+        } else {
+          streak = 0;
         }
+      }
     }
+  }
 }

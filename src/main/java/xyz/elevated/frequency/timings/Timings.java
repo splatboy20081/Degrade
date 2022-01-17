@@ -8,8 +8,8 @@ import xyz.elevated.frequency.Frequency;
 @RequiredArgsConstructor
 @Getter
 public enum Timings {
-    TICKS(Frequency.INSTANCE.getTickManager().getTicks()),
-    TPS(MinecraftServer.getServer().recentTps[0]);
+  TICKS(Frequency.INSTANCE.getTickManager().getTicks()),
+  TPS(MinecraftServer.getServer().recentTps[0]);
 
-    private final double number;
+  private final double number;
 }

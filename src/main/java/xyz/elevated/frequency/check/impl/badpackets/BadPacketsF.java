@@ -8,20 +8,20 @@ import xyz.elevated.frequency.wrapper.impl.client.WrappedPlayInHeldItemSlot;
 @CheckData(name = "BadPackets (F)")
 public final class BadPacketsF extends PacketCheck {
 
-    private int lastSlot = -1;
+  private int lastSlot = -1;
 
-    public BadPacketsF(PlayerData playerData) {
-        super(playerData);
+  public BadPacketsF(PlayerData playerData) {
+    super(playerData);
+  }
+
+  @Override
+  public void process(Object object) {
+    if (object instanceof WrappedPlayInHeldItemSlot) {
+      WrappedPlayInHeldItemSlot wrapper = (WrappedPlayInHeldItemSlot) object;
+
+      if (wrapper.getSlot() == lastSlot) fail();
+
+      lastSlot = wrapper.getSlot();
     }
-
-    @Override
-    public void process(Object object) {
-        if (object instanceof WrappedPlayInHeldItemSlot) {
-            WrappedPlayInHeldItemSlot wrapper = (WrappedPlayInHeldItemSlot) object;
-
-            if (wrapper.getSlot() == lastSlot) fail();
-
-            lastSlot = wrapper.getSlot();
-        }
-    }
+  }
 }

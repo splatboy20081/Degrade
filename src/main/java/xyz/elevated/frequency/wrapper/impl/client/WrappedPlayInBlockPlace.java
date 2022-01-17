@@ -6,19 +6,19 @@ import xyz.elevated.frequency.wrapper.PacketWrapper;
 
 public final class WrappedPlayInBlockPlace extends PacketWrapper {
 
-    public WrappedPlayInBlockPlace(Packet<?> instance) {
-        super(instance, PacketPlayInBlockPlace.class);
-    }
+  public WrappedPlayInBlockPlace(Packet<?> instance) {
+    super(instance, PacketPlayInBlockPlace.class);
+  }
 
-    public long getTimestamp() {
-        return get("timestamp");
-    }
+  public long getTimestamp() {
+    return get("timestamp");
+  }
 
-    public long getSystemTimestamp() {
-        return System.currentTimeMillis();
-    }
+  public long getSystemTimestamp() {
+    return System.currentTimeMillis();
+  }
 
-    public int getAction() {
-        return get("c");
-    }
+  public int getAction() {
+    return get("c");
+  }
 }

@@ -9,31 +9,33 @@ import xyz.elevated.frequency.wrapper.impl.client.WrappedPlayInFlying;
 @CheckData(name = "BadPackets (I)")
 public final class BadPacketsI extends PacketCheck {
 
-    private float lastYaw, lastPitch;
+  private float lastYaw, lastPitch;
 
-    public BadPacketsI(PlayerData playerData) {
-        super(playerData);
+  public BadPacketsI(PlayerData playerData) {
+    super(playerData);
+  }
+
+  @Override
+  public void process(Object object) {
+    if (object instanceof WrappedPlayInFlying) {
+      WrappedPlayInFlying wrapper = (WrappedPlayInFlying) object;
+
+      if (!wrapper.hasLook()
+          || playerData.getBukkitPlayer().isInsideVehicle()
+          || playerData.getActionManager().getSteer().get()) return;
+
+      float yaw = wrapper.getYaw();
+      float pitch = wrapper.getPitch();
+
+      boolean exempt =
+          isExempt(ExemptType.TELEPORTING, ExemptType.LAGGING, ExemptType.TPS, ExemptType.VEHICLE);
+
+      if (yaw == lastYaw && pitch == lastPitch && !exempt) {
+        fail();
+      }
+
+      lastYaw = yaw;
+      lastPitch = pitch;
     }
-
-    @Override
-    public void process(Object object) {
-        if (object instanceof WrappedPlayInFlying) {
-            WrappedPlayInFlying wrapper = (WrappedPlayInFlying) object;
-
-            if (!wrapper.hasLook() || playerData.getBukkitPlayer().isInsideVehicle()
-                    || playerData.getActionManager().getSteer().get()) return;
-
-            float yaw = wrapper.getYaw();
-            float pitch = wrapper.getPitch();
-
-            boolean exempt = isExempt(ExemptType.TELEPORTING, ExemptType.LAGGING, ExemptType.TPS, ExemptType.VEHICLE);
-
-            if (yaw == lastYaw && pitch == lastPitch && !exempt) {
-                fail();
-            }
-
-            lastYaw = yaw;
-            lastPitch = pitch;
-        }
-    }
+  }
 }

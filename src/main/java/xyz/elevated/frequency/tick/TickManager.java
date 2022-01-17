@@ -14,79 +14,84 @@ import xyz.elevated.frequency.util.Pair;
 @Getter
 public class TickManager implements Runnable {
 
-    private int ticks;
-    private static BukkitTask task;
+  private int ticks;
+  private static BukkitTask task;
 
-    public void start() {
-        //Ensuring that there is no previous task running to prevent memory leaks.
-        assert task == null : "TickProcessor has already been started";
+  public void start() {
+    // Ensuring that there is no previous task running to prevent memory leaks.
+    assert task == null : "TickProcessor has already been started";
 
-        task = Bukkit.getScheduler().runTaskTimer(Frequency.INSTANCE.getPlugin(), this, 0L, 1L);
-    }
+    task = Bukkit.getScheduler().runTaskTimer(Frequency.INSTANCE.getPlugin(), this, 0L, 1L);
+  }
 
-    public void stop() {
-        //Ensuring that the task isn't already stopped to prevent any errors.
-        if(task == null) return;
+  public void stop() {
+    // Ensuring that the task isn't already stopped to prevent any errors.
+    if (task == null) return;
 
-        task.cancel();
-        task = null;
-    }
+    task.cancel();
+    task = null;
+  }
 
-    @Override
-    public void run() {
-        ticks++;
+  @Override
+  public void run() {
+    ticks++;
 
-        Frequency.INSTANCE.getPlayerDataManager().getEntries().parallelStream().forEach(playerData -> {
-            Entity target = playerData.getTarget().get();
+    Frequency.INSTANCE.getPlayerDataManager().getEntries().parallelStream()
+        .forEach(
+            playerData -> {
+              Entity target = playerData.getTarget().get();
 
-            attack: {
+              attack:
+              {
                 if (target == null) break attack;
 
                 /*
-                * For the reach check to work on every entity, we need to set its bounding box as is
-                * from the game. To avoid needing to do this constantly for the last target we're only doing it when
-                * there has been someone attacked and not when the target is null.
+                 * For the reach check to work on every entity, we need to set its bounding box as is
+                 * from the game. To avoid needing to do this constantly for the last target we're only doing it when
+                 * there has been someone attacked and not when the target is null.
                  */
                 AxisAlignedBB boundingBox = NmsUtil.getEntity(target).getBoundingBox();
 
                 // Set the bounding box in the targetLocations storage along with the time.
                 playerData.getTargetLocations().add(new Pair<>(boundingBox, ticks));
-            }
+              }
 
-            transaction: {
+              transaction:
+              {
                 if (ticks == 1) break transaction;
 
                 /*
-                * We're using a timestamp to get a more dynamic time of when we sent the packet to the player.
-                * This can be used later on for a pingspoof check or for getting the player's ping with ease on response.
+                 * We're using a timestamp to get a more dynamic time of when we sent the packet to the player.
+                 * This can be used later on for a pingspoof check or for getting the player's ping with ease on response.
                  */
                 long timestamp = System.currentTimeMillis();
 
                 /*
-                * The identification used by the transaction packet should always 0 or a negative
-                * number to not mess up with actual inventory transactions. The way we're doing this here is fine,
-                * and we should not be having any issues regarding the game mechanics.
+                 * The identification used by the transaction packet should always 0 or a negative
+                 * number to not mess up with actual inventory transactions. The way we're doing this here is fine,
+                 * and we should not be having any issues regarding the game mechanics.
                  */
                 final int identification = 0;
                 short actionNumber = (short) (Short.MAX_VALUE % ticks);
 
                 /*
-                * We're setting in the identification and the action number we're about to send, plus ensuring
-                * that the packet is received as an unaccepted once because of the false boolean in the end.
+                 * We're setting in the identification and the action number we're about to send, plus ensuring
+                 * that the packet is received as an unaccepted once because of the false boolean in the end.
                  */
                 PacketPlayOutTransaction transaction =
-                        new PacketPlayOutTransaction(identification, actionNumber, false);
+                    new PacketPlayOutTransaction(identification, actionNumber, false);
 
                 /*
-                * We're sending the packet directly into the player's pipeline to avoid any
-                * problems in the future. We don't need to touch the actual anti-cheat pipeline.
-                * We also need to store the values within the packets sent to the player.
+                 * We're sending the packet directly into the player's pipeline to avoid any
+                 * problems in the future. We don't need to touch the actual anti-cheat pipeline.
+                 * We also need to store the values within the packets sent to the player.
                  */
                 playerData.getConnection().sendPacket(transaction);
                 playerData.getTransactionUpdates().put(actionNumber, timestamp);
-            }
+              }
 
-            keepalive: {
+              keepalive:
+              {
                 if (ticks == 1) break keepalive;
 
                 /*
@@ -96,26 +101,26 @@ public class TickManager implements Runnable {
                 long timestamp = System.currentTimeMillis();
 
                 /*
-                * We don't need to do any fancy randomization for keep-alive since they're much simpler
-                * as operations in comparison to keep-alive, and no matter how many of them we send there won't be
-                * and collisions with the actual game functionality.
+                 * We don't need to do any fancy randomization for keep-alive since they're much simpler
+                 * as operations in comparison to keep-alive, and no matter how many of them we send there won't be
+                 * and collisions with the actual game functionality.
                  */
                 int identification = ticks;
 
                 /*
-                * We're creating the keep-alive with the tick variable inside which is going to be used
-                * for is verification later on. Other than that everything can be left as is for keep-alive.
+                 * We're creating the keep-alive with the tick variable inside which is going to be used
+                 * for is verification later on. Other than that everything can be left as is for keep-alive.
                  */
                 PacketPlayOutKeepAlive keepAlive = new PacketPlayOutKeepAlive(identification);
 
                 /*
-                * Similarly to transactions, we can simply send the packet directly onto the player's pipeline
-                * and not have to do any fancy work with the anti-cheat pipeline. We also need to store the values
-                * within the packets sent to the player.
+                 * Similarly to transactions, we can simply send the packet directly onto the player's pipeline
+                 * and not have to do any fancy work with the anti-cheat pipeline. We also need to store the values
+                 * within the packets sent to the player.
                  */
                 playerData.getConnection().sendPacket(keepAlive);
                 playerData.getKeepAliveUpdates().put(identification, timestamp);
-            }
-        });
-    }
+              }
+            });
+  }
 }

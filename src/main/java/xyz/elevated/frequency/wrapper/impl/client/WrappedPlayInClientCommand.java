@@ -6,11 +6,11 @@ import xyz.elevated.frequency.wrapper.PacketWrapper;
 
 public final class WrappedPlayInClientCommand extends PacketWrapper {
 
-    public WrappedPlayInClientCommand(Packet<?> instance) {
-        super(instance, PacketPlayInClientCommand.class);
-    }
+  public WrappedPlayInClientCommand(Packet<?> instance) {
+    super(instance, PacketPlayInClientCommand.class);
+  }
 
-    public PacketPlayInClientCommand.EnumClientCommand getCommand() {
-        return get("a");
-    }
+  public PacketPlayInClientCommand.EnumClientCommand getCommand() {
+    return get("a");
+  }
 }

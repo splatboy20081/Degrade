@@ -9,70 +9,75 @@ import xyz.elevated.frequency.util.MathUtil;
 @CheckData(name = "AimAssist (D)")
 public final class AimAssistD extends RotationCheck {
 
-    private float lastDeltaPitch;
-    private boolean applied;
+  private float lastDeltaPitch;
+  private boolean applied;
 
-    private int rotations;
-    private final long[] grid = new long[10];
+  private int rotations;
+  private final long[] grid = new long[10];
 
-    public AimAssistD(PlayerData playerData) {
-        super(playerData);
-    }
+  public AimAssistD(PlayerData playerData) {
+    super(playerData);
+  }
 
-    @Override
-    public void process(RotationUpdate rotationUpdate) {
-        long now = System.currentTimeMillis();
+  @Override
+  public void process(RotationUpdate rotationUpdate) {
+    long now = System.currentTimeMillis();
 
-        float deltaYaw = rotationUpdate.getDeltaYaw();
-        float deltaPitch = rotationUpdate.getDeltaPitch();
+    float deltaYaw = rotationUpdate.getDeltaYaw();
+    float deltaPitch = rotationUpdate.getDeltaPitch();
 
-        boolean cinematic = playerData.getCinematic().get();
-        boolean attacking = now - playerData.getActionManager().getLastAttack() < 500L;
+    boolean cinematic = playerData.getCinematic().get();
+    boolean attacking = now - playerData.getActionManager().getLastAttack() < 500L;
 
-        long deviation = getDeviation(deltaPitch);
+    long deviation = getDeviation(deltaPitch);
 
-        ++rotations;
-        grid[rotations % grid.length] = deviation;
+    ++rotations;
+    grid[rotations % grid.length] = deviation;
 
-        // If the player wasn't using cinematic, where attacking and weren't spamming their aim
-        if (deltaYaw > 0.0 && deltaPitch > 0.0 && deltaYaw < 30.f && deltaPitch < 30.f && !cinematic && attacking) {
-            boolean reached = rotations > grid.length;
+    // If the player wasn't using cinematic, where attacking and weren't spamming their aim
+    if (deltaYaw > 0.0
+        && deltaPitch > 0.0
+        && deltaYaw < 30.f
+        && deltaPitch < 30.f
+        && !cinematic
+        && attacking) {
+      boolean reached = rotations > grid.length;
 
-            // If the rotations made were greater than the gcd length
-            if (reached) {
-                double deviationMax = 0;
+      // If the rotations made were greater than the gcd length
+      if (reached) {
+        double deviationMax = 0;
 
-                // Get the max deviation from the gcd log
-                for (double l : grid) {
-                    if (deviation != 0 && l != 0)
-                        deviationMax = Math.max(Math.max(l, deviation) % Math.min(l, deviation), deviationMax);
-                }
-
-                // If both the deviation and the max deviation were greater than 0,9
-                if (deviationMax > 0.0 && deviation > 0.0) {
-                    fail();
-
-                    applied = false;
-                }
-            }
+        // Get the max deviation from the gcd log
+        for (double l : grid) {
+          if (deviation != 0 && l != 0)
+            deviationMax = Math.max(Math.max(l, deviation) % Math.min(l, deviation), deviationMax);
         }
 
-        lastDeltaPitch = deltaPitch;
-    }
+        // If both the deviation and the max deviation were greater than 0,9
+        if (deviationMax > 0.0 && deviation > 0.0) {
+          fail();
 
-    // Get the GCD from the stored rotations and return a result whenever applied isn't false.
-    private long getDeviation(float deltaPitch) {
-        long expandedPitch = (long) (deltaPitch * MathUtil.EXPANDER);
-        long previousExpandedPitch = (long) (lastDeltaPitch * MathUtil.EXPANDER);
-
-        long result = applied ? MathUtil.getGcd(expandedPitch, previousExpandedPitch) : 0;
-
-        if (applied) {
-            applied = false;
-
-            return result;
+          applied = false;
         }
-
-        return 0L;
+      }
     }
+
+    lastDeltaPitch = deltaPitch;
+  }
+
+  // Get the GCD from the stored rotations and return a result whenever applied isn't false.
+  private long getDeviation(float deltaPitch) {
+    long expandedPitch = (long) (deltaPitch * MathUtil.EXPANDER);
+    long previousExpandedPitch = (long) (lastDeltaPitch * MathUtil.EXPANDER);
+
+    long result = applied ? MathUtil.getGcd(expandedPitch, previousExpandedPitch) : 0;
+
+    if (applied) {
+      applied = false;
+
+      return result;
+    }
+
+    return 0L;
+  }
 }

@@ -5,8 +5,10 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
 
-@AllArgsConstructor @Getter @Setter
+@AllArgsConstructor
+@Getter
+@Setter
 public final class PositionUpdate {
-    private final Location from, to;
-    private final boolean onGround;
+  private final Location from, to;
+  private final boolean onGround;
 }

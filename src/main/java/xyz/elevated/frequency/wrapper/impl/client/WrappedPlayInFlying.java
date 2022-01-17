@@ -6,39 +6,39 @@ import xyz.elevated.frequency.wrapper.PacketWrapper;
 
 public final class WrappedPlayInFlying extends PacketWrapper {
 
-    public WrappedPlayInFlying(Packet<?> instance) {
-        super(instance, PacketPlayInFlying.class);
-    }
+  public WrappedPlayInFlying(Packet<?> instance) {
+    super(instance, PacketPlayInFlying.class);
+  }
 
-    public double getX() {
-        return get("x");
-    }
+  public double getX() {
+    return get("x");
+  }
 
-    public double getY() {
-        return get("y");
-    }
+  public double getY() {
+    return get("y");
+  }
 
-    public double getZ() {
-        return get("z");
-    }
+  public double getZ() {
+    return get("z");
+  }
 
-    public float getYaw() {
-        return get("yaw");
-    }
+  public float getYaw() {
+    return get("yaw");
+  }
 
-    public float getPitch() {
-        return get("pitch");
-    }
+  public float getPitch() {
+    return get("pitch");
+  }
 
-    public boolean hasPos() {
-        return get("hasPos");
-    }
+  public boolean hasPos() {
+    return get("hasPos");
+  }
 
-    public boolean hasLook() {
-        return get("hasLook");
-    }
+  public boolean hasLook() {
+    return get("hasLook");
+  }
 
-    public boolean onGround() {
-        return get("f");
-    }
+  public boolean onGround() {
+    return get("f");
+  }
 }

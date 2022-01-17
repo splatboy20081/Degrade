@@ -6,19 +6,19 @@ import xyz.elevated.frequency.wrapper.PacketWrapper;
 
 public final class WrappedPlayInWindowClick extends PacketWrapper {
 
-    public WrappedPlayInWindowClick(Packet<?> instance) {
-        super(instance, PacketPlayInWindowClick.class);
-    }
+  public WrappedPlayInWindowClick(Packet<?> instance) {
+    super(instance, PacketPlayInWindowClick.class);
+  }
 
-    public int getSlot() {
-        return get("slot");
-    }
+  public int getSlot() {
+    return get("slot");
+  }
 
-    public int getShift() {
-        return get("shift");
-    }
+  public int getShift() {
+    return get("shift");
+  }
 
-    public int getButton() {
-        return get("button");
-    }
+  public int getButton() {
+    return get("button");
+  }
 }
