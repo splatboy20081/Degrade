@@ -1,6 +1,4 @@
-![imgur](https://i.imgur.com/FN2dqsq.png)
-
-# Frequency
+# Degrade [![CodeFactor](https://www.codefactor.io/repository/github/splatboy20081/degrade/badge)](https://www.codefactor.io/repository/github/splatboy20081/degrade)
 
 This is an open source anticheat mainly developed and maintained by Elevated and Gson, with help from Dawson and the additional mental support from frap
 
