@@ -65,6 +65,7 @@ public final class IncomingPacketProcessor implements Processor<Packet<PacketLis
       WrappedPlayInBlockDig wrapper = new WrappedPlayInBlockDig(packet);
 
       switch (wrapper.getDigType()) {
+        default:
         case START_DESTROY_BLOCK:
         case ABORT_DESTROY_BLOCK:
         case STOP_DESTROY_BLOCK:
@@ -97,6 +98,10 @@ public final class IncomingPacketProcessor implements Processor<Packet<PacketLis
           {
             playerData.getSprinting().set(false);
             break;
+          }
+        default:
+          {
+            // no default
           }
       }
 
