@@ -1,13 +1,13 @@
 # Degrade [![CodeFactor](https://www.codefactor.io/repository/github/splatboy20081/degrade/badge)](https://www.codefactor.io/repository/github/splatboy20081/degrade)
 
-This is an open source anticheat mainly developed and maintained by Elevated and Gson, with help from Dawson and the additional mental support from frap
+This is an open source anticheat mainly developed and maintained by Splatboy Dev [Frequency by Elevated, Gson & frap](https://github.com/elevateddev/frequency)
 
 The main purposes of this anticheat is to provide some learning grounds for new-comers into anticheats. This project is not recommended for
 commercial use into a production server as it still has not been properly tested, but it should function properly for the most part. We would appreciate contributing to the project since this would expedite release, even if you're a novice. We'll do our best to help you setup and get started. 
 
 ## Simple Base Explanation
 
-**Frequency:** This is where every method actually executes. It uses an enum for the instance to prevent the unnecessary creation of an object. It contains
+**Degrade:** This is where every method actually executes. It uses an enum for the instance to prevent the unnecessary creation of an object. It contains
 the executors we are using for the packet-handler injection and alert-looping, and also some basic managers to handle data easier. 
 
 **PacketWrapper:** This is a caching system for reflection that is used to get and grab the field values from packets. The wrapper child classes are only created
@@ -31,17 +31,17 @@ certain checks.
 **AlertManager:** This is where the alert messages, bans and broadcasts are being handled in. Everything is formatted from a base string, and the alert loop is
 handled in a different thread using an executor. The actual alerts/violations are handled via a list, to allow us to clear old alerts every 9000ms.
 
-## Working on Frequency
-Here we will lay out all the important information you need to know getting setup to work on Frequency. Always be sure to follow the structure of the project. We want everything to remain as readable and clean as possible so there's no future confusion or any conflicts. 
+## Working on Degrade
+Here we will lay out all the important information you need to know getting setup to work on Degrade. Always be sure to follow the structure of the project. We want everything to remain as readable and clean as possible so there's no future confusion or any conflicts. 
 
 ### Getting Setup
-1) Fork Frequency
+1) Fork Degrade
 2) Get your git environment setup on your computer.
 3) Load the directory into your project as Maven.
 4) You will find that the spigot dependency is missing. You can run BuildTools with a script Dawson made (https://www.dropbox.com/s/oj3v6arxfpfcb96/BuildTools.zip?dl=0). We have to do this because of licensing issues. However, it is really simple to use and there are instructions inside the ZIP file.
 
 ### Important Git Conventions
-Always make sure that your master is up to date with the Frequency one. **NEVER** work on master. When making a feature, format the branch based on master with "feature/{name}" or "bugfix/{name}". Then you can submit the branch in a pull request. We will not be merging master to master. The whole point of this is to help prevent merging conflicts and allow for a cleaner git history. 
+Always make sure that your master is up to date with the Degrade one. **NEVER** work on master. When making a feature, format the branch based on master with "feature/{name}" or "bugfix/{name}". Then you can submit the branch in a pull request. We will not be merging master to master. The whole point of this is to help prevent merging conflicts and allow for a cleaner git history.
 
 ### How to report bugs/issues
 Always make sure to give an in-depth explaination of anything that happened when you first encountered the issue. If you can, give a possible theory to what could be wrong, and finally provide some proof of the bug happening in the exact situation.
