@@ -11,26 +11,24 @@ import xyz.elevated.frequency.wrapper.impl.client.WrappedPlayInUseEntity;
 @CheckData(name = "Reach (A)")
 public final class ReachA extends PacketCheck {
 
-  public ReachA(PlayerData playerData) {
-    super(playerData);
-  }
-
-  @Override
-  public void process(Object object) {
-
-    if (object instanceof WrappedPlayInUseEntity && !isExempt(ExemptType.TPS)) {
-
-      if (((WrappedPlayInUseEntity) object)
-          .getAction()
-          .equals(PacketPlayInUseEntity.EnumEntityUseAction.ATTACK)) {
-
-        double dist =
-            MathUtil.getMagnitude(
-                playerData.getBukkitPlayer().getLocation(),
-                playerData.getTarget().get().getLocation());
-
-        if (dist > 3.51) fail();
-      }
+    public ReachA(PlayerData playerData) {
+        super(playerData);
     }
-  }
+
+    @Override
+    public void process(Object object) {
+
+        if (object instanceof WrappedPlayInUseEntity && !isExempt(ExemptType.TPS)) {
+
+            if(((WrappedPlayInUseEntity) object).getAction().equals(PacketPlayInUseEntity.EnumEntityUseAction.ATTACK)) {
+
+                double dist = MathUtil.getMagnitude(playerData.getBukkitPlayer().getLocation(), playerData.getTarget().get().getLocation());
+
+                if (dist > 3.51) fail();
+
+            }
+
+        }
+
+    }
 }
