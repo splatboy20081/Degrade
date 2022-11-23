@@ -27,10 +27,20 @@ public class MathUtil {
 
     double average;
 
-    // Increase the sum and the count to find the average and the standard deviation
-    for (Number number : data) {
-      sum += number.doubleValue();
-      ++count;
+        // Increase the sum and the count to find the average and the standard deviation
+        for (final Number number : data) {
+            sum += number.doubleValue();
+            ++count;
+        }
+
+        average = sum / count;
+
+        // Run the standard deviation formula
+        for (final Number number : data) {
+            variance += Math.pow(number.doubleValue() - average, 2.0);
+        }
+
+        return variance / count;
     }
 
     average = sum / count;
