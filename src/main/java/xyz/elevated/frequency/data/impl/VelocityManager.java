@@ -25,8 +25,7 @@ public final class VelocityManager {
   // Get the highest horizontal velocity
   public double getMaxHorizontal() {
     try {
-      return Math.sqrt(
-          velocities.stream().mapToDouble(VelocitySnapshot::getHorizontal).max().orElse(0.0));
+      returnvelocities.stream().mapToDouble(VelocitySnapshot::getHorizontal).max().orElse(0.0);
     } catch (Exception e) {
       return 1.0;
     }
