@@ -1,6 +1,6 @@
 # Degrade [![CodeFactor](https://www.codefactor.io/repository/github/splatboy20081/degrade/badge)](https://www.codefactor.io/repository/github/splatboy20081/degrade)
 
-This is an open source anticheat mainly developed and maintained by Splatboy Dev [Frequency by Elevated, Gson & frap](https://github.com/elevateddev/frequency)
+This is an open source anticheat mainly developed and maintained by Splatboy Dev. The original anticheat is [Frequency by Elevated, Gson & frap](https://github.com/elevateddev/frequency)
 
 The main purposes of this anticheat is to provide some learning grounds for new-comers into anticheats. This project is not recommended for
 commercial use into a production server as it still has not been properly tested, but it should function properly for the most part. We would appreciate contributing to the project since this would expedite release, even if you're a novice. We'll do our best to help you setup and get started. 
