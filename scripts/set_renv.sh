@@ -28,5 +28,5 @@ function get_versioned_name() {
 # Set GitHub environmental variables
 echo "VERSIONED_NAME=$(get_versioned_name)" >> "$GITHUB_ENV"
 
-changelog="$(. ./scripts/generate_changelog.sh)"
+changelog="$(. ./scripts/changelog.sh)"
 printf "GENERATED_CHANGELOG<<EOF\n%s\nEOF\n" "$changelog" >> "$GITHUB_ENV"
