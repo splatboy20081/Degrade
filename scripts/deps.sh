@@ -19,6 +19,7 @@
 # particularly robust nor configurable. Run from project parent directory.
 
 buildtools_dir=~/buildtools
+
 buildtools=$buildtools_dir/BuildTools.jar
 
 get_buildtools () {
@@ -27,6 +28,7 @@ get_buildtools () {
   fi
 
   mkdir $buildtools_dir
+  echo $buildtools_dir
   wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar -O $buildtools
 }
 
@@ -41,7 +43,8 @@ exit_code=0
 if [ $exit_code -ne 0 ]; then
   echo Installing Spigot 1.8.8...
   get_buildtools
-  java -jar $buildtools -rev "1.8.8" --remapped
+  java -jar $buildtools -rev "1.8.8"
+  echo Installed BuildTools.
 else
   echo Spigot 1.8.8 is already installed, continuing...
 fi
