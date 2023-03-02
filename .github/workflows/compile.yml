@@ -1,0 +1,83 @@
+name: OpenInv CI
+
+on:
+  push:
+  pull_request_target:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '8'
+          cache: 'maven'
+
+      # Install Spigot dependencies if necessary.
+      - name: Install Spigot Dependencies
+        run: . scripts/deps.sh
+
+      - name: Build With Maven
+        run: mvn -e clean package -am -P all
+
+      # Upload artifacts
+      - name: Upload Distributable Jar
+        id: upload-final
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: ./target/Frequency.jar
+
+  merge-dependabot:
+    name: Auto-merge Dependabot PRs
+    needs: [ build ]
+    if: "github.event.name == 'pull_request_target'
+      && github.actor == 'dependabot[bot]'
+      && contains( github.event.pull_request.labels.*.name, 'java')"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Approve
+        uses: hmarr/auto-approve-action@v3.1.0
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Merge
+        uses: pascalgn/automerge-action@v0.15.6
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          MERGE_LABELS: "dependencies"
+          MERGE_METHOD: "squash"
+
+  release:
+    name: Create Github Release
+    needs: [ build ]
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      # Fetch all history - used to assemble changelog.
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set Release Variables
+        run: bash ./scripts/set_renv.sh
+
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: dist
+
+      - name: Create Release
+        id: create-release
+        uses: softprops/action-gh-release@v0.1.15
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: ${{ env.VERSIONED_NAME }}
+          body: ${{ env.GENERATED_CHANGELOG }}
+          draft: true
+          prerelease: false
+          files: ./dist/Frequency.jar
