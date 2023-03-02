@@ -30,22 +30,18 @@ get_buildtools () {
   wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar -O $buildtools
 }
 
-readarray -t versions <<< "$(. ./scripts/get_spigot_versions.sh)"
-echo Found Spigot dependencies: "${versions[@]}"
+echo Spigot Version 1.8.8
 
 # Install dependencies aside from Spigot prior to running in offline mode.
 mvn dependency:go-offline -DexcludeArtifactIds=spigot
 
-for version in "${versions[@]}"; do
-  set -e
-  exit_code=0
-  mvn dependency:get -Dartifact=org.spigotmc:spigot:"$version":remapped-mojang -q -o || exit_code=$?
-  if [ $exit_code -ne 0 ]; then
-    echo Installing missing Spigot version "$version"
-    revision=${version%%-R*}
-    get_buildtools
-    java -jar $buildtools -rev "$revision" --remapped
-  else
-    echo Spigot "$version" is already installed
-  fi
-done
+set -e
+exit_code=0
+# mvn dependency:get -Dartifact=org.spigotmc:spigot:"1.8.8-R0.1-SNAPSHOT":remapped-mojang -q -o || exit_code=$?
+if [ $exit_code -ne 0 ]; then
+  echo Installing Spigot 1.8.8...
+  get_buildtools
+  java -jar $buildtools -rev "1.8.8" --remapped
+else
+  echo Spigot 1.8.8 is already installed, continuing...
+fi
