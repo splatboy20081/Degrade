@@ -32,8 +32,6 @@ if [[ ${spigot_versions[@]} ]]; then
 fi
 
 old_maven_opts=$MAVEN_OPTS
-# Add JVM parameters to allow help plugin access to packages it needs.
-export MAVEN_OPTS="$old_maven_opts --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED --add-opens java.base/java.text=ALL-UNNAMED --add-opens java.desktop/java.awt.font=ALL-UNNAMED"
 
 # Pull Spigot dependency information from Maven.
 # Since we only care about Spigot versions, only check modules in the folder internal.
