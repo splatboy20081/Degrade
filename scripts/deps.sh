@@ -37,9 +37,7 @@ echo Spigot Version 1.8.8
 # Install dependencies aside from Spigot prior to running in offline mode.
 mvn dependency:go-offline -DexcludeArtifactIds=spigot
 
-set -e
-exit_code=0
-# mvn dependency:get -Dartifact=org.spigotmc:spigot:"1.8.8-R0.1-SNAPSHOT":remapped-mojang -q -o || exit_code=$?
+mvn dependency:get -Dartifact=org.spigotmc:spigot:"1.8.8-R0.1-SNAPSHOT" -q -o || exit_code=$?
 if [ $exit_code -ne 0 ]; then
   echo Installing Spigot 1.8.8...
   get_buildtools
